@@ -1,0 +1,92 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  CREATOR
+  CLIPPER
+  ADMIN
+}
+
+enum CampaignStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+}
+
+enum ClipStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  REVISION_REQUESTED
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  avatarUrl    String?
+  role         Role     @default(CLIPPER)
+  balance      Float    @default(0.0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  campaigns    Campaign[]    @relation("CreatorCampaigns")
+  clips        Clip[]        @relation("ClipperClips")
+  transactions Transaction[]
+}
+
+model Campaign {
+  id              String         @id @default(uuid())
+  title           String
+  description     String
+  creatorId       String
+  creator         User           @relation("CreatorCampaigns", fields: [creatorId], references: [id])
+  rewardPerClip   Float
+  totalBudget     Float
+  remainingBudget Float
+  vodUrl          String?
+  status          CampaignStatus @default(ACTIVE)
+  deadline        DateTime
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  clips Clip[]
+}
+
+model Clip {
+  id           String     @id @default(uuid())
+  title        String
+  videoUrl     String
+  thumbnailUrl String?
+  duration     Float?
+  status       ClipStatus @default(PENDING)
+  feedback     String?
+
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id])
+
+  clipperId String
+  clipper   User   @relation("ClipperClips", fields: [clipperId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  amount      Float
+  type        String
+  referenceId String?
+  createdAt   DateTime @default(now())
+}
