@@ -14,7 +14,6 @@ export declare class UsersService {
         createdAt: Date;
     }>;
     findAll(): string;
-    findOne(id: string): string;
     update(id: string, updateUserDto: UpdateUserDto): Promise<{
         id: string;
         email: string;
@@ -24,5 +23,18 @@ export declare class UsersService {
         balance: number;
         createdAt: Date;
     }>;
+    findByEmail(email: string): Promise<{
+        id: string;
+        email: string;
+        passwordHash: string;
+        name: string;
+        avatarUrl: string | null;
+        role: import("../../generated/prisma/enums").Role;
+        balance: number;
+        createdAt: Date;
+        updatedAt: Date;
+        hashedRefreshToken: string | null;
+    } | null>;
+    findOne(id: string): string;
     remove(id: number): string;
 }

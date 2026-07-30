@@ -83,9 +83,6 @@ let UsersService = class UsersService {
     findAll() {
         return `This action returns all users`;
     }
-    findOne(id) {
-        return `This action returns a #${id} user`;
-    }
     async update(id, updateUserDto) {
         await this.findOne(id);
         const data = {
@@ -110,6 +107,16 @@ let UsersService = class UsersService {
                 createdAt: true,
             },
         });
+    }
+    async findByEmail(email) {
+        return this.prisma.user.findUnique({
+            where: {
+                email,
+            },
+        });
+    }
+    findOne(id) {
+        return `This action returns a #${id} user`;
     }
     remove(id) {
         return `This action removes a #${id} user`;

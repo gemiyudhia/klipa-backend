@@ -65,7 +65,8 @@ exports.UserScalarFieldEnum = {
     role: 'role',
     balance: 'balance',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    hashedRefreshToken: 'hashedRefreshToken'
 };
 exports.CampaignScalarFieldEnum = {
     id: 'id',

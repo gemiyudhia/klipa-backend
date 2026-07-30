@@ -25,6 +25,7 @@ export type UserMinAggregateOutputType = {
     balance: number | null;
     createdAt: Date | null;
     updatedAt: Date | null;
+    hashedRefreshToken: string | null;
 };
 export type UserMaxAggregateOutputType = {
     id: string | null;
@@ -36,6 +37,7 @@ export type UserMaxAggregateOutputType = {
     balance: number | null;
     createdAt: Date | null;
     updatedAt: Date | null;
+    hashedRefreshToken: string | null;
 };
 export type UserCountAggregateOutputType = {
     id: number;
@@ -47,6 +49,7 @@ export type UserCountAggregateOutputType = {
     balance: number;
     createdAt: number;
     updatedAt: number;
+    hashedRefreshToken: number;
     _all: number;
 };
 export type UserAvgAggregateInputType = {
@@ -65,6 +68,7 @@ export type UserMinAggregateInputType = {
     balance?: true;
     createdAt?: true;
     updatedAt?: true;
+    hashedRefreshToken?: true;
 };
 export type UserMaxAggregateInputType = {
     id?: true;
@@ -76,6 +80,7 @@ export type UserMaxAggregateInputType = {
     balance?: true;
     createdAt?: true;
     updatedAt?: true;
+    hashedRefreshToken?: true;
 };
 export type UserCountAggregateInputType = {
     id?: true;
@@ -87,6 +92,7 @@ export type UserCountAggregateInputType = {
     balance?: true;
     createdAt?: true;
     updatedAt?: true;
+    hashedRefreshToken?: true;
     _all?: true;
 };
 export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -127,6 +133,7 @@ export type UserGroupByOutputType = {
     balance: number;
     createdAt: Date;
     updatedAt: Date;
+    hashedRefreshToken: string | null;
     _count: UserCountAggregateOutputType | null;
     _avg: UserAvgAggregateOutputType | null;
     _sum: UserSumAggregateOutputType | null;
@@ -149,6 +156,7 @@ export type UserWhereInput = {
     balance?: Prisma.FloatFilter<"User"> | number;
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    hashedRefreshToken?: Prisma.StringNullableFilter<"User"> | string | null;
     campaigns?: Prisma.CampaignListRelationFilter;
     clips?: Prisma.ClipListRelationFilter;
     transactions?: Prisma.TransactionListRelationFilter;
@@ -163,6 +171,7 @@ export type UserOrderByWithRelationInput = {
     balance?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    hashedRefreshToken?: Prisma.SortOrderInput | Prisma.SortOrder;
     campaigns?: Prisma.CampaignOrderByRelationAggregateInput;
     clips?: Prisma.ClipOrderByRelationAggregateInput;
     transactions?: Prisma.TransactionOrderByRelationAggregateInput;
@@ -180,6 +189,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
     balance?: Prisma.FloatFilter<"User"> | number;
     createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    hashedRefreshToken?: Prisma.StringNullableFilter<"User"> | string | null;
     campaigns?: Prisma.CampaignListRelationFilter;
     clips?: Prisma.ClipListRelationFilter;
     transactions?: Prisma.TransactionListRelationFilter;
@@ -194,6 +204,7 @@ export type UserOrderByWithAggregationInput = {
     balance?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    hashedRefreshToken?: Prisma.SortOrderInput | Prisma.SortOrder;
     _count?: Prisma.UserCountOrderByAggregateInput;
     _avg?: Prisma.UserAvgOrderByAggregateInput;
     _max?: Prisma.UserMaxOrderByAggregateInput;
@@ -213,6 +224,7 @@ export type UserScalarWhereWithAggregatesInput = {
     balance?: Prisma.FloatWithAggregatesFilter<"User"> | number;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
+    hashedRefreshToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
 };
 export type UserCreateInput = {
     id?: string;
@@ -224,6 +236,7 @@ export type UserCreateInput = {
     balance?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
     campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
@@ -238,6 +251,7 @@ export type UserUncheckedCreateInput = {
     balance?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
     campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
@@ -252,6 +266,7 @@ export type UserUpdateInput = {
     balance?: Prisma.FloatFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
@@ -266,6 +281,7 @@ export type UserUncheckedUpdateInput = {
     balance?: Prisma.FloatFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
@@ -280,6 +296,7 @@ export type UserCreateManyInput = {
     balance?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
 };
 export type UserUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -291,6 +308,7 @@ export type UserUpdateManyMutationInput = {
     balance?: Prisma.FloatFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 };
 export type UserUncheckedUpdateManyInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -302,6 +320,7 @@ export type UserUncheckedUpdateManyInput = {
     balance?: Prisma.FloatFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
 };
 export type UserCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -313,6 +332,7 @@ export type UserCountOrderByAggregateInput = {
     balance?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    hashedRefreshToken?: Prisma.SortOrder;
 };
 export type UserAvgOrderByAggregateInput = {
     balance?: Prisma.SortOrder;
@@ -327,6 +347,7 @@ export type UserMaxOrderByAggregateInput = {
     balance?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    hashedRefreshToken?: Prisma.SortOrder;
 };
 export type UserMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -338,6 +359,7 @@ export type UserMinOrderByAggregateInput = {
     balance?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    hashedRefreshToken?: Prisma.SortOrder;
 };
 export type UserSumOrderByAggregateInput = {
     balance?: Prisma.SortOrder;
@@ -411,6 +433,7 @@ export type UserCreateWithoutCampaignsInput = {
     balance?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
     clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
 };
@@ -424,6 +447,7 @@ export type UserUncheckedCreateWithoutCampaignsInput = {
     balance?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
 };
@@ -450,6 +474,7 @@ export type UserUpdateWithoutCampaignsInput = {
     balance?: Prisma.FloatFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
 };
@@ -463,6 +488,7 @@ export type UserUncheckedUpdateWithoutCampaignsInput = {
     balance?: Prisma.FloatFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
 };
@@ -476,6 +502,7 @@ export type UserCreateWithoutClipsInput = {
     balance?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
     campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
     transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
 };
@@ -489,6 +516,7 @@ export type UserUncheckedCreateWithoutClipsInput = {
     balance?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
     campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
     transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
 };
@@ -515,6 +543,7 @@ export type UserUpdateWithoutClipsInput = {
     balance?: Prisma.FloatFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
     transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
 };
@@ -528,6 +557,7 @@ export type UserUncheckedUpdateWithoutClipsInput = {
     balance?: Prisma.FloatFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
     transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
 };
@@ -541,6 +571,7 @@ export type UserCreateWithoutTransactionsInput = {
     balance?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
     campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
 };
@@ -554,6 +585,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
     balance?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
     campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
 };
@@ -580,6 +612,7 @@ export type UserUpdateWithoutTransactionsInput = {
     balance?: Prisma.FloatFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
 };
@@ -593,6 +626,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
     balance?: Prisma.FloatFieldUpdateOperationsInput | number;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
 };
@@ -628,6 +662,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     balance?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    hashedRefreshToken?: boolean;
     campaigns?: boolean | Prisma.User$campaignsArgs<ExtArgs>;
     clips?: boolean | Prisma.User$clipsArgs<ExtArgs>;
     transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>;
@@ -643,6 +678,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     balance?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    hashedRefreshToken?: boolean;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -654,6 +690,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     balance?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    hashedRefreshToken?: boolean;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectScalar = {
     id?: boolean;
@@ -665,8 +702,9 @@ export type UserSelectScalar = {
     balance?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    hashedRefreshToken?: boolean;
 };
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "avatarUrl" | "role" | "balance" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>;
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "avatarUrl" | "role" | "balance" | "createdAt" | "updatedAt" | "hashedRefreshToken", ExtArgs["result"]["user"]>;
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     campaigns?: boolean | Prisma.User$campaignsArgs<ExtArgs>;
     clips?: boolean | Prisma.User$clipsArgs<ExtArgs>;
@@ -692,6 +730,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
         balance: number;
         createdAt: Date;
         updatedAt: Date;
+        hashedRefreshToken: string | null;
     }, ExtArgs["result"]["user"]>;
     composites: {};
 };
@@ -761,6 +800,7 @@ export interface UserFieldRefs {
     readonly balance: Prisma.FieldRef<"User", 'Float'>;
     readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>;
+    readonly hashedRefreshToken: Prisma.FieldRef<"User", 'String'>;
 }
 export type UserFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.UserSelect<ExtArgs> | null;

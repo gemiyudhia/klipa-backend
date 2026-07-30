@@ -46,10 +46,6 @@ export class UsersService {
     return `This action returns all users`;
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} user`;
-  }
-
   async update(id: string, updateUserDto: UpdateUserDto) {
     await this.findOne(id);
 
@@ -77,6 +73,18 @@ export class UsersService {
         createdAt: true,
       },
     });
+  }
+
+  async findByEmail(email: string) {
+    return this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+  }
+
+  findOne(id: string) {
+    return `This action returns a #${id} user`;
   }
 
   remove(id: number) {

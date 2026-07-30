@@ -517,6 +517,7 @@ export declare const UserScalarFieldEnum: {
     readonly balance: "balance";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
+    readonly hashedRefreshToken: "hashedRefreshToken";
 };
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
 export declare const CampaignScalarFieldEnum: {
