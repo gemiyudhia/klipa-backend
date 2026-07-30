@@ -107,7 +107,10 @@ let AuthService = class AuthService {
             email: user.email,
             role: user.role,
         };
-        return this.jwtService.signAsync(payload);
+        return this.jwtService.signAsync(payload, {
+            secret: this.configService.get('JWT_SECRET'),
+            expiresIn: '15m',
+        });
     }
 };
 exports.AuthService = AuthService;

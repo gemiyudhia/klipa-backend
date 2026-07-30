@@ -1,6 +1,7 @@
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Role } from "../../generated/prisma/enums";
 export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
@@ -9,7 +10,7 @@ export declare class UsersController {
         email: string;
         name: string;
         avatarUrl: string | null;
-        role: import("../../generated/prisma/enums").Role;
+        role: Role;
         balance: number;
         createdAt: Date;
     }>;
@@ -17,14 +18,14 @@ export declare class UsersController {
     findOne(id: string): Promise<{
         email: string;
         name: string;
-        role: import("../../generated/prisma/enums").Role;
+        role: Role;
     }>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<{
         id: string;
         email: string;
         name: string;
         avatarUrl: string | null;
-        role: import("../../generated/prisma/enums").Role;
+        role: Role;
         balance: number;
         createdAt: Date;
     }>;
