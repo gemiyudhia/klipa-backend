@@ -15,6 +15,10 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuards } from 'src/common/guards/jwt-auth.guard';
+import { Roles } from './decorators/roles.decorator';
+import { Role } from 'generated/prisma/enums';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { RolesGuard } from 'src/common/guards/roles.guard';
 
 @Controller('auth')
 export class AuthController {
