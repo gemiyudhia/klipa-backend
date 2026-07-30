@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -83,11 +87,32 @@ export class UsersService {
     });
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} user`;
+  async remove(id: string) {
+    await this.findOne(id);
+
+    await this.prisma.user.delete({
+      where: {
+        id,
+      },
+    });
+
+    return 'user deleted successful';
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async findOne(id: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        name: true,
+        email: true,
+        role: true,
+      },
+    });
+
+    if (!user) throw new NotFoundException(`user with id ${id} not found`);
+
+    return user;
   }
 }

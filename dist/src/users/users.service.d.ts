@@ -35,6 +35,10 @@ export declare class UsersService {
         updatedAt: Date;
         hashedRefreshToken: string | null;
     } | null>;
-    findOne(id: string): string;
-    remove(id: number): string;
+    remove(id: string): Promise<string>;
+    findOne(id: string): Promise<{
+        email: string;
+        name: string;
+        role: import("../../generated/prisma/enums").Role;
+    }>;
 }

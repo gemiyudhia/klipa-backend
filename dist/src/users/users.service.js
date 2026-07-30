@@ -115,11 +115,29 @@ let UsersService = class UsersService {
             },
         });
     }
-    findOne(id) {
-        return `This action returns a #${id} user`;
+    async remove(id) {
+        await this.findOne(id);
+        await this.prisma.user.delete({
+            where: {
+                id,
+            },
+        });
+        return 'user deleted successful';
     }
-    remove(id) {
-        return `This action removes a #${id} user`;
+    async findOne(id) {
+        const user = await this.prisma.user.findUnique({
+            where: {
+                id,
+            },
+            select: {
+                name: true,
+                email: true,
+                role: true,
+            },
+        });
+        if (!user)
+            throw new common_1.NotFoundException(`user with id ${id} not found`);
+        return user;
     }
 };
 exports.UsersService = UsersService;
