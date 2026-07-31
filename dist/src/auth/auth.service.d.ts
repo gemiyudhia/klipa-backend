@@ -12,9 +12,9 @@ export declare class AuthService {
     private readonly prisma;
     constructor(userService: UsersService, configService: ConfigService, jwtService: JwtService, prisma: PrismaService);
     register(createUserDto: CreateUserDto): Promise<{
-        id: string;
-        email: string;
         name: string;
+        email: string;
+        id: string;
         avatarUrl: string | null;
         role: import("generated/prisma/client").Role;
         balance: number;
@@ -30,10 +30,10 @@ export declare class AuthService {
     findOne(id: number): string;
     update(id: number, updateAuthDto: UpdateAuthDto): string;
     updateRefreshToken(userId: string, hashedRefreshToken: string | null): Promise<{
-        id: string;
-        email: string;
-        passwordHash: string;
         name: string;
+        email: string;
+        id: string;
+        passwordHash: string;
         avatarUrl: string | null;
         role: import("generated/prisma/client").Role;
         balance: number;

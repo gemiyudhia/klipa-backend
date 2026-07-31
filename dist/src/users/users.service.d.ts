@@ -5,9 +5,9 @@ export declare class UsersService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     create(createUserDto: CreateUserDto): Promise<{
-        id: string;
-        email: string;
         name: string;
+        email: string;
+        id: string;
         avatarUrl: string | null;
         role: import("../../generated/prisma/enums").Role;
         balance: number;
@@ -15,19 +15,19 @@ export declare class UsersService {
     }>;
     findAll(): string;
     update(id: string, updateUserDto: UpdateUserDto): Promise<{
-        id: string;
-        email: string;
         name: string;
+        email: string;
+        id: string;
         avatarUrl: string | null;
         role: import("../../generated/prisma/enums").Role;
         balance: number;
         createdAt: Date;
     }>;
     findByEmail(email: string): Promise<{
-        id: string;
-        email: string;
-        passwordHash: string;
         name: string;
+        email: string;
+        id: string;
+        passwordHash: string;
         avatarUrl: string | null;
         role: import("../../generated/prisma/enums").Role;
         balance: number;
@@ -37,8 +37,8 @@ export declare class UsersService {
     } | null>;
     remove(id: string): Promise<string>;
     findOne(id: string): Promise<{
-        email: string;
         name: string;
+        email: string;
         role: import("../../generated/prisma/enums").Role;
     }>;
 }

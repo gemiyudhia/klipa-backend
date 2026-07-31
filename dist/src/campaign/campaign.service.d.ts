@@ -1,0 +1,92 @@
+import { CreateCampaignDto } from './dto/create-campaign.dto';
+import { UpdateCampaignDto } from './dto/update-campaign.dto';
+import { PrismaService } from "../prisma/prisma.service";
+import { CampaignStatus, Role } from "../../generated/prisma/enums";
+export declare class CampaignService {
+    private readonly prisma;
+    constructor(prisma: PrismaService);
+    create(creatorId: string, createCampaignDto: CreateCampaignDto): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        title: string;
+        description: string;
+        rewardPerClip: number;
+        totalBudget: number;
+        remainingBudget: number;
+        vodUrl: string | null;
+        status: CampaignStatus;
+        deadline: Date;
+        creatorId: string;
+    }>;
+    findAllByCreator(creatorId: string): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        title: string;
+        description: string;
+        rewardPerClip: number;
+        totalBudget: number;
+        remainingBudget: number;
+        vodUrl: string | null;
+        status: CampaignStatus;
+        deadline: Date;
+        creatorId: string;
+    }[]>;
+    findAllPublic(): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        title: string;
+        description: string;
+        rewardPerClip: number;
+        totalBudget: number;
+        remainingBudget: number;
+        vodUrl: string | null;
+        status: CampaignStatus;
+        deadline: Date;
+        creatorId: string;
+    }[]>;
+    findOne(id: string): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        title: string;
+        description: string;
+        rewardPerClip: number;
+        totalBudget: number;
+        remainingBudget: number;
+        vodUrl: string | null;
+        status: CampaignStatus;
+        deadline: Date;
+        creatorId: string;
+    }>;
+    update(id: string, userId: string, userRole: Role, updateCampaignDto: UpdateCampaignDto): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        title: string;
+        description: string;
+        rewardPerClip: number;
+        totalBudget: number;
+        remainingBudget: number;
+        vodUrl: string | null;
+        status: CampaignStatus;
+        deadline: Date;
+        creatorId: string;
+    }>;
+    remove(id: string, userId: string, userRole: Role): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        title: string;
+        description: string;
+        rewardPerClip: number;
+        totalBudget: number;
+        remainingBudget: number;
+        vodUrl: string | null;
+        status: CampaignStatus;
+        deadline: Date;
+        creatorId: string;
+    }>;
+}

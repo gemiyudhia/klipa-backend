@@ -2,6 +2,7 @@ import { AuthService } from './auth.service';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { CreateUserDto } from "../users/dto/create-user.dto";
 import { LoginDto } from './dto/login.dto';
+import { Role } from "../../generated/prisma/enums";
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
@@ -10,7 +11,7 @@ export declare class AuthController {
         email: string;
         name: string;
         avatarUrl: string | null;
-        role: import("../../generated/prisma/enums").Role;
+        role: Role;
         balance: number;
         createdAt: Date;
     }>;
