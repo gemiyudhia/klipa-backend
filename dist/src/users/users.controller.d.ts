@@ -6,9 +6,9 @@ export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
     create(createUserDto: CreateUserDto): Promise<{
-        name: string;
-        email: string;
         id: string;
+        email: string;
+        name: string;
         avatarUrl: string | null;
         role: Role;
         balance: number;
@@ -16,14 +16,14 @@ export declare class UsersController {
     }>;
     findAll(): string;
     findOne(id: string): Promise<{
-        name: string;
         email: string;
+        name: string;
         role: Role;
     }>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<{
-        name: string;
-        email: string;
         id: string;
+        email: string;
+        name: string;
         avatarUrl: string | null;
         role: Role;
         balance: number;

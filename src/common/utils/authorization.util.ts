@@ -4,7 +4,7 @@ export function assertOwnerOrAdmin(
   resourceOwnerId: string,
   currentUserId: string,
   currentUserRole: string,
-  message: 'anda tidak memiliki akses ke resouce ini',
+  message = 'anda tidak memiliki akses ke resouce ini',
 ): void {
   const isOwner = resourceOwnerId === currentUserId;
   const isAdmin = currentUserRole === 'ADMIN';
