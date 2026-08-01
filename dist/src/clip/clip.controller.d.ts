@@ -8,14 +8,14 @@ export declare class ClipController {
     constructor(clipService: ClipService);
     create(clipperId: string, createClipDto: CreateClipDto): Promise<{
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
+        status: import("generated/prisma/enums").ClipStatus;
         videoUrl: string;
         thumbnailUrl: string | null;
         duration: number | null;
-        status: import("generated/prisma/enums").ClipStatus;
         feedback: string | null;
-        createdAt: Date;
-        updatedAt: Date;
         campaignId: string;
         clipperId: string;
     }>;
@@ -26,14 +26,14 @@ export declare class ClipController {
         };
     } & {
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
+        status: import("generated/prisma/enums").ClipStatus;
         videoUrl: string;
         thumbnailUrl: string | null;
         duration: number | null;
-        status: import("generated/prisma/enums").ClipStatus;
         feedback: string | null;
-        createdAt: Date;
-        updatedAt: Date;
         campaignId: string;
         clipperId: string;
     })[]>;
@@ -42,47 +42,47 @@ export declare class ClipController {
         role: Role;
     }): Promise<({
         clipper: {
-            id: string;
             name: string;
+            id: string;
         };
     } & {
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
+        status: import("generated/prisma/enums").ClipStatus;
         videoUrl: string;
         thumbnailUrl: string | null;
         duration: number | null;
-        status: import("generated/prisma/enums").ClipStatus;
         feedback: string | null;
-        createdAt: Date;
-        updatedAt: Date;
         campaignId: string;
         clipperId: string;
     })[]>;
     findOne(id: string): Promise<{
         campaign: {
             id: string;
-            title: string;
-            status: import("generated/prisma/enums").CampaignStatus;
             createdAt: Date;
             updatedAt: Date;
+            title: string;
             description: string;
-            creatorId: string;
             rewardPerClip: number;
             totalBudget: number;
             remainingBudget: number;
             vodUrl: string | null;
+            status: import("generated/prisma/enums").CampaignStatus;
             deadline: Date;
+            creatorId: string;
         };
     } & {
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
+        status: import("generated/prisma/enums").ClipStatus;
         videoUrl: string;
         thumbnailUrl: string | null;
         duration: number | null;
-        status: import("generated/prisma/enums").ClipStatus;
         feedback: string | null;
-        createdAt: Date;
-        updatedAt: Date;
         campaignId: string;
         clipperId: string;
     }>;
@@ -91,14 +91,14 @@ export declare class ClipController {
         role: Role;
     }, updateClipDto: UpdateClipDto): Promise<{
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
+        status: import("generated/prisma/enums").ClipStatus;
         videoUrl: string;
         thumbnailUrl: string | null;
         duration: number | null;
-        status: import("generated/prisma/enums").ClipStatus;
         feedback: string | null;
-        createdAt: Date;
-        updatedAt: Date;
         campaignId: string;
         clipperId: string;
     }>;
@@ -107,14 +107,14 @@ export declare class ClipController {
         role: Role;
     }, reviewClipDto: ReviewClipDto): Promise<{
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
+        status: import("generated/prisma/enums").ClipStatus;
         videoUrl: string;
         thumbnailUrl: string | null;
         duration: number | null;
-        status: import("generated/prisma/enums").ClipStatus;
         feedback: string | null;
-        createdAt: Date;
-        updatedAt: Date;
         campaignId: string;
         clipperId: string;
     }>;
@@ -123,14 +123,14 @@ export declare class ClipController {
         role: Role;
     }): Promise<{
         id: string;
+        createdAt: Date;
+        updatedAt: Date;
         title: string;
+        status: import("generated/prisma/enums").ClipStatus;
         videoUrl: string;
         thumbnailUrl: string | null;
         duration: number | null;
-        status: import("generated/prisma/enums").ClipStatus;
         feedback: string | null;
-        createdAt: Date;
-        updatedAt: Date;
         campaignId: string;
         clipperId: string;
     }>;

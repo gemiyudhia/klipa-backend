@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { CampaignModule } from './campaign/campaign.module';
 import { ClipModule } from './clip/clip.module';
+import { DisputeModule } from './dispute/dispute.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ClipModule } from './clip/clip.module';
     AuthModule,
     CampaignModule,
     ClipModule,
+    DisputeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

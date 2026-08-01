@@ -16,6 +16,7 @@ const users_module_1 = require("./users/users.module");
 const auth_module_1 = require("./auth/auth.module");
 const campaign_module_1 = require("./campaign/campaign.module");
 const clip_module_1 = require("./clip/clip.module");
+const dispute_module_1 = require("./dispute/dispute.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -30,6 +31,7 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
             campaign_module_1.CampaignModule,
             clip_module_1.ClipModule,
+            dispute_module_1.DisputeModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

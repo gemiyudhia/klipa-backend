@@ -18,3 +18,9 @@ export declare const ClipStatus: {
     readonly REVISION_REQUESTED: "REVISION_REQUESTED";
 };
 export type ClipStatus = (typeof ClipStatus)[keyof typeof ClipStatus];
+export declare const DisputeStatus: {
+    readonly PENDING: "PENDING";
+    readonly APPROVED: "APPROVED";
+    readonly REJECTED: "REJECTED";
+};
+export type DisputeStatus = (typeof DisputeStatus)[keyof typeof DisputeStatus];

@@ -167,6 +167,7 @@ export type ClipWhereInput = {
     updatedAt?: Prisma.DateTimeFilter<"Clip"> | Date | string;
     campaign?: Prisma.XOR<Prisma.CampaignScalarRelationFilter, Prisma.CampaignWhereInput>;
     clipper?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    dispute?: Prisma.XOR<Prisma.DisputeNullableScalarRelationFilter, Prisma.DisputeWhereInput> | null;
 };
 export type ClipOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
@@ -182,6 +183,7 @@ export type ClipOrderByWithRelationInput = {
     updatedAt?: Prisma.SortOrder;
     campaign?: Prisma.CampaignOrderByWithRelationInput;
     clipper?: Prisma.UserOrderByWithRelationInput;
+    dispute?: Prisma.DisputeOrderByWithRelationInput;
 };
 export type ClipWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -200,6 +202,7 @@ export type ClipWhereUniqueInput = Prisma.AtLeast<{
     updatedAt?: Prisma.DateTimeFilter<"Clip"> | Date | string;
     campaign?: Prisma.XOR<Prisma.CampaignScalarRelationFilter, Prisma.CampaignWhereInput>;
     clipper?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    dispute?: Prisma.XOR<Prisma.DisputeNullableScalarRelationFilter, Prisma.DisputeWhereInput> | null;
 }, "id">;
 export type ClipOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
@@ -247,6 +250,7 @@ export type ClipCreateInput = {
     updatedAt?: Date | string;
     campaign: Prisma.CampaignCreateNestedOneWithoutClipsInput;
     clipper: Prisma.UserCreateNestedOneWithoutClipsInput;
+    dispute?: Prisma.DisputeCreateNestedOneWithoutClipInput;
 };
 export type ClipUncheckedCreateInput = {
     id?: string;
@@ -260,6 +264,7 @@ export type ClipUncheckedCreateInput = {
     clipperId: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    dispute?: Prisma.DisputeUncheckedCreateNestedOneWithoutClipInput;
 };
 export type ClipUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -273,6 +278,7 @@ export type ClipUpdateInput = {
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     campaign?: Prisma.CampaignUpdateOneRequiredWithoutClipsNestedInput;
     clipper?: Prisma.UserUpdateOneRequiredWithoutClipsNestedInput;
+    dispute?: Prisma.DisputeUpdateOneWithoutClipNestedInput;
 };
 export type ClipUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -286,6 +292,7 @@ export type ClipUncheckedUpdateInput = {
     clipperId?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    dispute?: Prisma.DisputeUncheckedUpdateOneWithoutClipNestedInput;
 };
 export type ClipCreateManyInput = {
     id?: string;
@@ -377,6 +384,10 @@ export type ClipMinOrderByAggregateInput = {
 export type ClipSumOrderByAggregateInput = {
     duration?: Prisma.SortOrder;
 };
+export type ClipScalarRelationFilter = {
+    is?: Prisma.ClipWhereInput;
+    isNot?: Prisma.ClipWhereInput;
+};
 export type ClipCreateNestedManyWithoutClipperInput = {
     create?: Prisma.XOR<Prisma.ClipCreateWithoutClipperInput, Prisma.ClipUncheckedCreateWithoutClipperInput> | Prisma.ClipCreateWithoutClipperInput[] | Prisma.ClipUncheckedCreateWithoutClipperInput[];
     connectOrCreate?: Prisma.ClipCreateOrConnectWithoutClipperInput | Prisma.ClipCreateOrConnectWithoutClipperInput[];
@@ -463,6 +474,18 @@ export type NullableFloatFieldUpdateOperationsInput = {
 export type EnumClipStatusFieldUpdateOperationsInput = {
     set?: $Enums.ClipStatus;
 };
+export type ClipCreateNestedOneWithoutDisputeInput = {
+    create?: Prisma.XOR<Prisma.ClipCreateWithoutDisputeInput, Prisma.ClipUncheckedCreateWithoutDisputeInput>;
+    connectOrCreate?: Prisma.ClipCreateOrConnectWithoutDisputeInput;
+    connect?: Prisma.ClipWhereUniqueInput;
+};
+export type ClipUpdateOneRequiredWithoutDisputeNestedInput = {
+    create?: Prisma.XOR<Prisma.ClipCreateWithoutDisputeInput, Prisma.ClipUncheckedCreateWithoutDisputeInput>;
+    connectOrCreate?: Prisma.ClipCreateOrConnectWithoutDisputeInput;
+    upsert?: Prisma.ClipUpsertWithoutDisputeInput;
+    connect?: Prisma.ClipWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.ClipUpdateToOneWithWhereWithoutDisputeInput, Prisma.ClipUpdateWithoutDisputeInput>, Prisma.ClipUncheckedUpdateWithoutDisputeInput>;
+};
 export type ClipCreateWithoutClipperInput = {
     id?: string;
     title: string;
@@ -474,6 +497,7 @@ export type ClipCreateWithoutClipperInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     campaign: Prisma.CampaignCreateNestedOneWithoutClipsInput;
+    dispute?: Prisma.DisputeCreateNestedOneWithoutClipInput;
 };
 export type ClipUncheckedCreateWithoutClipperInput = {
     id?: string;
@@ -486,6 +510,7 @@ export type ClipUncheckedCreateWithoutClipperInput = {
     campaignId: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    dispute?: Prisma.DisputeUncheckedCreateNestedOneWithoutClipInput;
 };
 export type ClipCreateOrConnectWithoutClipperInput = {
     where: Prisma.ClipWhereUniqueInput;
@@ -535,6 +560,7 @@ export type ClipCreateWithoutCampaignInput = {
     createdAt?: Date | string;
     updatedAt?: Date | string;
     clipper: Prisma.UserCreateNestedOneWithoutClipsInput;
+    dispute?: Prisma.DisputeCreateNestedOneWithoutClipInput;
 };
 export type ClipUncheckedCreateWithoutCampaignInput = {
     id?: string;
@@ -547,6 +573,7 @@ export type ClipUncheckedCreateWithoutCampaignInput = {
     clipperId: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    dispute?: Prisma.DisputeUncheckedCreateNestedOneWithoutClipInput;
 };
 export type ClipCreateOrConnectWithoutCampaignInput = {
     where: Prisma.ClipWhereUniqueInput;
@@ -568,6 +595,71 @@ export type ClipUpdateWithWhereUniqueWithoutCampaignInput = {
 export type ClipUpdateManyWithWhereWithoutCampaignInput = {
     where: Prisma.ClipScalarWhereInput;
     data: Prisma.XOR<Prisma.ClipUpdateManyMutationInput, Prisma.ClipUncheckedUpdateManyWithoutCampaignInput>;
+};
+export type ClipCreateWithoutDisputeInput = {
+    id?: string;
+    title: string;
+    videoUrl: string;
+    thumbnailUrl?: string | null;
+    duration?: number | null;
+    status?: $Enums.ClipStatus;
+    feedback?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    campaign: Prisma.CampaignCreateNestedOneWithoutClipsInput;
+    clipper: Prisma.UserCreateNestedOneWithoutClipsInput;
+};
+export type ClipUncheckedCreateWithoutDisputeInput = {
+    id?: string;
+    title: string;
+    videoUrl: string;
+    thumbnailUrl?: string | null;
+    duration?: number | null;
+    status?: $Enums.ClipStatus;
+    feedback?: string | null;
+    campaignId: string;
+    clipperId: string;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type ClipCreateOrConnectWithoutDisputeInput = {
+    where: Prisma.ClipWhereUniqueInput;
+    create: Prisma.XOR<Prisma.ClipCreateWithoutDisputeInput, Prisma.ClipUncheckedCreateWithoutDisputeInput>;
+};
+export type ClipUpsertWithoutDisputeInput = {
+    update: Prisma.XOR<Prisma.ClipUpdateWithoutDisputeInput, Prisma.ClipUncheckedUpdateWithoutDisputeInput>;
+    create: Prisma.XOR<Prisma.ClipCreateWithoutDisputeInput, Prisma.ClipUncheckedCreateWithoutDisputeInput>;
+    where?: Prisma.ClipWhereInput;
+};
+export type ClipUpdateToOneWithWhereWithoutDisputeInput = {
+    where?: Prisma.ClipWhereInput;
+    data: Prisma.XOR<Prisma.ClipUpdateWithoutDisputeInput, Prisma.ClipUncheckedUpdateWithoutDisputeInput>;
+};
+export type ClipUpdateWithoutDisputeInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    title?: Prisma.StringFieldUpdateOperationsInput | string;
+    videoUrl?: Prisma.StringFieldUpdateOperationsInput | string;
+    thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    status?: Prisma.EnumClipStatusFieldUpdateOperationsInput | $Enums.ClipStatus;
+    feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    campaign?: Prisma.CampaignUpdateOneRequiredWithoutClipsNestedInput;
+    clipper?: Prisma.UserUpdateOneRequiredWithoutClipsNestedInput;
+};
+export type ClipUncheckedUpdateWithoutDisputeInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    title?: Prisma.StringFieldUpdateOperationsInput | string;
+    videoUrl?: Prisma.StringFieldUpdateOperationsInput | string;
+    thumbnailUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    status?: Prisma.EnumClipStatusFieldUpdateOperationsInput | $Enums.ClipStatus;
+    feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    campaignId?: Prisma.StringFieldUpdateOperationsInput | string;
+    clipperId?: Prisma.StringFieldUpdateOperationsInput | string;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type ClipCreateManyClipperInput = {
     id?: string;
@@ -592,6 +684,7 @@ export type ClipUpdateWithoutClipperInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     campaign?: Prisma.CampaignUpdateOneRequiredWithoutClipsNestedInput;
+    dispute?: Prisma.DisputeUpdateOneWithoutClipNestedInput;
 };
 export type ClipUncheckedUpdateWithoutClipperInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -604,6 +697,7 @@ export type ClipUncheckedUpdateWithoutClipperInput = {
     campaignId?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    dispute?: Prisma.DisputeUncheckedUpdateOneWithoutClipNestedInput;
 };
 export type ClipUncheckedUpdateManyWithoutClipperInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -640,6 +734,7 @@ export type ClipUpdateWithoutCampaignInput = {
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     clipper?: Prisma.UserUpdateOneRequiredWithoutClipsNestedInput;
+    dispute?: Prisma.DisputeUpdateOneWithoutClipNestedInput;
 };
 export type ClipUncheckedUpdateWithoutCampaignInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -652,6 +747,7 @@ export type ClipUncheckedUpdateWithoutCampaignInput = {
     clipperId?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    dispute?: Prisma.DisputeUncheckedUpdateOneWithoutClipNestedInput;
 };
 export type ClipUncheckedUpdateManyWithoutCampaignInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -679,6 +775,7 @@ export type ClipSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     updatedAt?: boolean;
     campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>;
     clipper?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    dispute?: boolean | Prisma.Clip$disputeArgs<ExtArgs>;
 }, ExtArgs["result"]["clip"]>;
 export type ClipSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -727,6 +824,7 @@ export type ClipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type ClipInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>;
     clipper?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    dispute?: boolean | Prisma.Clip$disputeArgs<ExtArgs>;
 };
 export type ClipIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>;
@@ -741,6 +839,7 @@ export type $ClipPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     objects: {
         campaign: Prisma.$CampaignPayload<ExtArgs>;
         clipper: Prisma.$UserPayload<ExtArgs>;
+        dispute: Prisma.$DisputePayload<ExtArgs> | null;
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
@@ -808,6 +907,7 @@ export interface Prisma__ClipClient<T, Null = never, ExtArgs extends runtime.Typ
     readonly [Symbol.toStringTag]: "PrismaPromise";
     campaign<T extends Prisma.CampaignDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CampaignDefaultArgs<ExtArgs>>): Prisma.Prisma__CampaignClient<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
     clipper<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    dispute<T extends Prisma.Clip$disputeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Clip$disputeArgs<ExtArgs>>): Prisma.Prisma__DisputeClient<runtime.Types.Result.GetResult<Prisma.$DisputePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
     then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
     catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
     finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
@@ -924,6 +1024,12 @@ export type ClipDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type ClipDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.ClipWhereInput;
     limit?: number;
+};
+export type Clip$disputeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    select?: Prisma.DisputeSelect<ExtArgs> | null;
+    omit?: Prisma.DisputeOmit<ExtArgs> | null;
+    include?: Prisma.DisputeInclude<ExtArgs> | null;
+    where?: Prisma.DisputeWhereInput;
 };
 export type ClipDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.ClipSelect<ExtArgs> | null;
