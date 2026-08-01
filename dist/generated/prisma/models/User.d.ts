@@ -160,6 +160,8 @@ export type UserWhereInput = {
     campaigns?: Prisma.CampaignListRelationFilter;
     clips?: Prisma.ClipListRelationFilter;
     transactions?: Prisma.TransactionListRelationFilter;
+    disputesRaised?: Prisma.DisputeListRelationFilter;
+    disputesResolved?: Prisma.DisputeListRelationFilter;
 };
 export type UserOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
@@ -175,6 +177,8 @@ export type UserOrderByWithRelationInput = {
     campaigns?: Prisma.CampaignOrderByRelationAggregateInput;
     clips?: Prisma.ClipOrderByRelationAggregateInput;
     transactions?: Prisma.TransactionOrderByRelationAggregateInput;
+    disputesRaised?: Prisma.DisputeOrderByRelationAggregateInput;
+    disputesResolved?: Prisma.DisputeOrderByRelationAggregateInput;
 };
 export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -193,6 +197,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
     campaigns?: Prisma.CampaignListRelationFilter;
     clips?: Prisma.ClipListRelationFilter;
     transactions?: Prisma.TransactionListRelationFilter;
+    disputesRaised?: Prisma.DisputeListRelationFilter;
+    disputesResolved?: Prisma.DisputeListRelationFilter;
 }, "id" | "email">;
 export type UserOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
@@ -240,6 +246,8 @@ export type UserCreateInput = {
     campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    disputesRaised?: Prisma.DisputeCreateNestedManyWithoutClipperInput;
+    disputesResolved?: Prisma.DisputeCreateNestedManyWithoutResolvedByInput;
 };
 export type UserUncheckedCreateInput = {
     id?: string;
@@ -255,6 +263,8 @@ export type UserUncheckedCreateInput = {
     campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    disputesRaised?: Prisma.DisputeUncheckedCreateNestedManyWithoutClipperInput;
+    disputesResolved?: Prisma.DisputeUncheckedCreateNestedManyWithoutResolvedByInput;
 };
 export type UserUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -270,6 +280,8 @@ export type UserUpdateInput = {
     campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    disputesRaised?: Prisma.DisputeUpdateManyWithoutClipperNestedInput;
+    disputesResolved?: Prisma.DisputeUpdateManyWithoutResolvedByNestedInput;
 };
 export type UserUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -285,6 +297,8 @@ export type UserUncheckedUpdateInput = {
     campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    disputesRaised?: Prisma.DisputeUncheckedUpdateManyWithoutClipperNestedInput;
+    disputesResolved?: Prisma.DisputeUncheckedUpdateManyWithoutResolvedByNestedInput;
 };
 export type UserCreateManyInput = {
     id?: string;
@@ -368,6 +382,10 @@ export type UserScalarRelationFilter = {
     is?: Prisma.UserWhereInput;
     isNot?: Prisma.UserWhereInput;
 };
+export type UserNullableScalarRelationFilter = {
+    is?: Prisma.UserWhereInput | null;
+    isNot?: Prisma.UserWhereInput | null;
+};
 export type StringFieldUpdateOperationsInput = {
     set?: string;
 };
@@ -423,6 +441,32 @@ export type UserUpdateOneRequiredWithoutTransactionsNestedInput = {
     connect?: Prisma.UserWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTransactionsInput, Prisma.UserUpdateWithoutTransactionsInput>, Prisma.UserUncheckedUpdateWithoutTransactionsInput>;
 };
+export type UserCreateNestedOneWithoutDisputesRaisedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutDisputesRaisedInput, Prisma.UserUncheckedCreateWithoutDisputesRaisedInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutDisputesRaisedInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserCreateNestedOneWithoutDisputesResolvedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutDisputesResolvedInput, Prisma.UserUncheckedCreateWithoutDisputesResolvedInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutDisputesResolvedInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutDisputesRaisedNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutDisputesRaisedInput, Prisma.UserUncheckedCreateWithoutDisputesRaisedInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutDisputesRaisedInput;
+    upsert?: Prisma.UserUpsertWithoutDisputesRaisedInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDisputesRaisedInput, Prisma.UserUpdateWithoutDisputesRaisedInput>, Prisma.UserUncheckedUpdateWithoutDisputesRaisedInput>;
+};
+export type UserUpdateOneWithoutDisputesResolvedNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutDisputesResolvedInput, Prisma.UserUncheckedCreateWithoutDisputesResolvedInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutDisputesResolvedInput;
+    upsert?: Prisma.UserUpsertWithoutDisputesResolvedInput;
+    disconnect?: Prisma.UserWhereInput | boolean;
+    delete?: Prisma.UserWhereInput | boolean;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDisputesResolvedInput, Prisma.UserUpdateWithoutDisputesResolvedInput>, Prisma.UserUncheckedUpdateWithoutDisputesResolvedInput>;
+};
 export type UserCreateWithoutCampaignsInput = {
     id?: string;
     email: string;
@@ -436,6 +480,8 @@ export type UserCreateWithoutCampaignsInput = {
     hashedRefreshToken?: string | null;
     clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    disputesRaised?: Prisma.DisputeCreateNestedManyWithoutClipperInput;
+    disputesResolved?: Prisma.DisputeCreateNestedManyWithoutResolvedByInput;
 };
 export type UserUncheckedCreateWithoutCampaignsInput = {
     id?: string;
@@ -450,6 +496,8 @@ export type UserUncheckedCreateWithoutCampaignsInput = {
     hashedRefreshToken?: string | null;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    disputesRaised?: Prisma.DisputeUncheckedCreateNestedManyWithoutClipperInput;
+    disputesResolved?: Prisma.DisputeUncheckedCreateNestedManyWithoutResolvedByInput;
 };
 export type UserCreateOrConnectWithoutCampaignsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -477,6 +525,8 @@ export type UserUpdateWithoutCampaignsInput = {
     hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    disputesRaised?: Prisma.DisputeUpdateManyWithoutClipperNestedInput;
+    disputesResolved?: Prisma.DisputeUpdateManyWithoutResolvedByNestedInput;
 };
 export type UserUncheckedUpdateWithoutCampaignsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -491,6 +541,8 @@ export type UserUncheckedUpdateWithoutCampaignsInput = {
     hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    disputesRaised?: Prisma.DisputeUncheckedUpdateManyWithoutClipperNestedInput;
+    disputesResolved?: Prisma.DisputeUncheckedUpdateManyWithoutResolvedByNestedInput;
 };
 export type UserCreateWithoutClipsInput = {
     id?: string;
@@ -505,6 +557,8 @@ export type UserCreateWithoutClipsInput = {
     hashedRefreshToken?: string | null;
     campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
     transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    disputesRaised?: Prisma.DisputeCreateNestedManyWithoutClipperInput;
+    disputesResolved?: Prisma.DisputeCreateNestedManyWithoutResolvedByInput;
 };
 export type UserUncheckedCreateWithoutClipsInput = {
     id?: string;
@@ -519,6 +573,8 @@ export type UserUncheckedCreateWithoutClipsInput = {
     hashedRefreshToken?: string | null;
     campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
     transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    disputesRaised?: Prisma.DisputeUncheckedCreateNestedManyWithoutClipperInput;
+    disputesResolved?: Prisma.DisputeUncheckedCreateNestedManyWithoutResolvedByInput;
 };
 export type UserCreateOrConnectWithoutClipsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -546,6 +602,8 @@ export type UserUpdateWithoutClipsInput = {
     hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
     transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    disputesRaised?: Prisma.DisputeUpdateManyWithoutClipperNestedInput;
+    disputesResolved?: Prisma.DisputeUpdateManyWithoutResolvedByNestedInput;
 };
 export type UserUncheckedUpdateWithoutClipsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -560,6 +618,8 @@ export type UserUncheckedUpdateWithoutClipsInput = {
     hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
     transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    disputesRaised?: Prisma.DisputeUncheckedUpdateManyWithoutClipperNestedInput;
+    disputesResolved?: Prisma.DisputeUncheckedUpdateManyWithoutResolvedByNestedInput;
 };
 export type UserCreateWithoutTransactionsInput = {
     id?: string;
@@ -574,6 +634,8 @@ export type UserCreateWithoutTransactionsInput = {
     hashedRefreshToken?: string | null;
     campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
+    disputesRaised?: Prisma.DisputeCreateNestedManyWithoutClipperInput;
+    disputesResolved?: Prisma.DisputeCreateNestedManyWithoutResolvedByInput;
 };
 export type UserUncheckedCreateWithoutTransactionsInput = {
     id?: string;
@@ -588,6 +650,8 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
     hashedRefreshToken?: string | null;
     campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
+    disputesRaised?: Prisma.DisputeUncheckedCreateNestedManyWithoutClipperInput;
+    disputesResolved?: Prisma.DisputeUncheckedCreateNestedManyWithoutResolvedByInput;
 };
 export type UserCreateOrConnectWithoutTransactionsInput = {
     where: Prisma.UserWhereUniqueInput;
@@ -615,6 +679,8 @@ export type UserUpdateWithoutTransactionsInput = {
     hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
+    disputesRaised?: Prisma.DisputeUpdateManyWithoutClipperNestedInput;
+    disputesResolved?: Prisma.DisputeUpdateManyWithoutResolvedByNestedInput;
 };
 export type UserUncheckedUpdateWithoutTransactionsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -629,16 +695,176 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
     hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
+    disputesRaised?: Prisma.DisputeUncheckedUpdateManyWithoutClipperNestedInput;
+    disputesResolved?: Prisma.DisputeUncheckedUpdateManyWithoutResolvedByNestedInput;
+};
+export type UserCreateWithoutDisputesRaisedInput = {
+    id?: string;
+    email: string;
+    passwordHash: string;
+    name: string;
+    avatarUrl?: string | null;
+    role?: $Enums.Role;
+    balance?: number;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
+    campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
+    clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    disputesResolved?: Prisma.DisputeCreateNestedManyWithoutResolvedByInput;
+};
+export type UserUncheckedCreateWithoutDisputesRaisedInput = {
+    id?: string;
+    email: string;
+    passwordHash: string;
+    name: string;
+    avatarUrl?: string | null;
+    role?: $Enums.Role;
+    balance?: number;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
+    campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
+    clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    disputesResolved?: Prisma.DisputeUncheckedCreateNestedManyWithoutResolvedByInput;
+};
+export type UserCreateOrConnectWithoutDisputesRaisedInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutDisputesRaisedInput, Prisma.UserUncheckedCreateWithoutDisputesRaisedInput>;
+};
+export type UserCreateWithoutDisputesResolvedInput = {
+    id?: string;
+    email: string;
+    passwordHash: string;
+    name: string;
+    avatarUrl?: string | null;
+    role?: $Enums.Role;
+    balance?: number;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
+    campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
+    clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    disputesRaised?: Prisma.DisputeCreateNestedManyWithoutClipperInput;
+};
+export type UserUncheckedCreateWithoutDisputesResolvedInput = {
+    id?: string;
+    email: string;
+    passwordHash: string;
+    name: string;
+    avatarUrl?: string | null;
+    role?: $Enums.Role;
+    balance?: number;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
+    campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
+    clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    disputesRaised?: Prisma.DisputeUncheckedCreateNestedManyWithoutClipperInput;
+};
+export type UserCreateOrConnectWithoutDisputesResolvedInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutDisputesResolvedInput, Prisma.UserUncheckedCreateWithoutDisputesResolvedInput>;
+};
+export type UserUpsertWithoutDisputesRaisedInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutDisputesRaisedInput, Prisma.UserUncheckedUpdateWithoutDisputesRaisedInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutDisputesRaisedInput, Prisma.UserUncheckedCreateWithoutDisputesRaisedInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutDisputesRaisedInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutDisputesRaisedInput, Prisma.UserUncheckedUpdateWithoutDisputesRaisedInput>;
+};
+export type UserUpdateWithoutDisputesRaisedInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    balance?: Prisma.FloatFieldUpdateOperationsInput | number;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
+    clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    disputesResolved?: Prisma.DisputeUpdateManyWithoutResolvedByNestedInput;
+};
+export type UserUncheckedUpdateWithoutDisputesRaisedInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    balance?: Prisma.FloatFieldUpdateOperationsInput | number;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
+    clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    disputesResolved?: Prisma.DisputeUncheckedUpdateManyWithoutResolvedByNestedInput;
+};
+export type UserUpsertWithoutDisputesResolvedInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutDisputesResolvedInput, Prisma.UserUncheckedUpdateWithoutDisputesResolvedInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutDisputesResolvedInput, Prisma.UserUncheckedCreateWithoutDisputesResolvedInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutDisputesResolvedInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutDisputesResolvedInput, Prisma.UserUncheckedUpdateWithoutDisputesResolvedInput>;
+};
+export type UserUpdateWithoutDisputesResolvedInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    balance?: Prisma.FloatFieldUpdateOperationsInput | number;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
+    clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    disputesRaised?: Prisma.DisputeUpdateManyWithoutClipperNestedInput;
+};
+export type UserUncheckedUpdateWithoutDisputesResolvedInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    balance?: Prisma.FloatFieldUpdateOperationsInput | number;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
+    clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    disputesRaised?: Prisma.DisputeUncheckedUpdateManyWithoutClipperNestedInput;
 };
 export type UserCountOutputType = {
     campaigns: number;
     clips: number;
     transactions: number;
+    disputesRaised: number;
+    disputesResolved: number;
 };
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     campaigns?: boolean | UserCountOutputTypeCountCampaignsArgs;
     clips?: boolean | UserCountOutputTypeCountClipsArgs;
     transactions?: boolean | UserCountOutputTypeCountTransactionsArgs;
+    disputesRaised?: boolean | UserCountOutputTypeCountDisputesRaisedArgs;
+    disputesResolved?: boolean | UserCountOutputTypeCountDisputesResolvedArgs;
 };
 export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null;
@@ -651,6 +877,12 @@ export type UserCountOutputTypeCountClipsArgs<ExtArgs extends runtime.Types.Exte
 };
 export type UserCountOutputTypeCountTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.TransactionWhereInput;
+};
+export type UserCountOutputTypeCountDisputesRaisedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.DisputeWhereInput;
+};
+export type UserCountOutputTypeCountDisputesResolvedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.DisputeWhereInput;
 };
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -666,6 +898,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     campaigns?: boolean | Prisma.User$campaignsArgs<ExtArgs>;
     clips?: boolean | Prisma.User$clipsArgs<ExtArgs>;
     transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>;
+    disputesRaised?: boolean | Prisma.User$disputesRaisedArgs<ExtArgs>;
+    disputesResolved?: boolean | Prisma.User$disputesResolvedArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -709,6 +943,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     campaigns?: boolean | Prisma.User$campaignsArgs<ExtArgs>;
     clips?: boolean | Prisma.User$clipsArgs<ExtArgs>;
     transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>;
+    disputesRaised?: boolean | Prisma.User$disputesRaisedArgs<ExtArgs>;
+    disputesResolved?: boolean | Prisma.User$disputesResolvedArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
@@ -719,6 +955,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
         campaigns: Prisma.$CampaignPayload<ExtArgs>[];
         clips: Prisma.$ClipPayload<ExtArgs>[];
         transactions: Prisma.$TransactionPayload<ExtArgs>[];
+        disputesRaised: Prisma.$DisputePayload<ExtArgs>[];
+        disputesResolved: Prisma.$DisputePayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
@@ -786,6 +1024,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
     campaigns<T extends Prisma.User$campaignsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$campaignsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     clips<T extends Prisma.User$clipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$clipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     transactions<T extends Prisma.User$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    disputesRaised<T extends Prisma.User$disputesRaisedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$disputesRaisedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DisputePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    disputesResolved<T extends Prisma.User$disputesResolvedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$disputesResolvedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DisputePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
     catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
     finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
@@ -932,6 +1172,28 @@ export type User$transactionsArgs<ExtArgs extends runtime.Types.Extensions.Inter
     take?: number;
     skip?: number;
     distinct?: Prisma.TransactionScalarFieldEnum | Prisma.TransactionScalarFieldEnum[];
+};
+export type User$disputesRaisedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    select?: Prisma.DisputeSelect<ExtArgs> | null;
+    omit?: Prisma.DisputeOmit<ExtArgs> | null;
+    include?: Prisma.DisputeInclude<ExtArgs> | null;
+    where?: Prisma.DisputeWhereInput;
+    orderBy?: Prisma.DisputeOrderByWithRelationInput | Prisma.DisputeOrderByWithRelationInput[];
+    cursor?: Prisma.DisputeWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.DisputeScalarFieldEnum | Prisma.DisputeScalarFieldEnum[];
+};
+export type User$disputesResolvedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    select?: Prisma.DisputeSelect<ExtArgs> | null;
+    omit?: Prisma.DisputeOmit<ExtArgs> | null;
+    include?: Prisma.DisputeInclude<ExtArgs> | null;
+    where?: Prisma.DisputeWhereInput;
+    orderBy?: Prisma.DisputeOrderByWithRelationInput | Prisma.DisputeOrderByWithRelationInput[];
+    cursor?: Prisma.DisputeWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.DisputeScalarFieldEnum | Prisma.DisputeScalarFieldEnum[];
 };
 export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.UserSelect<ExtArgs> | null;

@@ -15,6 +15,7 @@ export declare const ModelName: {
     readonly Campaign: "Campaign";
     readonly Clip: "Clip";
     readonly Transaction: "Transaction";
+    readonly Dispute: "Dispute";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export declare const TransactionIsolationLevel: {
@@ -75,6 +76,18 @@ export declare const TransactionScalarFieldEnum: {
     readonly createdAt: "createdAt";
 };
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum];
+export declare const DisputeScalarFieldEnum: {
+    readonly id: "id";
+    readonly clipId: "clipId";
+    readonly clipperId: "clipperId";
+    readonly reason: "reason";
+    readonly status: "status";
+    readonly resolutionNote: "resolutionNote";
+    readonly resolvedById: "resolvedById";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type DisputeScalarFieldEnum = (typeof DisputeScalarFieldEnum)[keyof typeof DisputeScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: "asc";
     readonly desc: "desc";

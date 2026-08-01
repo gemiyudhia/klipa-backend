@@ -164,6 +164,7 @@ export declare const ModelName: {
     readonly Campaign: "Campaign";
     readonly Clip: "Clip";
     readonly Transaction: "Transaction";
+    readonly Dispute: "Dispute";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export interface TypeMapCb<GlobalOmitOptions = {}> extends runtime.Types.Utils.Fn<{
@@ -176,7 +177,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         omit: GlobalOmitOptions;
     };
     meta: {
-        modelProps: "user" | "campaign" | "clip" | "transaction";
+        modelProps: "user" | "campaign" | "clip" | "transaction" | "dispute";
         txIsolationLevel: TransactionIsolationLevel;
     };
     model: {
@@ -476,6 +477,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
                 };
             };
         };
+        Dispute: {
+            payload: Prisma.$DisputePayload<ExtArgs>;
+            fields: Prisma.DisputeFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.DisputeFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DisputePayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.DisputeFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DisputePayload>;
+                };
+                findFirst: {
+                    args: Prisma.DisputeFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DisputePayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.DisputeFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DisputePayload>;
+                };
+                findMany: {
+                    args: Prisma.DisputeFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DisputePayload>[];
+                };
+                create: {
+                    args: Prisma.DisputeCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DisputePayload>;
+                };
+                createMany: {
+                    args: Prisma.DisputeCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                createManyAndReturn: {
+                    args: Prisma.DisputeCreateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DisputePayload>[];
+                };
+                delete: {
+                    args: Prisma.DisputeDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DisputePayload>;
+                };
+                update: {
+                    args: Prisma.DisputeUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DisputePayload>;
+                };
+                deleteMany: {
+                    args: Prisma.DisputeDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.DisputeUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateManyAndReturn: {
+                    args: Prisma.DisputeUpdateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DisputePayload>[];
+                };
+                upsert: {
+                    args: Prisma.DisputeUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$DisputePayload>;
+                };
+                aggregate: {
+                    args: Prisma.DisputeAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateDispute>;
+                };
+                groupBy: {
+                    args: Prisma.DisputeGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.DisputeGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.DisputeCountArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.DisputeCountAggregateOutputType> | number;
+                };
+            };
+        };
     };
 } & {
     other: {
@@ -558,6 +633,18 @@ export declare const TransactionScalarFieldEnum: {
     readonly createdAt: "createdAt";
 };
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum];
+export declare const DisputeScalarFieldEnum: {
+    readonly id: "id";
+    readonly clipId: "clipId";
+    readonly clipperId: "clipperId";
+    readonly reason: "reason";
+    readonly status: "status";
+    readonly resolutionNote: "resolutionNote";
+    readonly resolvedById: "resolvedById";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type DisputeScalarFieldEnum = (typeof DisputeScalarFieldEnum)[keyof typeof DisputeScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: "asc";
     readonly desc: "desc";
@@ -585,6 +672,8 @@ export type EnumCampaignStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 export type ListEnumCampaignStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CampaignStatus[]'>;
 export type EnumClipStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClipStatus'>;
 export type ListEnumClipStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClipStatus[]'>;
+export type EnumDisputeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DisputeStatus'>;
+export type ListEnumDisputeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DisputeStatus[]'>;
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>;
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>;
 export type BatchPayload = {
@@ -619,6 +708,7 @@ export type GlobalOmitConfig = {
     campaign?: Prisma.CampaignOmit;
     clip?: Prisma.ClipOmit;
     transaction?: Prisma.TransactionOmit;
+    dispute?: Prisma.DisputeOmit;
 };
 export type LogLevel = 'info' | 'query' | 'warn' | 'error';
 export type LogDefinition = {

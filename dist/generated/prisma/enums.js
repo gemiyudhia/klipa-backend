@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ClipStatus = exports.CampaignStatus = exports.Role = void 0;
+exports.DisputeStatus = exports.ClipStatus = exports.CampaignStatus = exports.Role = void 0;
 exports.Role = {
     CREATOR: 'CREATOR',
     CLIPPER: 'CLIPPER',
@@ -17,5 +17,10 @@ exports.ClipStatus = {
     APPROVED: 'APPROVED',
     REJECTED: 'REJECTED',
     REVISION_REQUESTED: 'REVISION_REQUESTED'
+};
+exports.DisputeStatus = {
+    PENDING: 'PENDING',
+    APPROVED: 'APPROVED',
+    REJECTED: 'REJECTED'
 };
 //# sourceMappingURL=enums.js.map

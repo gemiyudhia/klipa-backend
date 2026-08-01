@@ -10,3 +10,4 @@ export type User = Prisma.UserModel;
 export type Campaign = Prisma.CampaignModel;
 export type Clip = Prisma.ClipModel;
 export type Transaction = Prisma.TransactionModel;
+export type Dispute = Prisma.DisputeModel;
