@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { CampaignModule } from './campaign/campaign.module';
+import { ClipModule } from './clip/clip.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { CampaignModule } from './campaign/campaign.module';
     UsersModule,
     AuthModule,
     CampaignModule,
+    ClipModule,
   ],
   controllers: [AppController],
   providers: [AppService],

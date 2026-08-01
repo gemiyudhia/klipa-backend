@@ -23,15 +23,12 @@ let RolesGuard = class RolesGuard {
             context.getHandler(),
             context.getClass(),
         ]);
-        console.log('requiredRole: ', requireRoles);
         if (!requireRoles || requireRoles.length === 0)
             return true;
         const { user } = context.switchToHttp().getRequest();
-        console.log('user: ', user);
         if (!user)
             return false;
         const result = requireRoles.includes(user.role);
-        console.log('hasil cek role: ', result);
         return result;
     }
 };
