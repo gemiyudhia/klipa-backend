@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.defineExtension = exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.DisputeScalarFieldEnum = exports.TransactionScalarFieldEnum = exports.ClipScalarFieldEnum = exports.CampaignScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.prismaVersion = exports.getExtensionContext = exports.Decimal = exports.Sql = exports.raw = exports.join = exports.empty = exports.sql = exports.PrismaClientValidationError = exports.PrismaClientInitializationError = exports.PrismaClientRustPanicError = exports.PrismaClientUnknownRequestError = exports.PrismaClientKnownRequestError = void 0;
+exports.defineExtension = exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.WithdrawalRequestScalarFieldEnum = exports.DisputeScalarFieldEnum = exports.TransactionScalarFieldEnum = exports.ClipScalarFieldEnum = exports.CampaignScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.prismaVersion = exports.getExtensionContext = exports.Decimal = exports.Sql = exports.raw = exports.join = exports.empty = exports.sql = exports.PrismaClientValidationError = exports.PrismaClientInitializationError = exports.PrismaClientRustPanicError = exports.PrismaClientUnknownRequestError = exports.PrismaClientKnownRequestError = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/client"));
 exports.PrismaClientKnownRequestError = runtime.PrismaClientKnownRequestError;
 exports.PrismaClientUnknownRequestError = runtime.PrismaClientUnknownRequestError;
@@ -64,7 +64,8 @@ exports.ModelName = {
     Campaign: 'Campaign',
     Clip: 'Clip',
     Transaction: 'Transaction',
-    Dispute: 'Dispute'
+    Dispute: 'Dispute',
+    WithdrawalRequest: 'WithdrawalRequest'
 };
 exports.TransactionIsolationLevel = runtime.makeStrictEnum({
     ReadUncommitted: 'ReadUncommitted',
@@ -82,7 +83,10 @@ exports.UserScalarFieldEnum = {
     balance: 'balance',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    hashedRefreshToken: 'hashedRefreshToken'
+    hashedRefreshToken: 'hashedRefreshToken',
+    bankName: 'bankName',
+    bankAccountNumber: 'bankAccountNumber',
+    bankAccountName: 'bankAccountName'
 };
 exports.CampaignScalarFieldEnum = {
     id: 'id',
@@ -127,6 +131,18 @@ exports.DisputeScalarFieldEnum = {
     status: 'status',
     resolutionNote: 'resolutionNote',
     resolvedById: 'resolvedById',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.WithdrawalRequestScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    amount: 'amount',
+    taxAmount: 'taxAmount',
+    netAmount: 'netAmount',
+    status: 'status',
+    rejectionReason: 'rejectionReason',
+    processedById: 'processedById',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };

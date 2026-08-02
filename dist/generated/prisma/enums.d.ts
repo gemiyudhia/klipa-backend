@@ -24,3 +24,9 @@ export declare const DisputeStatus: {
     readonly REJECTED: "REJECTED";
 };
 export type DisputeStatus = (typeof DisputeStatus)[keyof typeof DisputeStatus];
+export declare const WithdrawalStatus: {
+    readonly PENDING: "PENDING";
+    readonly APPROVED: "APPROVED";
+    readonly REJECTED: "REJECTED";
+};
+export type WithdrawalStatus = (typeof WithdrawalStatus)[keyof typeof WithdrawalStatus];

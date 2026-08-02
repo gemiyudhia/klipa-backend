@@ -199,6 +199,21 @@ export type EnumDisputeStatusWithAggregatesFilter<$PrismaModel = never> = {
     _min?: Prisma.NestedEnumDisputeStatusFilter<$PrismaModel>;
     _max?: Prisma.NestedEnumDisputeStatusFilter<$PrismaModel>;
 };
+export type EnumWithdrawalStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.WithdrawalStatus | Prisma.EnumWithdrawalStatusFieldRefInput<$PrismaModel>;
+    in?: $Enums.WithdrawalStatus[] | Prisma.ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.WithdrawalStatus[] | Prisma.ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumWithdrawalStatusFilter<$PrismaModel> | $Enums.WithdrawalStatus;
+};
+export type EnumWithdrawalStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WithdrawalStatus | Prisma.EnumWithdrawalStatusFieldRefInput<$PrismaModel>;
+    in?: $Enums.WithdrawalStatus[] | Prisma.ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.WithdrawalStatus[] | Prisma.ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumWithdrawalStatusWithAggregatesFilter<$PrismaModel> | $Enums.WithdrawalStatus;
+    _count?: Prisma.NestedIntFilter<$PrismaModel>;
+    _min?: Prisma.NestedEnumWithdrawalStatusFilter<$PrismaModel>;
+    _max?: Prisma.NestedEnumWithdrawalStatusFilter<$PrismaModel>;
+};
 export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | Prisma.StringFieldRefInput<$PrismaModel>;
     in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>;
@@ -409,4 +424,19 @@ export type NestedEnumDisputeStatusWithAggregatesFilter<$PrismaModel = never> = 
     _count?: Prisma.NestedIntFilter<$PrismaModel>;
     _min?: Prisma.NestedEnumDisputeStatusFilter<$PrismaModel>;
     _max?: Prisma.NestedEnumDisputeStatusFilter<$PrismaModel>;
+};
+export type NestedEnumWithdrawalStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.WithdrawalStatus | Prisma.EnumWithdrawalStatusFieldRefInput<$PrismaModel>;
+    in?: $Enums.WithdrawalStatus[] | Prisma.ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.WithdrawalStatus[] | Prisma.ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumWithdrawalStatusFilter<$PrismaModel> | $Enums.WithdrawalStatus;
+};
+export type NestedEnumWithdrawalStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WithdrawalStatus | Prisma.EnumWithdrawalStatusFieldRefInput<$PrismaModel>;
+    in?: $Enums.WithdrawalStatus[] | Prisma.ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.WithdrawalStatus[] | Prisma.ListEnumWithdrawalStatusFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumWithdrawalStatusWithAggregatesFilter<$PrismaModel> | $Enums.WithdrawalStatus;
+    _count?: Prisma.NestedIntFilter<$PrismaModel>;
+    _min?: Prisma.NestedEnumWithdrawalStatusFilter<$PrismaModel>;
+    _max?: Prisma.NestedEnumWithdrawalStatusFilter<$PrismaModel>;
 };

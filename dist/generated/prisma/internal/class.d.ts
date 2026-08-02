@@ -45,5 +45,8 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
     get dispute(): Prisma.DisputeDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
+    get withdrawalRequest(): Prisma.WithdrawalRequestDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
 }
 export declare function getPrismaClientClass(): PrismaClientConstructor;

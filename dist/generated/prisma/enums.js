@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DisputeStatus = exports.ClipStatus = exports.CampaignStatus = exports.Role = void 0;
+exports.WithdrawalStatus = exports.DisputeStatus = exports.ClipStatus = exports.CampaignStatus = exports.Role = void 0;
 exports.Role = {
     CREATOR: 'CREATOR',
     CLIPPER: 'CLIPPER',
@@ -19,6 +19,11 @@ exports.ClipStatus = {
     REVISION_REQUESTED: 'REVISION_REQUESTED'
 };
 exports.DisputeStatus = {
+    PENDING: 'PENDING',
+    APPROVED: 'APPROVED',
+    REJECTED: 'REJECTED'
+};
+exports.WithdrawalStatus = {
     PENDING: 'PENDING',
     APPROVED: 'APPROVED',
     REJECTED: 'REJECTED'

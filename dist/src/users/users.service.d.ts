@@ -34,6 +34,9 @@ export declare class UsersService {
         createdAt: Date;
         updatedAt: Date;
         hashedRefreshToken: string | null;
+        bankName: string | null;
+        bankAccountNumber: string | null;
+        bankAccountName: string | null;
     } | null>;
     remove(id: string): Promise<string>;
     findOne(id: string): Promise<{

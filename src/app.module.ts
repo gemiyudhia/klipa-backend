@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { CampaignModule } from './campaign/campaign.module';
 import { ClipModule } from './clip/clip.module';
 import { DisputeModule } from './dispute/dispute.module';
+import { WithdrawalModule } from './withdrawal/withdrawal.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { DisputeModule } from './dispute/dispute.module';
     CampaignModule,
     ClipModule,
     DisputeModule,
+    WithdrawalModule,
   ],
   controllers: [AppController],
   providers: [AppService],

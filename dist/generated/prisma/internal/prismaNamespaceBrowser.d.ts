@@ -16,6 +16,7 @@ export declare const ModelName: {
     readonly Clip: "Clip";
     readonly Transaction: "Transaction";
     readonly Dispute: "Dispute";
+    readonly WithdrawalRequest: "WithdrawalRequest";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export declare const TransactionIsolationLevel: {
@@ -36,6 +37,9 @@ export declare const UserScalarFieldEnum: {
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
     readonly hashedRefreshToken: "hashedRefreshToken";
+    readonly bankName: "bankName";
+    readonly bankAccountNumber: "bankAccountNumber";
+    readonly bankAccountName: "bankAccountName";
 };
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
 export declare const CampaignScalarFieldEnum: {
@@ -88,6 +92,19 @@ export declare const DisputeScalarFieldEnum: {
     readonly updatedAt: "updatedAt";
 };
 export type DisputeScalarFieldEnum = (typeof DisputeScalarFieldEnum)[keyof typeof DisputeScalarFieldEnum];
+export declare const WithdrawalRequestScalarFieldEnum: {
+    readonly id: "id";
+    readonly userId: "userId";
+    readonly amount: "amount";
+    readonly taxAmount: "taxAmount";
+    readonly netAmount: "netAmount";
+    readonly status: "status";
+    readonly rejectionReason: "rejectionReason";
+    readonly processedById: "processedById";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type WithdrawalRequestScalarFieldEnum = (typeof WithdrawalRequestScalarFieldEnum)[keyof typeof WithdrawalRequestScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: "asc";
     readonly desc: "desc";
