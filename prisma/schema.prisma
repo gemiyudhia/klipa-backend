@@ -34,6 +34,12 @@ enum DisputeStatus {
   REJECTED
 }
 
+enum WithdrawalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model User {
   id           String   @id @default(uuid())
   email        String   @unique
@@ -47,11 +53,17 @@ model User {
 
   hashedRefreshToken String?
 
-  campaigns        Campaign[]    @relation("CreatorCampaigns")
-  clips            Clip[]        @relation("ClipperClips")
-  transactions     Transaction[]
-  disputesRaised   Dispute[]     @relation("ClipperDisputes")
-  disputesResolved Dispute[]     @relation("AdminResolvedDisputes")
+  bankName          String?
+  bankAccountNumber String?
+  bankAccountName   String?
+
+  campaigns            Campaign[]          @relation("CreatorCampaigns")
+  clips                Clip[]              @relation("ClipperClips")
+  transactions         Transaction[]
+  disputesRaised       Dispute[]           @relation("ClipperDisputes")
+  disputesResolved     Dispute[]           @relation("AdminResolvedDisputes")
+  withdrawals          WithdrawalRequest[] @relation("UserWithdrawals")
+  withdrawalsProcessed WithdrawalRequest[] @relation("AdminProcessedWithdrawals")
 }
 
 model Campaign {
@@ -115,4 +127,23 @@ model Dispute {
   resolvedBy     User?         @relation("AdminResolvedDisputes", fields: [resolvedById], references: [id])
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
+}
+
+model WithdrawalRequest {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation("UserWithdrawals", fields: [userId], references: [id])
+
+  amount    Float
+  taxAmount Float?
+  netAmount Float?
+
+  status          WithdrawalStatus @default(PENDING)
+  rejectionReason String?
+
+  processedById String?
+  processedBy   User?   @relation("AdminProcessedWithdrawals", fields: [processedById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

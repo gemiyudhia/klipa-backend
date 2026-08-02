@@ -165,6 +165,7 @@ export declare const ModelName: {
     readonly Clip: "Clip";
     readonly Transaction: "Transaction";
     readonly Dispute: "Dispute";
+    readonly WithdrawalRequest: "WithdrawalRequest";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export interface TypeMapCb<GlobalOmitOptions = {}> extends runtime.Types.Utils.Fn<{
@@ -177,7 +178,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         omit: GlobalOmitOptions;
     };
     meta: {
-        modelProps: "user" | "campaign" | "clip" | "transaction" | "dispute";
+        modelProps: "user" | "campaign" | "clip" | "transaction" | "dispute" | "withdrawalRequest";
         txIsolationLevel: TransactionIsolationLevel;
     };
     model: {
@@ -551,6 +552,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
                 };
             };
         };
+        WithdrawalRequest: {
+            payload: Prisma.$WithdrawalRequestPayload<ExtArgs>;
+            fields: Prisma.WithdrawalRequestFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.WithdrawalRequestFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalRequestPayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.WithdrawalRequestFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalRequestPayload>;
+                };
+                findFirst: {
+                    args: Prisma.WithdrawalRequestFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalRequestPayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.WithdrawalRequestFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalRequestPayload>;
+                };
+                findMany: {
+                    args: Prisma.WithdrawalRequestFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalRequestPayload>[];
+                };
+                create: {
+                    args: Prisma.WithdrawalRequestCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalRequestPayload>;
+                };
+                createMany: {
+                    args: Prisma.WithdrawalRequestCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                createManyAndReturn: {
+                    args: Prisma.WithdrawalRequestCreateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalRequestPayload>[];
+                };
+                delete: {
+                    args: Prisma.WithdrawalRequestDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalRequestPayload>;
+                };
+                update: {
+                    args: Prisma.WithdrawalRequestUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalRequestPayload>;
+                };
+                deleteMany: {
+                    args: Prisma.WithdrawalRequestDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.WithdrawalRequestUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateManyAndReturn: {
+                    args: Prisma.WithdrawalRequestUpdateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalRequestPayload>[];
+                };
+                upsert: {
+                    args: Prisma.WithdrawalRequestUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalRequestPayload>;
+                };
+                aggregate: {
+                    args: Prisma.WithdrawalRequestAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateWithdrawalRequest>;
+                };
+                groupBy: {
+                    args: Prisma.WithdrawalRequestGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.WithdrawalRequestGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.WithdrawalRequestCountArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.WithdrawalRequestCountAggregateOutputType> | number;
+                };
+            };
+        };
     };
 } & {
     other: {
@@ -593,6 +668,9 @@ export declare const UserScalarFieldEnum: {
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
     readonly hashedRefreshToken: "hashedRefreshToken";
+    readonly bankName: "bankName";
+    readonly bankAccountNumber: "bankAccountNumber";
+    readonly bankAccountName: "bankAccountName";
 };
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
 export declare const CampaignScalarFieldEnum: {
@@ -645,6 +723,19 @@ export declare const DisputeScalarFieldEnum: {
     readonly updatedAt: "updatedAt";
 };
 export type DisputeScalarFieldEnum = (typeof DisputeScalarFieldEnum)[keyof typeof DisputeScalarFieldEnum];
+export declare const WithdrawalRequestScalarFieldEnum: {
+    readonly id: "id";
+    readonly userId: "userId";
+    readonly amount: "amount";
+    readonly taxAmount: "taxAmount";
+    readonly netAmount: "netAmount";
+    readonly status: "status";
+    readonly rejectionReason: "rejectionReason";
+    readonly processedById: "processedById";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type WithdrawalRequestScalarFieldEnum = (typeof WithdrawalRequestScalarFieldEnum)[keyof typeof WithdrawalRequestScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: "asc";
     readonly desc: "desc";
@@ -674,6 +765,8 @@ export type EnumClipStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
 export type ListEnumClipStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClipStatus[]'>;
 export type EnumDisputeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DisputeStatus'>;
 export type ListEnumDisputeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DisputeStatus[]'>;
+export type EnumWithdrawalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WithdrawalStatus'>;
+export type ListEnumWithdrawalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WithdrawalStatus[]'>;
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>;
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>;
 export type BatchPayload = {
@@ -709,6 +802,7 @@ export type GlobalOmitConfig = {
     clip?: Prisma.ClipOmit;
     transaction?: Prisma.TransactionOmit;
     dispute?: Prisma.DisputeOmit;
+    withdrawalRequest?: Prisma.WithdrawalRequestOmit;
 };
 export type LogLevel = 'info' | 'query' | 'warn' | 'error';
 export type LogDefinition = {

@@ -40,6 +40,9 @@ export declare class AuthService {
         createdAt: Date;
         updatedAt: Date;
         hashedRefreshToken: string | null;
+        bankName: string | null;
+        bankAccountNumber: string | null;
+        bankAccountName: string | null;
     }>;
     private generateAccessToken;
 }
