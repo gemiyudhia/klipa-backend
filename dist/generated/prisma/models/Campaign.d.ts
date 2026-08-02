@@ -13,11 +13,15 @@ export type CampaignAvgAggregateOutputType = {
     rewardPerClip: number | null;
     totalBudget: number | null;
     remainingBudget: number | null;
+    platformFeeAmount: number | null;
+    totalCharged: number | null;
 };
 export type CampaignSumAggregateOutputType = {
     rewardPerClip: number | null;
     totalBudget: number | null;
     remainingBudget: number | null;
+    platformFeeAmount: number | null;
+    totalCharged: number | null;
 };
 export type CampaignMinAggregateOutputType = {
     id: string | null;
@@ -27,6 +31,8 @@ export type CampaignMinAggregateOutputType = {
     rewardPerClip: number | null;
     totalBudget: number | null;
     remainingBudget: number | null;
+    platformFeeAmount: number | null;
+    totalCharged: number | null;
     vodUrl: string | null;
     status: $Enums.CampaignStatus | null;
     deadline: Date | null;
@@ -41,6 +47,8 @@ export type CampaignMaxAggregateOutputType = {
     rewardPerClip: number | null;
     totalBudget: number | null;
     remainingBudget: number | null;
+    platformFeeAmount: number | null;
+    totalCharged: number | null;
     vodUrl: string | null;
     status: $Enums.CampaignStatus | null;
     deadline: Date | null;
@@ -55,6 +63,8 @@ export type CampaignCountAggregateOutputType = {
     rewardPerClip: number;
     totalBudget: number;
     remainingBudget: number;
+    platformFeeAmount: number;
+    totalCharged: number;
     vodUrl: number;
     status: number;
     deadline: number;
@@ -66,11 +76,15 @@ export type CampaignAvgAggregateInputType = {
     rewardPerClip?: true;
     totalBudget?: true;
     remainingBudget?: true;
+    platformFeeAmount?: true;
+    totalCharged?: true;
 };
 export type CampaignSumAggregateInputType = {
     rewardPerClip?: true;
     totalBudget?: true;
     remainingBudget?: true;
+    platformFeeAmount?: true;
+    totalCharged?: true;
 };
 export type CampaignMinAggregateInputType = {
     id?: true;
@@ -80,6 +94,8 @@ export type CampaignMinAggregateInputType = {
     rewardPerClip?: true;
     totalBudget?: true;
     remainingBudget?: true;
+    platformFeeAmount?: true;
+    totalCharged?: true;
     vodUrl?: true;
     status?: true;
     deadline?: true;
@@ -94,6 +110,8 @@ export type CampaignMaxAggregateInputType = {
     rewardPerClip?: true;
     totalBudget?: true;
     remainingBudget?: true;
+    platformFeeAmount?: true;
+    totalCharged?: true;
     vodUrl?: true;
     status?: true;
     deadline?: true;
@@ -108,6 +126,8 @@ export type CampaignCountAggregateInputType = {
     rewardPerClip?: true;
     totalBudget?: true;
     remainingBudget?: true;
+    platformFeeAmount?: true;
+    totalCharged?: true;
     vodUrl?: true;
     status?: true;
     deadline?: true;
@@ -151,6 +171,8 @@ export type CampaignGroupByOutputType = {
     rewardPerClip: number;
     totalBudget: number;
     remainingBudget: number;
+    platformFeeAmount: number;
+    totalCharged: number;
     vodUrl: string | null;
     status: $Enums.CampaignStatus;
     deadline: Date;
@@ -176,6 +198,8 @@ export type CampaignWhereInput = {
     rewardPerClip?: Prisma.FloatFilter<"Campaign"> | number;
     totalBudget?: Prisma.FloatFilter<"Campaign"> | number;
     remainingBudget?: Prisma.FloatFilter<"Campaign"> | number;
+    platformFeeAmount?: Prisma.FloatFilter<"Campaign"> | number;
+    totalCharged?: Prisma.FloatFilter<"Campaign"> | number;
     vodUrl?: Prisma.StringNullableFilter<"Campaign"> | string | null;
     status?: Prisma.EnumCampaignStatusFilter<"Campaign"> | $Enums.CampaignStatus;
     deadline?: Prisma.DateTimeFilter<"Campaign"> | Date | string;
@@ -192,6 +216,8 @@ export type CampaignOrderByWithRelationInput = {
     rewardPerClip?: Prisma.SortOrder;
     totalBudget?: Prisma.SortOrder;
     remainingBudget?: Prisma.SortOrder;
+    platformFeeAmount?: Prisma.SortOrder;
+    totalCharged?: Prisma.SortOrder;
     vodUrl?: Prisma.SortOrderInput | Prisma.SortOrder;
     status?: Prisma.SortOrder;
     deadline?: Prisma.SortOrder;
@@ -211,6 +237,8 @@ export type CampaignWhereUniqueInput = Prisma.AtLeast<{
     rewardPerClip?: Prisma.FloatFilter<"Campaign"> | number;
     totalBudget?: Prisma.FloatFilter<"Campaign"> | number;
     remainingBudget?: Prisma.FloatFilter<"Campaign"> | number;
+    platformFeeAmount?: Prisma.FloatFilter<"Campaign"> | number;
+    totalCharged?: Prisma.FloatFilter<"Campaign"> | number;
     vodUrl?: Prisma.StringNullableFilter<"Campaign"> | string | null;
     status?: Prisma.EnumCampaignStatusFilter<"Campaign"> | $Enums.CampaignStatus;
     deadline?: Prisma.DateTimeFilter<"Campaign"> | Date | string;
@@ -227,6 +255,8 @@ export type CampaignOrderByWithAggregationInput = {
     rewardPerClip?: Prisma.SortOrder;
     totalBudget?: Prisma.SortOrder;
     remainingBudget?: Prisma.SortOrder;
+    platformFeeAmount?: Prisma.SortOrder;
+    totalCharged?: Prisma.SortOrder;
     vodUrl?: Prisma.SortOrderInput | Prisma.SortOrder;
     status?: Prisma.SortOrder;
     deadline?: Prisma.SortOrder;
@@ -249,6 +279,8 @@ export type CampaignScalarWhereWithAggregatesInput = {
     rewardPerClip?: Prisma.FloatWithAggregatesFilter<"Campaign"> | number;
     totalBudget?: Prisma.FloatWithAggregatesFilter<"Campaign"> | number;
     remainingBudget?: Prisma.FloatWithAggregatesFilter<"Campaign"> | number;
+    platformFeeAmount?: Prisma.FloatWithAggregatesFilter<"Campaign"> | number;
+    totalCharged?: Prisma.FloatWithAggregatesFilter<"Campaign"> | number;
     vodUrl?: Prisma.StringNullableWithAggregatesFilter<"Campaign"> | string | null;
     status?: Prisma.EnumCampaignStatusWithAggregatesFilter<"Campaign"> | $Enums.CampaignStatus;
     deadline?: Prisma.DateTimeWithAggregatesFilter<"Campaign"> | Date | string;
@@ -262,6 +294,8 @@ export type CampaignCreateInput = {
     rewardPerClip: number;
     totalBudget: number;
     remainingBudget: number;
+    platformFeeAmount?: number;
+    totalCharged?: number;
     vodUrl?: string | null;
     status?: $Enums.CampaignStatus;
     deadline: Date | string;
@@ -278,6 +312,8 @@ export type CampaignUncheckedCreateInput = {
     rewardPerClip: number;
     totalBudget: number;
     remainingBudget: number;
+    platformFeeAmount?: number;
+    totalCharged?: number;
     vodUrl?: string | null;
     status?: $Enums.CampaignStatus;
     deadline: Date | string;
@@ -292,6 +328,8 @@ export type CampaignUpdateInput = {
     rewardPerClip?: Prisma.FloatFieldUpdateOperationsInput | number;
     totalBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
     remainingBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
+    platformFeeAmount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    totalCharged?: Prisma.FloatFieldUpdateOperationsInput | number;
     vodUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     status?: Prisma.EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus;
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -308,6 +346,8 @@ export type CampaignUncheckedUpdateInput = {
     rewardPerClip?: Prisma.FloatFieldUpdateOperationsInput | number;
     totalBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
     remainingBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
+    platformFeeAmount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    totalCharged?: Prisma.FloatFieldUpdateOperationsInput | number;
     vodUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     status?: Prisma.EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus;
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -323,6 +363,8 @@ export type CampaignCreateManyInput = {
     rewardPerClip: number;
     totalBudget: number;
     remainingBudget: number;
+    platformFeeAmount?: number;
+    totalCharged?: number;
     vodUrl?: string | null;
     status?: $Enums.CampaignStatus;
     deadline: Date | string;
@@ -336,6 +378,8 @@ export type CampaignUpdateManyMutationInput = {
     rewardPerClip?: Prisma.FloatFieldUpdateOperationsInput | number;
     totalBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
     remainingBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
+    platformFeeAmount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    totalCharged?: Prisma.FloatFieldUpdateOperationsInput | number;
     vodUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     status?: Prisma.EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus;
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -350,6 +394,8 @@ export type CampaignUncheckedUpdateManyInput = {
     rewardPerClip?: Prisma.FloatFieldUpdateOperationsInput | number;
     totalBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
     remainingBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
+    platformFeeAmount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    totalCharged?: Prisma.FloatFieldUpdateOperationsInput | number;
     vodUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     status?: Prisma.EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus;
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -372,6 +418,8 @@ export type CampaignCountOrderByAggregateInput = {
     rewardPerClip?: Prisma.SortOrder;
     totalBudget?: Prisma.SortOrder;
     remainingBudget?: Prisma.SortOrder;
+    platformFeeAmount?: Prisma.SortOrder;
+    totalCharged?: Prisma.SortOrder;
     vodUrl?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
     deadline?: Prisma.SortOrder;
@@ -382,6 +430,8 @@ export type CampaignAvgOrderByAggregateInput = {
     rewardPerClip?: Prisma.SortOrder;
     totalBudget?: Prisma.SortOrder;
     remainingBudget?: Prisma.SortOrder;
+    platformFeeAmount?: Prisma.SortOrder;
+    totalCharged?: Prisma.SortOrder;
 };
 export type CampaignMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -391,6 +441,8 @@ export type CampaignMaxOrderByAggregateInput = {
     rewardPerClip?: Prisma.SortOrder;
     totalBudget?: Prisma.SortOrder;
     remainingBudget?: Prisma.SortOrder;
+    platformFeeAmount?: Prisma.SortOrder;
+    totalCharged?: Prisma.SortOrder;
     vodUrl?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
     deadline?: Prisma.SortOrder;
@@ -405,6 +457,8 @@ export type CampaignMinOrderByAggregateInput = {
     rewardPerClip?: Prisma.SortOrder;
     totalBudget?: Prisma.SortOrder;
     remainingBudget?: Prisma.SortOrder;
+    platformFeeAmount?: Prisma.SortOrder;
+    totalCharged?: Prisma.SortOrder;
     vodUrl?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
     deadline?: Prisma.SortOrder;
@@ -415,6 +469,8 @@ export type CampaignSumOrderByAggregateInput = {
     rewardPerClip?: Prisma.SortOrder;
     totalBudget?: Prisma.SortOrder;
     remainingBudget?: Prisma.SortOrder;
+    platformFeeAmount?: Prisma.SortOrder;
+    totalCharged?: Prisma.SortOrder;
 };
 export type CampaignScalarRelationFilter = {
     is?: Prisma.CampaignWhereInput;
@@ -480,6 +536,8 @@ export type CampaignCreateWithoutCreatorInput = {
     rewardPerClip: number;
     totalBudget: number;
     remainingBudget: number;
+    platformFeeAmount?: number;
+    totalCharged?: number;
     vodUrl?: string | null;
     status?: $Enums.CampaignStatus;
     deadline: Date | string;
@@ -494,6 +552,8 @@ export type CampaignUncheckedCreateWithoutCreatorInput = {
     rewardPerClip: number;
     totalBudget: number;
     remainingBudget: number;
+    platformFeeAmount?: number;
+    totalCharged?: number;
     vodUrl?: string | null;
     status?: $Enums.CampaignStatus;
     deadline: Date | string;
@@ -533,6 +593,8 @@ export type CampaignScalarWhereInput = {
     rewardPerClip?: Prisma.FloatFilter<"Campaign"> | number;
     totalBudget?: Prisma.FloatFilter<"Campaign"> | number;
     remainingBudget?: Prisma.FloatFilter<"Campaign"> | number;
+    platformFeeAmount?: Prisma.FloatFilter<"Campaign"> | number;
+    totalCharged?: Prisma.FloatFilter<"Campaign"> | number;
     vodUrl?: Prisma.StringNullableFilter<"Campaign"> | string | null;
     status?: Prisma.EnumCampaignStatusFilter<"Campaign"> | $Enums.CampaignStatus;
     deadline?: Prisma.DateTimeFilter<"Campaign"> | Date | string;
@@ -546,6 +608,8 @@ export type CampaignCreateWithoutClipsInput = {
     rewardPerClip: number;
     totalBudget: number;
     remainingBudget: number;
+    platformFeeAmount?: number;
+    totalCharged?: number;
     vodUrl?: string | null;
     status?: $Enums.CampaignStatus;
     deadline: Date | string;
@@ -561,6 +625,8 @@ export type CampaignUncheckedCreateWithoutClipsInput = {
     rewardPerClip: number;
     totalBudget: number;
     remainingBudget: number;
+    platformFeeAmount?: number;
+    totalCharged?: number;
     vodUrl?: string | null;
     status?: $Enums.CampaignStatus;
     deadline: Date | string;
@@ -587,6 +653,8 @@ export type CampaignUpdateWithoutClipsInput = {
     rewardPerClip?: Prisma.FloatFieldUpdateOperationsInput | number;
     totalBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
     remainingBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
+    platformFeeAmount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    totalCharged?: Prisma.FloatFieldUpdateOperationsInput | number;
     vodUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     status?: Prisma.EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus;
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -602,6 +670,8 @@ export type CampaignUncheckedUpdateWithoutClipsInput = {
     rewardPerClip?: Prisma.FloatFieldUpdateOperationsInput | number;
     totalBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
     remainingBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
+    platformFeeAmount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    totalCharged?: Prisma.FloatFieldUpdateOperationsInput | number;
     vodUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     status?: Prisma.EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus;
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -615,6 +685,8 @@ export type CampaignCreateManyCreatorInput = {
     rewardPerClip: number;
     totalBudget: number;
     remainingBudget: number;
+    platformFeeAmount?: number;
+    totalCharged?: number;
     vodUrl?: string | null;
     status?: $Enums.CampaignStatus;
     deadline: Date | string;
@@ -628,6 +700,8 @@ export type CampaignUpdateWithoutCreatorInput = {
     rewardPerClip?: Prisma.FloatFieldUpdateOperationsInput | number;
     totalBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
     remainingBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
+    platformFeeAmount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    totalCharged?: Prisma.FloatFieldUpdateOperationsInput | number;
     vodUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     status?: Prisma.EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus;
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -642,6 +716,8 @@ export type CampaignUncheckedUpdateWithoutCreatorInput = {
     rewardPerClip?: Prisma.FloatFieldUpdateOperationsInput | number;
     totalBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
     remainingBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
+    platformFeeAmount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    totalCharged?: Prisma.FloatFieldUpdateOperationsInput | number;
     vodUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     status?: Prisma.EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus;
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -656,6 +732,8 @@ export type CampaignUncheckedUpdateManyWithoutCreatorInput = {
     rewardPerClip?: Prisma.FloatFieldUpdateOperationsInput | number;
     totalBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
     remainingBudget?: Prisma.FloatFieldUpdateOperationsInput | number;
+    platformFeeAmount?: Prisma.FloatFieldUpdateOperationsInput | number;
+    totalCharged?: Prisma.FloatFieldUpdateOperationsInput | number;
     vodUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     status?: Prisma.EnumCampaignStatusFieldUpdateOperationsInput | $Enums.CampaignStatus;
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -682,6 +760,8 @@ export type CampaignSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
     rewardPerClip?: boolean;
     totalBudget?: boolean;
     remainingBudget?: boolean;
+    platformFeeAmount?: boolean;
+    totalCharged?: boolean;
     vodUrl?: boolean;
     status?: boolean;
     deadline?: boolean;
@@ -699,6 +779,8 @@ export type CampaignSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
     rewardPerClip?: boolean;
     totalBudget?: boolean;
     remainingBudget?: boolean;
+    platformFeeAmount?: boolean;
+    totalCharged?: boolean;
     vodUrl?: boolean;
     status?: boolean;
     deadline?: boolean;
@@ -714,6 +796,8 @@ export type CampaignSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
     rewardPerClip?: boolean;
     totalBudget?: boolean;
     remainingBudget?: boolean;
+    platformFeeAmount?: boolean;
+    totalCharged?: boolean;
     vodUrl?: boolean;
     status?: boolean;
     deadline?: boolean;
@@ -729,13 +813,15 @@ export type CampaignSelectScalar = {
     rewardPerClip?: boolean;
     totalBudget?: boolean;
     remainingBudget?: boolean;
+    platformFeeAmount?: boolean;
+    totalCharged?: boolean;
     vodUrl?: boolean;
     status?: boolean;
     deadline?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 };
-export type CampaignOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "creatorId" | "rewardPerClip" | "totalBudget" | "remainingBudget" | "vodUrl" | "status" | "deadline" | "createdAt" | "updatedAt", ExtArgs["result"]["campaign"]>;
+export type CampaignOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "creatorId" | "rewardPerClip" | "totalBudget" | "remainingBudget" | "platformFeeAmount" | "totalCharged" | "vodUrl" | "status" | "deadline" | "createdAt" | "updatedAt", ExtArgs["result"]["campaign"]>;
 export type CampaignInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     clips?: boolean | Prisma.Campaign$clipsArgs<ExtArgs>;
@@ -761,6 +847,8 @@ export type $CampaignPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
+        platformFeeAmount: number;
+        totalCharged: number;
         vodUrl: string | null;
         status: $Enums.CampaignStatus;
         deadline: Date;
@@ -832,6 +920,8 @@ export interface CampaignFieldRefs {
     readonly rewardPerClip: Prisma.FieldRef<"Campaign", 'Float'>;
     readonly totalBudget: Prisma.FieldRef<"Campaign", 'Float'>;
     readonly remainingBudget: Prisma.FieldRef<"Campaign", 'Float'>;
+    readonly platformFeeAmount: Prisma.FieldRef<"Campaign", 'Float'>;
+    readonly totalCharged: Prisma.FieldRef<"Campaign", 'Float'>;
     readonly vodUrl: Prisma.FieldRef<"Campaign", 'String'>;
     readonly status: Prisma.FieldRef<"Campaign", 'CampaignStatus'>;
     readonly deadline: Prisma.FieldRef<"Campaign", 'DateTime'>;

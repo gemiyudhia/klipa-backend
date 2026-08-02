@@ -19,96 +19,82 @@ let ClipService = class ClipService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async create(clipperId, createClipDto) {
+    async create(clipperId, dto) {
         const campaign = await this.prisma.campaign.findUnique({
-            where: {
-                id: createClipDto.campaignId,
-            },
+            where: { id: dto.campaignId },
         });
-        if (!campaign)
+        if (!campaign) {
             throw new common_1.NotFoundException('Campaign tidak ditemukan');
+        }
         if (campaign.status !== 'ACTIVE') {
             throw new common_1.BadRequestException('Campaign ini tidak sedang aktif menerima klip');
         }
-        return this.prisma.clip.create({
-            data: {
-                title: createClipDto.title,
-                videoUrl: createClipDto.videoUrl,
-                thumbnailUrl: createClipDto.thumbnailUrl,
-                duration: createClipDto.duration,
-                campaignId: createClipDto.campaignId,
-                clipperId,
-            },
+        return this.prisma.$transaction(async (tx) => {
+            const lockResult = await tx.campaign.updateMany({
+                where: {
+                    id: dto.campaignId,
+                    remainingBudget: { gte: campaign.rewardPerClip },
+                },
+                data: {
+                    remainingBudget: { decrement: campaign.rewardPerClip },
+                },
+            });
+            if (lockResult.count === 0) {
+                throw new common_1.BadRequestException('Budget campaign ini sudah penuh/habis');
+            }
+            return tx.clip.create({
+                data: {
+                    title: dto.title,
+                    videoUrl: dto.videoUrl,
+                    thumbnailUrl: dto.thumbnailUrl,
+                    duration: dto.duration,
+                    campaignId: dto.campaignId,
+                    clipperId,
+                },
+            });
         });
     }
     async findAllByClipper(clipperId) {
         return this.prisma.clip.findMany({
-            where: {
-                clipperId,
-            },
-            orderBy: {
-                createdAt: 'desc',
-            },
-            include: {
-                campaign: {
-                    select: {
-                        id: true,
-                        title: true,
-                    },
-                },
-            },
+            where: { clipperId },
+            orderBy: { createdAt: 'desc' },
+            include: { campaign: { select: { id: true, title: true } } },
         });
     }
     async findAllByCampaign(campaignId, userId, userRole) {
         const campaign = await this.prisma.campaign.findUnique({
-            where: {
-                id: campaignId,
-            },
+            where: { id: campaignId },
         });
-        if (!campaign)
+        if (!campaign) {
             throw new common_1.NotFoundException('Campaign tidak ditemukan');
+        }
         (0, authorization_util_1.assertOwnerOrAdmin)(campaign.creatorId, userId, userRole);
         return this.prisma.clip.findMany({
-            where: {
-                id: campaignId,
-            },
-            orderBy: {
-                createdAt: 'desc',
-            },
-            include: {
-                clipper: {
-                    select: {
-                        id: true,
-                        name: true,
-                    },
-                },
-            },
+            where: { campaignId },
+            orderBy: { createdAt: 'desc' },
+            include: { clipper: { select: { id: true, name: true } } },
         });
     }
     async findOne(id) {
         const clip = await this.prisma.clip.findUnique({
-            where: {
-                id,
-            },
-            include: {
-                campaign: true,
-            },
+            where: { id },
+            include: { campaign: true },
         });
-        if (!clip)
+        if (!clip) {
             throw new common_1.NotFoundException('Klip tidak ditemukan');
+        }
         return clip;
     }
-    async update(id, userId, userRole, updateClipDto) {
+    async update(id, userId, userRole, dto) {
         const clip = await this.findOne(id);
         (0, authorization_util_1.assertOwnerOrAdmin)(clip.clipperId, userId, userRole);
-        if (clip.status === enums_1.ClipStatus.APPROVED && userRole !== enums_1.Role.ADMIN)
+        if (clip.status === enums_1.ClipStatus.APPROVED && userRole !== enums_1.Role.ADMIN) {
             throw new common_1.ForbiddenException('Klip yang sudah disetujui tidak bisa diubah lagi');
+        }
         return this.prisma.clip.update({
-            where: {
-                id,
-            },
+            where: { id },
             data: {
-                ...updateClipDto,
+                ...dto,
                 status: clip.status === enums_1.ClipStatus.REVISION_REQUESTED
                     ? enums_1.ClipStatus.PENDING
                     : undefined,
@@ -119,52 +105,78 @@ let ClipService = class ClipService {
         const clip = await this.findOne(id);
         (0, authorization_util_1.assertOwnerOrAdmin)(clip.clipperId, userId, userRole);
         if (clip.status === enums_1.ClipStatus.APPROVED && userRole !== enums_1.Role.ADMIN) {
-            throw new common_1.ForbiddenException('klip yang sudah disetujui tidak dapat dihapus');
+            throw new common_1.ForbiddenException('Klip yang sudah disetujui tidak bisa dihapus');
         }
-        return this.prisma.clip.delete({ where: { id } });
+        return this.prisma.$transaction(async (tx) => {
+            const deletedClip = await tx.clip.delete({ where: { id } });
+            if (clip.status !== enums_1.ClipStatus.APPROVED) {
+                await tx.campaign.update({
+                    where: { id: clip.campaignId },
+                    data: { remainingBudget: { increment: clip.campaign.rewardPerClip } },
+                });
+            }
+            return deletedClip;
+        });
     }
-    async review(id, creatorId, userRole, reviewClipDto) {
+    async review(id, creatorId, userRole, dto) {
         const clip = await this.findOne(id);
         (0, authorization_util_1.assertOwnerOrAdmin)(clip.campaign.creatorId, creatorId, userRole);
         if (clip.status === enums_1.ClipStatus.APPROVED) {
             throw new common_1.BadRequestException('Klip ini sudah disetujui sebelumnya');
         }
-        const updateClip = await this.prisma.clip.update({
-            where: { id },
-            data: {
-                status: reviewClipDto.status,
-                feedback: reviewClipDto.feedback,
-            },
-        });
-        if (reviewClipDto.status === enums_1.ClipStatus.APPROVED) {
-            await this.prisma.$transaction([
-                this.prisma.campaign.update({
-                    where: {
-                        id: clip.campaignId,
-                    },
-                    data: {
-                        remainingBudget: { decrement: clip.campaign.rewardPerClip },
-                    },
-                }),
-                this.prisma.user.update({
-                    where: {
-                        id: clip.clipperId,
-                    },
-                    data: {
-                        balance: { increment: clip.campaign.rewardPerClip },
-                    },
-                }),
-                this.prisma.transaction.create({
-                    data: {
-                        userId: clip.clipperId,
-                        amount: clip.campaign.rewardPerClip,
-                        type: 'CLIP_PAYOUT',
-                        referenceId: clip.id,
-                    },
-                }),
-            ]);
+        if (dto.status === 'REJECTED') {
+            return this.prisma.$transaction(async (tx) => {
+                const updatedClip = await tx.clip.update({
+                    where: { id },
+                    data: { status: enums_1.ClipStatus.REJECTED, feedback: dto.feedback },
+                });
+                await tx.campaign.update({
+                    where: { id: clip.campaignId },
+                    data: { remainingBudget: { increment: clip.campaign.rewardPerClip } },
+                });
+                return updatedClip;
+            });
         }
-        return updateClip;
+        if (dto.status === 'REVISION_REQUESTED') {
+            return this.prisma.clip.update({
+                where: { id },
+                data: { status: enums_1.ClipStatus.REVISION_REQUESTED, feedback: dto.feedback },
+            });
+        }
+        const rewardPerClip = clip.campaign.rewardPerClip;
+        const platformFeeAmount = rewardPerClip * 0.1;
+        const payoutAmount = rewardPerClip - platformFeeAmount;
+        const [updatedClip] = await this.prisma.$transaction([
+            this.prisma.clip.update({
+                where: { id },
+                data: {
+                    status: enums_1.ClipStatus.APPROVED,
+                    feedback: dto.feedback,
+                    platformFeeAmount,
+                    payoutAmount,
+                },
+            }),
+            this.prisma.user.update({
+                where: { id: clip.clipperId },
+                data: { balance: { increment: payoutAmount } },
+            }),
+            this.prisma.transaction.create({
+                data: {
+                    userId: clip.clipperId,
+                    amount: payoutAmount,
+                    type: 'CLIP_PAYOUT',
+                    referenceId: clip.id,
+                },
+            }),
+            this.prisma.platformRevenue.create({
+                data: {
+                    source: 'CLIPPER_FEE',
+                    amount: platformFeeAmount,
+                    referenceId: clip.id,
+                },
+            }),
+        ]);
+        return updatedClip;
     }
 };
 exports.ClipService = ClipService;

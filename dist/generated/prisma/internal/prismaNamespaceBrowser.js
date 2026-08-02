@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.WithdrawalRequestScalarFieldEnum = exports.DisputeScalarFieldEnum = exports.TransactionScalarFieldEnum = exports.ClipScalarFieldEnum = exports.CampaignScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
+exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.TransactionScalarFieldEnum = exports.PlatformRevenueScalarFieldEnum = exports.WithdrawalRequestScalarFieldEnum = exports.DisputeScalarFieldEnum = exports.ClipScalarFieldEnum = exports.CampaignScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/index-browser"));
 exports.Decimal = runtime.Decimal;
 exports.NullTypes = {
@@ -48,9 +48,10 @@ exports.ModelName = {
     User: 'User',
     Campaign: 'Campaign',
     Clip: 'Clip',
-    Transaction: 'Transaction',
     Dispute: 'Dispute',
-    WithdrawalRequest: 'WithdrawalRequest'
+    WithdrawalRequest: 'WithdrawalRequest',
+    PlatformRevenue: 'PlatformRevenue',
+    Transaction: 'Transaction'
 };
 exports.TransactionIsolationLevel = runtime.makeStrictEnum({
     ReadUncommitted: 'ReadUncommitted',
@@ -81,6 +82,8 @@ exports.CampaignScalarFieldEnum = {
     rewardPerClip: 'rewardPerClip',
     totalBudget: 'totalBudget',
     remainingBudget: 'remainingBudget',
+    platformFeeAmount: 'platformFeeAmount',
+    totalCharged: 'totalCharged',
     vodUrl: 'vodUrl',
     status: 'status',
     deadline: 'deadline',
@@ -95,18 +98,12 @@ exports.ClipScalarFieldEnum = {
     duration: 'duration',
     status: 'status',
     feedback: 'feedback',
+    platformFeeAmount: 'platformFeeAmount',
+    payoutAmount: 'payoutAmount',
     campaignId: 'campaignId',
     clipperId: 'clipperId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
-};
-exports.TransactionScalarFieldEnum = {
-    id: 'id',
-    userId: 'userId',
-    amount: 'amount',
-    type: 'type',
-    referenceId: 'referenceId',
-    createdAt: 'createdAt'
 };
 exports.DisputeScalarFieldEnum = {
     id: 'id',
@@ -130,6 +127,21 @@ exports.WithdrawalRequestScalarFieldEnum = {
     processedById: 'processedById',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
+};
+exports.PlatformRevenueScalarFieldEnum = {
+    id: 'id',
+    source: 'source',
+    amount: 'amount',
+    referenceId: 'referenceId',
+    createdAt: 'createdAt'
+};
+exports.TransactionScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    amount: 'amount',
+    type: 'type',
+    referenceId: 'referenceId',
+    createdAt: 'createdAt'
 };
 exports.SortOrder = {
     asc: 'asc',

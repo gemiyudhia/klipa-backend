@@ -9,9 +9,11 @@ import { CampaignModule } from './campaign/campaign.module';
 import { ClipModule } from './clip/clip.module';
 import { DisputeModule } from './dispute/dispute.module';
 import { WithdrawalModule } from './withdrawal/withdrawal.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
     }),

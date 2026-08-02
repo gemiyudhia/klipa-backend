@@ -16,11 +16,15 @@ import { Role } from 'generated/prisma/enums';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { JwtAuthGuards } from 'src/common/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guard';
+import { CampaignExpiryTask } from './task/campaign-expiry.task';
 
 @Controller('campaign')
 @UseGuards(JwtAuthGuards, RolesGuard)
 export class CampaignController {
-  constructor(private readonly campaignService: CampaignService) {}
+  constructor(
+    private readonly campaignService: CampaignService,
+    private readonly campaignExpiryTask: CampaignExpiryTask,
+  ) {}
 
   @Post()
   @Roles(Role.CREATOR)
@@ -71,5 +75,14 @@ export class CampaignController {
     @CurrentUser() user: { sub: string; role: Role },
   ) {
     return this.campaignService.remove(id, user.sub, user.role);
+  }
+
+  @Post('trigger-expiry-check')
+  @Roles(Role.ADMIN)
+  async triggerExpiryCheck() {
+    await this.campaignExpiryTask.handleExpiredCampaigns();
+    return {
+      message: 'Pengecekan campaign expired berhasil dijalankan manual',
+    };
   }
 }

@@ -1,11 +1,11 @@
-import { CreateDisputeDto } from './dto/create-dispute.dto';
 import { PrismaService } from "../prisma/prisma.service";
-import { ClipStatus, DisputeStatus, Role } from "../../generated/prisma/enums";
+import { CreateDisputeDto } from './dto/create-dispute.dto';
 import { ResolveDisputeDto } from './dto/resolve-dispute.dto';
+import { ClipStatus, DisputeStatus, Role } from "../../generated/prisma/enums";
 export declare class DisputeService {
-    private readonly prisma;
+    private prisma;
     constructor(prisma: PrismaService);
-    create(clipperId: string, createDisputeDto: CreateDisputeDto): Promise<{
+    create(clipperId: string, dto: CreateDisputeDto): Promise<{
         id: string;
         createdAt: Date;
         updatedAt: Date;
@@ -16,7 +16,7 @@ export declare class DisputeService {
         clipId: string;
         resolvedById: string | null;
     }>;
-    findAllClipper(clipperId: string): Promise<({
+    findAllByClipper(clipperId: string): Promise<({
         clip: {
             id: string;
             title: string;
@@ -45,11 +45,13 @@ export declare class DisputeService {
             createdAt: Date;
             updatedAt: Date;
             title: string;
+            platformFeeAmount: number | null;
             status: ClipStatus;
             videoUrl: string;
             thumbnailUrl: string | null;
             duration: number | null;
             feedback: string | null;
+            payoutAmount: number | null;
             campaignId: string;
             clipperId: string;
         };
@@ -81,6 +83,8 @@ export declare class DisputeService {
                 rewardPerClip: number;
                 totalBudget: number;
                 remainingBudget: number;
+                platformFeeAmount: number;
+                totalCharged: number;
                 vodUrl: string | null;
                 status: import("generated/prisma/enums").CampaignStatus;
                 deadline: Date;
@@ -91,11 +95,13 @@ export declare class DisputeService {
             createdAt: Date;
             updatedAt: Date;
             title: string;
+            platformFeeAmount: number | null;
             status: ClipStatus;
             videoUrl: string;
             thumbnailUrl: string | null;
             duration: number | null;
             feedback: string | null;
+            payoutAmount: number | null;
             campaignId: string;
             clipperId: string;
         };
@@ -115,7 +121,7 @@ export declare class DisputeService {
         clipId: string;
         resolvedById: string | null;
     }>;
-    resolve(id: string, adminId: string, resolveDisputeDto: ResolveDisputeDto): Promise<{
+    resolve(id: string, adminId: string, dto: ResolveDisputeDto): Promise<{
         id: string;
         createdAt: Date;
         updatedAt: Date;

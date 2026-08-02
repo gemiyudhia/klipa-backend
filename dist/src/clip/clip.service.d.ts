@@ -1,21 +1,23 @@
+import { PrismaService } from "../prisma/prisma.service";
 import { CreateClipDto } from './dto/create-clip.dto';
 import { UpdateClipDto } from './dto/update-clip.dto';
-import { PrismaService } from "../prisma/prisma.service";
-import { ClipStatus, Role } from "../../generated/prisma/enums";
 import { ReviewClipDto } from './dto/review-clip.dto';
+import { Role, ClipStatus } from "../../generated/prisma/enums";
 export declare class ClipService {
-    private readonly prisma;
+    private prisma;
     constructor(prisma: PrismaService);
-    create(clipperId: string, createClipDto: CreateClipDto): Promise<{
+    create(clipperId: string, dto: CreateClipDto): Promise<{
         id: string;
         createdAt: Date;
         updatedAt: Date;
         title: string;
+        platformFeeAmount: number | null;
         status: ClipStatus;
         videoUrl: string;
         thumbnailUrl: string | null;
         duration: number | null;
         feedback: string | null;
+        payoutAmount: number | null;
         campaignId: string;
         clipperId: string;
     }>;
@@ -29,11 +31,13 @@ export declare class ClipService {
         createdAt: Date;
         updatedAt: Date;
         title: string;
+        platformFeeAmount: number | null;
         status: ClipStatus;
         videoUrl: string;
         thumbnailUrl: string | null;
         duration: number | null;
         feedback: string | null;
+        payoutAmount: number | null;
         campaignId: string;
         clipperId: string;
     })[]>;
@@ -47,11 +51,13 @@ export declare class ClipService {
         createdAt: Date;
         updatedAt: Date;
         title: string;
+        platformFeeAmount: number | null;
         status: ClipStatus;
         videoUrl: string;
         thumbnailUrl: string | null;
         duration: number | null;
         feedback: string | null;
+        payoutAmount: number | null;
         campaignId: string;
         clipperId: string;
     })[]>;
@@ -65,6 +71,8 @@ export declare class ClipService {
             rewardPerClip: number;
             totalBudget: number;
             remainingBudget: number;
+            platformFeeAmount: number;
+            totalCharged: number;
             vodUrl: string | null;
             status: import("generated/prisma/enums").CampaignStatus;
             deadline: Date;
@@ -75,24 +83,28 @@ export declare class ClipService {
         createdAt: Date;
         updatedAt: Date;
         title: string;
+        platformFeeAmount: number | null;
         status: ClipStatus;
         videoUrl: string;
         thumbnailUrl: string | null;
         duration: number | null;
         feedback: string | null;
+        payoutAmount: number | null;
         campaignId: string;
         clipperId: string;
     }>;
-    update(id: string, userId: string, userRole: Role, updateClipDto: UpdateClipDto): Promise<{
+    update(id: string, userId: string, userRole: Role, dto: UpdateClipDto): Promise<{
         id: string;
         createdAt: Date;
         updatedAt: Date;
         title: string;
+        platformFeeAmount: number | null;
         status: ClipStatus;
         videoUrl: string;
         thumbnailUrl: string | null;
         duration: number | null;
         feedback: string | null;
+        payoutAmount: number | null;
         campaignId: string;
         clipperId: string;
     }>;
@@ -101,24 +113,28 @@ export declare class ClipService {
         createdAt: Date;
         updatedAt: Date;
         title: string;
+        platformFeeAmount: number | null;
         status: ClipStatus;
         videoUrl: string;
         thumbnailUrl: string | null;
         duration: number | null;
         feedback: string | null;
+        payoutAmount: number | null;
         campaignId: string;
         clipperId: string;
     }>;
-    review(id: string, creatorId: string, userRole: Role, reviewClipDto: ReviewClipDto): Promise<{
+    review(id: string, creatorId: string, userRole: Role, dto: ReviewClipDto): Promise<{
         id: string;
         createdAt: Date;
         updatedAt: Date;
         title: string;
+        platformFeeAmount: number | null;
         status: ClipStatus;
         videoUrl: string;
         thumbnailUrl: string | null;
         duration: number | null;
         feedback: string | null;
+        payoutAmount: number | null;
         campaignId: string;
         clipperId: string;
     }>;

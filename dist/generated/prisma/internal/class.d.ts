@@ -39,13 +39,16 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
     get clip(): Prisma.ClipDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
-    get transaction(): Prisma.TransactionDelegate<ExtArgs, {
-        omit: OmitOpts;
-    }>;
     get dispute(): Prisma.DisputeDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
     get withdrawalRequest(): Prisma.WithdrawalRequestDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    get platformRevenue(): Prisma.PlatformRevenueDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    get transaction(): Prisma.TransactionDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
 }

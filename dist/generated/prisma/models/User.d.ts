@@ -509,18 +509,6 @@ export type UserUpdateOneRequiredWithoutClipsNestedInput = {
     connect?: Prisma.UserWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutClipsInput, Prisma.UserUpdateWithoutClipsInput>, Prisma.UserUncheckedUpdateWithoutClipsInput>;
 };
-export type UserCreateNestedOneWithoutTransactionsInput = {
-    create?: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>;
-    connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransactionsInput;
-    connect?: Prisma.UserWhereUniqueInput;
-};
-export type UserUpdateOneRequiredWithoutTransactionsNestedInput = {
-    create?: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>;
-    connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransactionsInput;
-    upsert?: Prisma.UserUpsertWithoutTransactionsInput;
-    connect?: Prisma.UserWhereUniqueInput;
-    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTransactionsInput, Prisma.UserUpdateWithoutTransactionsInput>, Prisma.UserUncheckedUpdateWithoutTransactionsInput>;
-};
 export type UserCreateNestedOneWithoutDisputesRaisedInput = {
     create?: Prisma.XOR<Prisma.UserCreateWithoutDisputesRaisedInput, Prisma.UserUncheckedCreateWithoutDisputesRaisedInput>;
     connectOrCreate?: Prisma.UserCreateOrConnectWithoutDisputesRaisedInput;
@@ -572,6 +560,18 @@ export type UserUpdateOneWithoutWithdrawalsProcessedNestedInput = {
     delete?: Prisma.UserWhereInput | boolean;
     connect?: Prisma.UserWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWithdrawalsProcessedInput, Prisma.UserUpdateWithoutWithdrawalsProcessedInput>, Prisma.UserUncheckedUpdateWithoutWithdrawalsProcessedInput>;
+};
+export type UserCreateNestedOneWithoutTransactionsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransactionsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutTransactionsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransactionsInput;
+    upsert?: Prisma.UserUpsertWithoutTransactionsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTransactionsInput, Prisma.UserUpdateWithoutTransactionsInput>, Prisma.UserUncheckedUpdateWithoutTransactionsInput>;
 };
 export type UserCreateWithoutCampaignsInput = {
     id?: string;
@@ -762,103 +762,6 @@ export type UserUncheckedUpdateWithoutClipsInput = {
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
     transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
-    disputesRaised?: Prisma.DisputeUncheckedUpdateManyWithoutClipperNestedInput;
-    disputesResolved?: Prisma.DisputeUncheckedUpdateManyWithoutResolvedByNestedInput;
-    withdrawals?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput;
-    withdrawalsProcessed?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutProcessedByNestedInput;
-};
-export type UserCreateWithoutTransactionsInput = {
-    id?: string;
-    email: string;
-    passwordHash: string;
-    name: string;
-    avatarUrl?: string | null;
-    role?: $Enums.Role;
-    balance?: number;
-    createdAt?: Date | string;
-    updatedAt?: Date | string;
-    hashedRefreshToken?: string | null;
-    bankName?: string | null;
-    bankAccountNumber?: string | null;
-    bankAccountName?: string | null;
-    campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
-    clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
-    disputesRaised?: Prisma.DisputeCreateNestedManyWithoutClipperInput;
-    disputesResolved?: Prisma.DisputeCreateNestedManyWithoutResolvedByInput;
-    withdrawals?: Prisma.WithdrawalRequestCreateNestedManyWithoutUserInput;
-    withdrawalsProcessed?: Prisma.WithdrawalRequestCreateNestedManyWithoutProcessedByInput;
-};
-export type UserUncheckedCreateWithoutTransactionsInput = {
-    id?: string;
-    email: string;
-    passwordHash: string;
-    name: string;
-    avatarUrl?: string | null;
-    role?: $Enums.Role;
-    balance?: number;
-    createdAt?: Date | string;
-    updatedAt?: Date | string;
-    hashedRefreshToken?: string | null;
-    bankName?: string | null;
-    bankAccountNumber?: string | null;
-    bankAccountName?: string | null;
-    campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
-    clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
-    disputesRaised?: Prisma.DisputeUncheckedCreateNestedManyWithoutClipperInput;
-    disputesResolved?: Prisma.DisputeUncheckedCreateNestedManyWithoutResolvedByInput;
-    withdrawals?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput;
-    withdrawalsProcessed?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutProcessedByInput;
-};
-export type UserCreateOrConnectWithoutTransactionsInput = {
-    where: Prisma.UserWhereUniqueInput;
-    create: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>;
-};
-export type UserUpsertWithoutTransactionsInput = {
-    update: Prisma.XOR<Prisma.UserUpdateWithoutTransactionsInput, Prisma.UserUncheckedUpdateWithoutTransactionsInput>;
-    create: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>;
-    where?: Prisma.UserWhereInput;
-};
-export type UserUpdateToOneWithWhereWithoutTransactionsInput = {
-    where?: Prisma.UserWhereInput;
-    data: Prisma.XOR<Prisma.UserUpdateWithoutTransactionsInput, Prisma.UserUncheckedUpdateWithoutTransactionsInput>;
-};
-export type UserUpdateWithoutTransactionsInput = {
-    id?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
-    passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
-    name?: Prisma.StringFieldUpdateOperationsInput | string;
-    avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
-    balance?: Prisma.FloatFieldUpdateOperationsInput | number;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
-    clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
-    disputesRaised?: Prisma.DisputeUpdateManyWithoutClipperNestedInput;
-    disputesResolved?: Prisma.DisputeUpdateManyWithoutResolvedByNestedInput;
-    withdrawals?: Prisma.WithdrawalRequestUpdateManyWithoutUserNestedInput;
-    withdrawalsProcessed?: Prisma.WithdrawalRequestUpdateManyWithoutProcessedByNestedInput;
-};
-export type UserUncheckedUpdateWithoutTransactionsInput = {
-    id?: Prisma.StringFieldUpdateOperationsInput | string;
-    email?: Prisma.StringFieldUpdateOperationsInput | string;
-    passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
-    name?: Prisma.StringFieldUpdateOperationsInput | string;
-    avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
-    balance?: Prisma.FloatFieldUpdateOperationsInput | number;
-    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
-    clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
     disputesRaised?: Prisma.DisputeUncheckedUpdateManyWithoutClipperNestedInput;
     disputesResolved?: Prisma.DisputeUncheckedUpdateManyWithoutResolvedByNestedInput;
     withdrawals?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput;
@@ -1251,6 +1154,103 @@ export type UserUncheckedUpdateWithoutWithdrawalsProcessedInput = {
     disputesRaised?: Prisma.DisputeUncheckedUpdateManyWithoutClipperNestedInput;
     disputesResolved?: Prisma.DisputeUncheckedUpdateManyWithoutResolvedByNestedInput;
     withdrawals?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutTransactionsInput = {
+    id?: string;
+    email: string;
+    passwordHash: string;
+    name: string;
+    avatarUrl?: string | null;
+    role?: $Enums.Role;
+    balance?: number;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
+    bankName?: string | null;
+    bankAccountNumber?: string | null;
+    bankAccountName?: string | null;
+    campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
+    clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
+    disputesRaised?: Prisma.DisputeCreateNestedManyWithoutClipperInput;
+    disputesResolved?: Prisma.DisputeCreateNestedManyWithoutResolvedByInput;
+    withdrawals?: Prisma.WithdrawalRequestCreateNestedManyWithoutUserInput;
+    withdrawalsProcessed?: Prisma.WithdrawalRequestCreateNestedManyWithoutProcessedByInput;
+};
+export type UserUncheckedCreateWithoutTransactionsInput = {
+    id?: string;
+    email: string;
+    passwordHash: string;
+    name: string;
+    avatarUrl?: string | null;
+    role?: $Enums.Role;
+    balance?: number;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    hashedRefreshToken?: string | null;
+    bankName?: string | null;
+    bankAccountNumber?: string | null;
+    bankAccountName?: string | null;
+    campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
+    clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
+    disputesRaised?: Prisma.DisputeUncheckedCreateNestedManyWithoutClipperInput;
+    disputesResolved?: Prisma.DisputeUncheckedCreateNestedManyWithoutResolvedByInput;
+    withdrawals?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutUserInput;
+    withdrawalsProcessed?: Prisma.WithdrawalRequestUncheckedCreateNestedManyWithoutProcessedByInput;
+};
+export type UserCreateOrConnectWithoutTransactionsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>;
+};
+export type UserUpsertWithoutTransactionsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutTransactionsInput, Prisma.UserUncheckedUpdateWithoutTransactionsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutTransactionsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutTransactionsInput, Prisma.UserUncheckedUpdateWithoutTransactionsInput>;
+};
+export type UserUpdateWithoutTransactionsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    balance?: Prisma.FloatFieldUpdateOperationsInput | number;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
+    clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
+    disputesRaised?: Prisma.DisputeUpdateManyWithoutClipperNestedInput;
+    disputesResolved?: Prisma.DisputeUpdateManyWithoutResolvedByNestedInput;
+    withdrawals?: Prisma.WithdrawalRequestUpdateManyWithoutUserNestedInput;
+    withdrawalsProcessed?: Prisma.WithdrawalRequestUpdateManyWithoutProcessedByNestedInput;
+};
+export type UserUncheckedUpdateWithoutTransactionsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    passwordHash?: Prisma.StringFieldUpdateOperationsInput | string;
+    name?: Prisma.StringFieldUpdateOperationsInput | string;
+    avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role;
+    balance?: Prisma.FloatFieldUpdateOperationsInput | number;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
+    clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
+    disputesRaised?: Prisma.DisputeUncheckedUpdateManyWithoutClipperNestedInput;
+    disputesResolved?: Prisma.DisputeUncheckedUpdateManyWithoutResolvedByNestedInput;
+    withdrawals?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutUserNestedInput;
+    withdrawalsProcessed?: Prisma.WithdrawalRequestUncheckedUpdateManyWithoutProcessedByNestedInput;
 };
 export type UserCountOutputType = {
     campaigns: number;

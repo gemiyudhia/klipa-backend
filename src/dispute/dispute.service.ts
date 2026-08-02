@@ -1,43 +1,36 @@
 import {
-  BadRequestException,
-  ConflictException,
-  ForbiddenException,
   Injectable,
   NotFoundException,
+  ForbiddenException,
+  BadRequestException,
+  ConflictException,
 } from '@nestjs/common';
-import { CreateDisputeDto } from './dto/create-dispute.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { ClipStatus, DisputeStatus, Role } from 'generated/prisma/enums';
+import { CreateDisputeDto } from './dto/create-dispute.dto';
 import { ResolveDisputeDto } from './dto/resolve-dispute.dto';
 import { assertOwnerOrAdmin } from 'src/common/utils/authorization.util';
+import { ClipStatus, DisputeStatus, Role } from 'generated/prisma/enums';
 
 @Injectable()
 export class DisputeService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
-  async create(clipperId: string, createDisputeDto: CreateDisputeDto) {
+  async create(clipperId: string, dto: CreateDisputeDto) {
     const clip = await this.prisma.clip.findUnique({
-      where: {
-        id: createDisputeDto.clipId,
-      },
-      include: {
-        dispute: true,
-      },
+      where: { id: dto.clipId },
+      include: { dispute: true },
     });
 
     if (!clip) {
       throw new NotFoundException('Klip tidak ditemukan');
     }
 
-    // Perbaikan: bandingkan pemilik klip dengan user yang sedang login
     if (clip.clipperId !== clipperId) {
       throw new ForbiddenException(
         'Anda hanya bisa mengajukan dispute untuk klip milik sendiri',
       );
     }
 
-    // Jika dispute hanya boleh dibuat saat klip REJECTED,
-    // gunakan !==, bukan ===
     if (clip.status !== ClipStatus.REJECTED) {
       throw new BadRequestException(
         'Dispute hanya bisa diajukan untuk klip yang berstatus REJECTED',
@@ -49,86 +42,41 @@ export class DisputeService {
     }
 
     return this.prisma.dispute.create({
-      data: {
-        clipId: createDisputeDto.clipId,
-        clipperId,
-        reason: createDisputeDto.reason,
-      },
+      data: { clipId: dto.clipId, clipperId, reason: dto.reason },
     });
   }
 
-  async findAllClipper(clipperId: string) {
+  async findAllByClipper(clipperId: string) {
     return this.prisma.dispute.findMany({
-      where: {
-        clipperId,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-      include: {
-        clip: {
-          select: {
-            id: true,
-            title: true,
-            status: true,
-          },
-        },
-      },
+      where: { clipperId },
+      orderBy: { createdAt: 'desc' },
+      include: { clip: { select: { id: true, title: true, status: true } } },
     });
   }
 
   async findAllPending() {
     return this.prisma.dispute.findMany({
-      where: {
-        status: DisputeStatus.PENDING,
-      },
-      orderBy: {
-        createdAt: 'asc',
-      },
+      where: { status: DisputeStatus.PENDING },
+      orderBy: { createdAt: 'asc' },
       include: {
         clip: {
           include: {
             campaign: {
-              select: {
-                id: true,
-                title: true,
-                rewardPerClip: true,
-              },
+              select: { id: true, title: true, rewardPerClip: true },
             },
           },
         },
-        clipper: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
+        clipper: { select: { id: true, name: true, email: true } },
       },
     });
   }
 
-  // Helper internal:
-  // mengambil dispute dan melempar NotFoundException jika tidak ditemukan
-  // tanpa melakukan pengecekan ownership
   private async findByIdOrThrow(id: string) {
     const dispute = await this.prisma.dispute.findUnique({
-      where: {
-        id,
-      },
+      where: { id },
       include: {
-        clip: {
-          include: {
-            campaign: true,
-          },
-        },
-        clipper: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
+        clip: { include: { campaign: true } },
+        clipper: { select: { id: true, name: true, email: true } },
       },
     });
 
@@ -139,22 +87,13 @@ export class DisputeService {
     return dispute;
   }
 
-  // Dipakai oleh controller:
-  // mengambil dispute lalu memeriksa apakah user adalah pemilik atau admin
   async findOne(id: string, userId: string, userRole: Role) {
     const dispute = await this.findByIdOrThrow(id);
-
     assertOwnerOrAdmin(dispute.clipperId, userId, userRole);
-
     return dispute;
   }
 
-  async resolve(
-    id: string,
-    adminId: string,
-    resolveDisputeDto: ResolveDisputeDto,
-  ) {
-    // Admin memakai helper internal tanpa ownership check
+  async resolve(id: string, adminId: string, dto: ResolveDisputeDto) {
     const dispute = await this.findByIdOrThrow(id);
 
     if (dispute.status !== DisputeStatus.PENDING) {
@@ -163,87 +102,77 @@ export class DisputeService {
       );
     }
 
-    // Jika admin menolak dispute,
-    // hanya update data dispute
-    if (resolveDisputeDto.status === 'REJECTED') {
+    if (dto.status === 'REJECTED') {
       return this.prisma.dispute.update({
-        where: {
-          id,
-        },
+        where: { id },
         data: {
           status: DisputeStatus.REJECTED,
-          resolutionNote: resolveDisputeDto.resolutionNote,
+          resolutionNote: dto.resolutionNote,
           resolvedById: adminId,
         },
       });
     }
 
-    // Jika dispute disetujui,
-    // lakukan seluruh perubahan dalam satu transaction
     const clip = dispute.clip;
     const campaign = clip.campaign;
+    const rewardPerClip = campaign.rewardPerClip;
+    const platformFeeAmount = rewardPerClip * 0.1;
+    const payoutAmount = rewardPerClip - platformFeeAmount;
 
-    const [updatedDispute] = await this.prisma.$transaction([
-      // 1. Ubah status dispute menjadi APPROVED
-      this.prisma.dispute.update({
-        where: {
-          id,
-        },
+    return this.prisma.$transaction(async (tx) => {
+      const lockResult = await tx.campaign.updateMany({
+        where: { id: campaign.id, remainingBudget: { gte: rewardPerClip } },
+        data: { remainingBudget: { decrement: rewardPerClip } },
+      });
+
+      if (lockResult.count === 0) {
+        throw new BadRequestException(
+          'Budget campaign sudah habis, dispute tidak bisa disetujui saat ini',
+        );
+      }
+
+      const updatedDispute = await tx.dispute.update({
+        where: { id },
         data: {
           status: DisputeStatus.APPROVED,
-          resolutionNote: resolveDisputeDto.resolutionNote,
+          resolutionNote: dto.resolutionNote,
           resolvedById: adminId,
         },
-      }),
+      });
 
-      // 2. Ubah status klip menjadi APPROVED
-      this.prisma.clip.update({
-        where: {
-          id: clip.id,
-        },
+      await tx.clip.update({
+        where: { id: clip.id },
         data: {
           status: ClipStatus.APPROVED,
-          feedback:
-            resolveDisputeDto.resolutionNote ??
-            'Disetujui lewat proses dispute',
+          feedback: dto.resolutionNote ?? 'Disetujui lewat proses dispute',
+          platformFeeAmount,
+          payoutAmount,
         },
-      }),
+      });
 
-      // 3. Kurangi sisa budget campaign
-      this.prisma.campaign.update({
-        where: {
-          id: campaign.id,
-        },
-        data: {
-          remainingBudget: {
-            decrement: campaign.rewardPerClip,
-          },
-        },
-      }),
+      await tx.user.update({
+        where: { id: clip.clipperId },
+        data: { balance: { increment: payoutAmount } },
+      });
 
-      // 4. Tambahkan saldo clipper
-      this.prisma.user.update({
-        where: {
-          id: clip.clipperId,
-        },
-        data: {
-          balance: {
-            increment: campaign.rewardPerClip,
-          },
-        },
-      }),
-
-      // 5. Catat riwayat transaksi
-      this.prisma.transaction.create({
+      await tx.transaction.create({
         data: {
           userId: clip.clipperId,
-          amount: campaign.rewardPerClip,
+          amount: payoutAmount,
           type: 'CLIP_PAYOUT_VIA_DISPUTE',
           referenceId: clip.id,
         },
-      }),
-    ]);
+      });
 
-    return updatedDispute;
+      await tx.platformRevenue.create({
+        data: {
+          source: 'CLIPPER_FEE',
+          amount: platformFeeAmount,
+          referenceId: clip.id,
+        },
+      });
+
+      return updatedDispute;
+    });
   }
 }

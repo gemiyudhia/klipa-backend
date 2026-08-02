@@ -5,7 +5,7 @@ import { CampaignStatus, Role } from "../../generated/prisma/enums";
 export declare class CampaignService {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    create(creatorId: string, createCampaignDto: CreateCampaignDto): Promise<{
+    create(creatorId: string, dto: CreateCampaignDto): Promise<{
         id: string;
         createdAt: Date;
         updatedAt: Date;
@@ -14,6 +14,8 @@ export declare class CampaignService {
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
+        platformFeeAmount: number;
+        totalCharged: number;
         vodUrl: string | null;
         status: CampaignStatus;
         deadline: Date;
@@ -28,6 +30,8 @@ export declare class CampaignService {
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
+        platformFeeAmount: number;
+        totalCharged: number;
         vodUrl: string | null;
         status: CampaignStatus;
         deadline: Date;
@@ -42,6 +46,8 @@ export declare class CampaignService {
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
+        platformFeeAmount: number;
+        totalCharged: number;
         vodUrl: string | null;
         status: CampaignStatus;
         deadline: Date;
@@ -56,6 +62,8 @@ export declare class CampaignService {
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
+        platformFeeAmount: number;
+        totalCharged: number;
         vodUrl: string | null;
         status: CampaignStatus;
         deadline: Date;
@@ -70,6 +78,8 @@ export declare class CampaignService {
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
+        platformFeeAmount: number;
+        totalCharged: number;
         vodUrl: string | null;
         status: CampaignStatus;
         deadline: Date;
@@ -84,6 +94,8 @@ export declare class CampaignService {
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
+        platformFeeAmount: number;
+        totalCharged: number;
         vodUrl: string | null;
         status: CampaignStatus;
         deadline: Date;

@@ -40,6 +40,11 @@ enum WithdrawalStatus {
   REJECTED
 }
 
+enum RevenueSource {
+  CREATOR_FEE
+  CLIPPER_FEE
+}
+
 model User {
   id           String   @id @default(uuid())
   email        String   @unique
@@ -67,31 +72,35 @@ model User {
 }
 
 model Campaign {
-  id              String         @id @default(uuid())
-  title           String
-  description     String
-  creatorId       String
-  creator         User           @relation("CreatorCampaigns", fields: [creatorId], references: [id])
-  rewardPerClip   Float
-  totalBudget     Float
-  remainingBudget Float
-  vodUrl          String?
-  status          CampaignStatus @default(ACTIVE)
-  deadline        DateTime
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  id                String         @id @default(uuid())
+  title             String
+  description       String
+  creatorId         String
+  creator           User           @relation("CreatorCampaigns", fields: [creatorId], references: [id])
+  rewardPerClip     Float
+  totalBudget       Float
+  remainingBudget   Float
+  platformFeeAmount Float          @default(0)
+  totalCharged      Float          @default(0)
+  vodUrl            String?
+  status            CampaignStatus @default(ACTIVE)
+  deadline          DateTime
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
 
   clips Clip[]
 }
 
 model Clip {
-  id           String     @id @default(uuid())
-  title        String
-  videoUrl     String
-  thumbnailUrl String?
-  duration     Float?
-  status       ClipStatus @default(PENDING)
-  feedback     String?
+  id                String     @id @default(uuid())
+  title             String
+  videoUrl          String
+  thumbnailUrl      String?
+  duration          Float?
+  status            ClipStatus @default(PENDING)
+  feedback          String?
+  platformFeeAmount Float?
+  payoutAmount      Float?
 
   campaignId String
   campaign   Campaign @relation(fields: [campaignId], references: [id])
@@ -101,17 +110,8 @@ model Clip {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  dispute   Dispute?
-}
 
-model Transaction {
-  id          String   @id @default(uuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  amount      Float
-  type        String
-  referenceId String?
-  createdAt   DateTime @default(now())
+  dispute Dispute?
 }
 
 model Dispute {
@@ -146,4 +146,22 @@ model WithdrawalRequest {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model PlatformRevenue {
+  id          String        @id @default(uuid())
+  source      RevenueSource
+  amount      Float
+  referenceId String
+  createdAt   DateTime      @default(now())
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  amount      Float
+  type        String
+  referenceId String?
+  createdAt   DateTime @default(now())
 }

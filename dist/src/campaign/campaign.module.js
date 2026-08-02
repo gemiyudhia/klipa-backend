@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const campaign_service_1 = require("./campaign.service");
 const campaign_controller_1 = require("./campaign.controller");
 const prisma_module_1 = require("../prisma/prisma.module");
+const campaign_expiry_task_1 = require("./task/campaign-expiry.task");
 let CampaignModule = class CampaignModule {
 };
 exports.CampaignModule = CampaignModule;
@@ -18,8 +19,8 @@ exports.CampaignModule = CampaignModule = __decorate([
     (0, common_1.Module)({
         imports: [prisma_module_1.PrismaModule],
         controllers: [campaign_controller_1.CampaignController],
-        providers: [campaign_service_1.CampaignService],
-        exports: [campaign_service_1.CampaignService],
+        providers: [campaign_service_1.CampaignService, campaign_expiry_task_1.CampaignExpiryTask],
+        exports: [campaign_service_1.CampaignService, campaign_expiry_task_1.CampaignExpiryTask],
     })
 ], CampaignModule);
 //# sourceMappingURL=campaign.module.js.map

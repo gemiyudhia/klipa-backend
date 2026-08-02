@@ -5,6 +5,7 @@ export * from './enums.js';
 export type User = Prisma.UserModel;
 export type Campaign = Prisma.CampaignModel;
 export type Clip = Prisma.ClipModel;
-export type Transaction = Prisma.TransactionModel;
 export type Dispute = Prisma.DisputeModel;
 export type WithdrawalRequest = Prisma.WithdrawalRequestModel;
+export type PlatformRevenue = Prisma.PlatformRevenueModel;
+export type Transaction = Prisma.TransactionModel;

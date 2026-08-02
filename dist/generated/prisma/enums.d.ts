@@ -30,3 +30,8 @@ export declare const WithdrawalStatus: {
     readonly REJECTED: "REJECTED";
 };
 export type WithdrawalStatus = (typeof WithdrawalStatus)[keyof typeof WithdrawalStatus];
+export declare const RevenueSource: {
+    readonly CREATOR_FEE: "CREATOR_FEE";
+    readonly CLIPPER_FEE: "CLIPPER_FEE";
+};
+export type RevenueSource = (typeof RevenueSource)[keyof typeof RevenueSource];

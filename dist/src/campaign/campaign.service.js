@@ -19,19 +19,63 @@ let CampaignService = class CampaignService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async create(creatorId, createCampaignDto) {
-        return this.prisma.campaign.create({
-            data: {
-                title: createCampaignDto.title,
-                description: createCampaignDto.description,
-                rewardPerClip: createCampaignDto.rewardPerClip,
-                totalBudget: createCampaignDto.totalBudget,
-                remainingBudget: createCampaignDto.totalBudget,
-                vodUrl: createCampaignDto.vodUrl,
-                deadline: new Date(createCampaignDto.deadline),
-                creatorId,
-            },
+    async create(creatorId, dto) {
+        const creator = await this.prisma.user.findUnique({
+            where: { id: creatorId },
         });
+        if (!creator) {
+            throw new common_1.NotFoundException('User tidak ditemukan');
+        }
+        const platformFeeAmount = dto.totalBudget * 0.05;
+        const totalCharged = dto.totalBudget + platformFeeAmount;
+        if (creator.balance < totalCharged) {
+            throw new common_1.BadRequestException(`Saldo tidak mencukupi. Dibutuhkan ${totalCharged} (sudah termasuk fee platform 5%), saldo Anda saat ini ${creator.balance}`);
+        }
+        const campaign = await this.prisma.$transaction(async (tx) => {
+            const newCampaign = await tx.campaign.create({
+                data: {
+                    title: dto.title,
+                    description: dto.description,
+                    rewardPerClip: dto.rewardPerClip,
+                    totalBudget: dto.totalBudget,
+                    remainingBudget: dto.totalBudget,
+                    platformFeeAmount,
+                    totalCharged,
+                    vodUrl: dto.vodUrl,
+                    deadline: new Date(dto.deadline),
+                    creatorId,
+                },
+            });
+            await tx.user.update({
+                where: { id: creatorId },
+                data: { balance: { decrement: totalCharged } },
+            });
+            await tx.transaction.create({
+                data: {
+                    userId: creatorId,
+                    amount: -dto.totalBudget,
+                    type: 'CAMPAIGN_DEPOSIT',
+                    referenceId: newCampaign.id,
+                },
+            });
+            await tx.transaction.create({
+                data: {
+                    userId: creatorId,
+                    amount: -platformFeeAmount,
+                    type: 'CREATOR_PLATFORM_FEE',
+                    referenceId: newCampaign.id,
+                },
+            });
+            await tx.platformRevenue.create({
+                data: {
+                    source: 'CREATOR_FEE',
+                    amount: platformFeeAmount,
+                    referenceId: newCampaign.id,
+                },
+            });
+            return newCampaign;
+        });
+        return campaign;
     }
     async findAllByCreator(creatorId) {
         return this.prisma.campaign.findMany({

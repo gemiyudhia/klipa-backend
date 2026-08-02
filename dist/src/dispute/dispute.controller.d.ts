@@ -45,11 +45,13 @@ export declare class DisputeController {
             createdAt: Date;
             updatedAt: Date;
             title: string;
+            platformFeeAmount: number | null;
             status: import("generated/prisma/enums").ClipStatus;
             videoUrl: string;
             thumbnailUrl: string | null;
             duration: number | null;
             feedback: string | null;
+            payoutAmount: number | null;
             campaignId: string;
             clipperId: string;
         };
@@ -83,6 +85,8 @@ export declare class DisputeController {
                 rewardPerClip: number;
                 totalBudget: number;
                 remainingBudget: number;
+                platformFeeAmount: number;
+                totalCharged: number;
                 vodUrl: string | null;
                 status: import("generated/prisma/enums").CampaignStatus;
                 deadline: Date;
@@ -93,11 +97,13 @@ export declare class DisputeController {
             createdAt: Date;
             updatedAt: Date;
             title: string;
+            platformFeeAmount: number | null;
             status: import("generated/prisma/enums").ClipStatus;
             videoUrl: string;
             thumbnailUrl: string | null;
             duration: number | null;
             feedback: string | null;
+            payoutAmount: number | null;
             campaignId: string;
             clipperId: string;
         };

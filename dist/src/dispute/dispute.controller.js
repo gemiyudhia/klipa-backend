@@ -31,7 +31,7 @@ let DisputeController = class DisputeController {
         return this.disputeService.create(clipperId, createDisputeDto);
     }
     findMine(clipperId) {
-        return this.disputeService.findAllClipper(clipperId);
+        return this.disputeService.findAllByClipper(clipperId);
     }
     findAllPending() {
         return this.disputeService.findAllPending();
