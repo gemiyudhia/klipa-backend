@@ -115,4 +115,24 @@ export class UsersService {
 
     return user;
   }
+
+  async topUp(userId: string, amount: number) {
+    return this.prisma.$transaction(async (tx) => {
+      const user = await tx.user.update({
+        where: { id: userId },
+        data: { balance: { increment: amount } },
+      });
+
+      await tx.transaction.create({
+        data: {
+          userId,
+          amount,
+          type: 'TOPUP_DEMO',
+          referenceId: null,
+        },
+      });
+
+      return user;
+    });
+  }
 }

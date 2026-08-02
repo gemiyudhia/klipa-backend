@@ -22,10 +22,13 @@ const enums_1 = require("../../generated/prisma/enums");
 const current_user_decorator_1 = require("../auth/decorators/current-user.decorator");
 const jwt_auth_guard_1 = require("../common/guards/jwt-auth.guard");
 const roles_guard_1 = require("../common/guards/roles.guard");
+const campaign_expiry_task_1 = require("./task/campaign-expiry.task");
 let CampaignController = class CampaignController {
     campaignService;
-    constructor(campaignService) {
+    campaignExpiryTask;
+    constructor(campaignService, campaignExpiryTask) {
         this.campaignService = campaignService;
+        this.campaignExpiryTask = campaignExpiryTask;
     }
     create(creatorId, createCampaignDto) {
         return this.campaignService.create(creatorId, createCampaignDto);
@@ -44,6 +47,12 @@ let CampaignController = class CampaignController {
     }
     remove(id, user) {
         return this.campaignService.remove(id, user.sub, user.role);
+    }
+    async triggerExpiryCheck() {
+        await this.campaignExpiryTask.handleExpiredCampaigns();
+        return {
+            message: 'Pengecekan campaign expired berhasil dijalankan manual',
+        };
     }
 };
 exports.CampaignController = CampaignController;
@@ -98,9 +107,17 @@ __decorate([
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
 ], CampaignController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Post)('trigger-expiry-check'),
+    (0, roles_decorator_1.Roles)(enums_1.Role.ADMIN),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], CampaignController.prototype, "triggerExpiryCheck", null);
 exports.CampaignController = CampaignController = __decorate([
     (0, common_1.Controller)('campaign'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuards, roles_guard_1.RolesGuard),
-    __metadata("design:paramtypes", [campaign_service_1.CampaignService])
+    __metadata("design:paramtypes", [campaign_service_1.CampaignService,
+        campaign_expiry_task_1.CampaignExpiryTask])
 ], CampaignController);
 //# sourceMappingURL=campaign.controller.js.map

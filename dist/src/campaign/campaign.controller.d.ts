@@ -2,9 +2,11 @@ import { CampaignService } from './campaign.service';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
 import { UpdateCampaignDto } from './dto/update-campaign.dto';
 import { Role } from "../../generated/prisma/enums";
+import { CampaignExpiryTask } from './task/campaign-expiry.task';
 export declare class CampaignController {
     private readonly campaignService;
-    constructor(campaignService: CampaignService);
+    private readonly campaignExpiryTask;
+    constructor(campaignService: CampaignService, campaignExpiryTask: CampaignExpiryTask);
     create(creatorId: string, createCampaignDto: CreateCampaignDto): Promise<{
         id: string;
         createdAt: Date;
@@ -14,6 +16,8 @@ export declare class CampaignController {
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
+        platformFeeAmount: number;
+        totalCharged: number;
         vodUrl: string | null;
         status: import("generated/prisma/enums").CampaignStatus;
         deadline: Date;
@@ -28,6 +32,8 @@ export declare class CampaignController {
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
+        platformFeeAmount: number;
+        totalCharged: number;
         vodUrl: string | null;
         status: import("generated/prisma/enums").CampaignStatus;
         deadline: Date;
@@ -42,6 +48,8 @@ export declare class CampaignController {
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
+        platformFeeAmount: number;
+        totalCharged: number;
         vodUrl: string | null;
         status: import("generated/prisma/enums").CampaignStatus;
         deadline: Date;
@@ -56,6 +64,8 @@ export declare class CampaignController {
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
+        platformFeeAmount: number;
+        totalCharged: number;
         vodUrl: string | null;
         status: import("generated/prisma/enums").CampaignStatus;
         deadline: Date;
@@ -73,6 +83,8 @@ export declare class CampaignController {
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
+        platformFeeAmount: number;
+        totalCharged: number;
         vodUrl: string | null;
         status: import("generated/prisma/enums").CampaignStatus;
         deadline: Date;
@@ -90,9 +102,14 @@ export declare class CampaignController {
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
+        platformFeeAmount: number;
+        totalCharged: number;
         vodUrl: string | null;
         status: import("generated/prisma/enums").CampaignStatus;
         deadline: Date;
         creatorId: string;
+    }>;
+    triggerExpiryCheck(): Promise<{
+        message: string;
     }>;
 }

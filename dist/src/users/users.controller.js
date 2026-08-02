@@ -21,6 +21,8 @@ const jwt_auth_guard_1 = require("../common/guards/jwt-auth.guard");
 const roles_guard_1 = require("../common/guards/roles.guard");
 const roles_decorator_1 = require("../auth/decorators/roles.decorator");
 const enums_1 = require("../../generated/prisma/enums");
+const current_user_decorator_1 = require("../auth/decorators/current-user.decorator");
+const topup_dto_1 = require("./dto/topup.dto");
 let UsersController = class UsersController {
     usersService;
     constructor(usersService) {
@@ -40,6 +42,9 @@ let UsersController = class UsersController {
     }
     remove(id) {
         return this.usersService.remove(id);
+    }
+    topUp(userId, topUpDto) {
+        return this.usersService.topUp(userId, topUpDto.amount);
     }
 };
 exports.UsersController = UsersController;
@@ -80,6 +85,15 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Patch)('me/topup'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuards),
+    __param(0, (0, current_user_decorator_1.CurrentUser)('sub')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, topup_dto_1.TopUpDto]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "topUp", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

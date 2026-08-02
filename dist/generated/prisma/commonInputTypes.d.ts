@@ -214,6 +214,21 @@ export type EnumWithdrawalStatusWithAggregatesFilter<$PrismaModel = never> = {
     _min?: Prisma.NestedEnumWithdrawalStatusFilter<$PrismaModel>;
     _max?: Prisma.NestedEnumWithdrawalStatusFilter<$PrismaModel>;
 };
+export type EnumRevenueSourceFilter<$PrismaModel = never> = {
+    equals?: $Enums.RevenueSource | Prisma.EnumRevenueSourceFieldRefInput<$PrismaModel>;
+    in?: $Enums.RevenueSource[] | Prisma.ListEnumRevenueSourceFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.RevenueSource[] | Prisma.ListEnumRevenueSourceFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumRevenueSourceFilter<$PrismaModel> | $Enums.RevenueSource;
+};
+export type EnumRevenueSourceWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RevenueSource | Prisma.EnumRevenueSourceFieldRefInput<$PrismaModel>;
+    in?: $Enums.RevenueSource[] | Prisma.ListEnumRevenueSourceFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.RevenueSource[] | Prisma.ListEnumRevenueSourceFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumRevenueSourceWithAggregatesFilter<$PrismaModel> | $Enums.RevenueSource;
+    _count?: Prisma.NestedIntFilter<$PrismaModel>;
+    _min?: Prisma.NestedEnumRevenueSourceFilter<$PrismaModel>;
+    _max?: Prisma.NestedEnumRevenueSourceFilter<$PrismaModel>;
+};
 export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | Prisma.StringFieldRefInput<$PrismaModel>;
     in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>;
@@ -439,4 +454,19 @@ export type NestedEnumWithdrawalStatusWithAggregatesFilter<$PrismaModel = never>
     _count?: Prisma.NestedIntFilter<$PrismaModel>;
     _min?: Prisma.NestedEnumWithdrawalStatusFilter<$PrismaModel>;
     _max?: Prisma.NestedEnumWithdrawalStatusFilter<$PrismaModel>;
+};
+export type NestedEnumRevenueSourceFilter<$PrismaModel = never> = {
+    equals?: $Enums.RevenueSource | Prisma.EnumRevenueSourceFieldRefInput<$PrismaModel>;
+    in?: $Enums.RevenueSource[] | Prisma.ListEnumRevenueSourceFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.RevenueSource[] | Prisma.ListEnumRevenueSourceFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumRevenueSourceFilter<$PrismaModel> | $Enums.RevenueSource;
+};
+export type NestedEnumRevenueSourceWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RevenueSource | Prisma.EnumRevenueSourceFieldRefInput<$PrismaModel>;
+    in?: $Enums.RevenueSource[] | Prisma.ListEnumRevenueSourceFieldRefInput<$PrismaModel>;
+    notIn?: $Enums.RevenueSource[] | Prisma.ListEnumRevenueSourceFieldRefInput<$PrismaModel>;
+    not?: Prisma.NestedEnumRevenueSourceWithAggregatesFilter<$PrismaModel> | $Enums.RevenueSource;
+    _count?: Prisma.NestedIntFilter<$PrismaModel>;
+    _min?: Prisma.NestedEnumRevenueSourceFilter<$PrismaModel>;
+    _max?: Prisma.NestedEnumRevenueSourceFilter<$PrismaModel>;
 };

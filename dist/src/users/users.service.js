@@ -139,6 +139,23 @@ let UsersService = class UsersService {
             throw new common_1.NotFoundException(`user with id ${id} not found`);
         return user;
     }
+    async topUp(userId, amount) {
+        return this.prisma.$transaction(async (tx) => {
+            const user = await tx.user.update({
+                where: { id: userId },
+                data: { balance: { increment: amount } },
+            });
+            await tx.transaction.create({
+                data: {
+                    userId,
+                    amount,
+                    type: 'TOPUP_DEMO',
+                    referenceId: null,
+                },
+            });
+            return user;
+        });
+    }
 };
 exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([

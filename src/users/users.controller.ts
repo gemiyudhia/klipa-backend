@@ -15,6 +15,8 @@ import { JwtAuthGuards } from 'src/common/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'generated/prisma/enums';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { TopUpDto } from './dto/topup.dto';
 
 @Controller('users')
 export class UsersController {
@@ -45,5 +47,11 @@ export class UsersController {
   @Roles(Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
+  }
+
+  @Patch('me/topup')
+  @UseGuards(JwtAuthGuards)
+  topUp(@CurrentUser('sub') userId: string, @Body() topUpDto: TopUpDto) {
+    return this.usersService.topUp(userId, topUpDto.amount);
   }
 }

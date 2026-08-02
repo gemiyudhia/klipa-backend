@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WithdrawalStatus = exports.DisputeStatus = exports.ClipStatus = exports.CampaignStatus = exports.Role = void 0;
+exports.RevenueSource = exports.WithdrawalStatus = exports.DisputeStatus = exports.ClipStatus = exports.CampaignStatus = exports.Role = void 0;
 exports.Role = {
     CREATOR: 'CREATOR',
     CLIPPER: 'CLIPPER',
@@ -27,5 +27,9 @@ exports.WithdrawalStatus = {
     PENDING: 'PENDING',
     APPROVED: 'APPROVED',
     REJECTED: 'REJECTED'
+};
+exports.RevenueSource = {
+    CREATOR_FEE: 'CREATOR_FEE',
+    CLIPPER_FEE: 'CLIPPER_FEE'
 };
 //# sourceMappingURL=enums.js.map

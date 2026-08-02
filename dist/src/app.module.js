@@ -18,12 +18,14 @@ const campaign_module_1 = require("./campaign/campaign.module");
 const clip_module_1 = require("./clip/clip.module");
 const dispute_module_1 = require("./dispute/dispute.module");
 const withdrawal_module_1 = require("./withdrawal/withdrawal.module");
+const schedule_1 = require("@nestjs/schedule");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            schedule_1.ScheduleModule.forRoot(),
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
             }),

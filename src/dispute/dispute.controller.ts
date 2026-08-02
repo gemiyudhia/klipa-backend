@@ -35,7 +35,7 @@ export class DisputeController {
   @Get('mine')
   @Roles(Role.CLIPPER)
   findMine(@CurrentUser('sub') clipperId: string) {
-    return this.disputeService.findAllClipper(clipperId);
+    return this.disputeService.findAllByClipper(clipperId);
   }
 
   @Get('pending')

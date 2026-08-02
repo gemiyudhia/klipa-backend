@@ -11,9 +11,13 @@ export type AggregateClip = {
 };
 export type ClipAvgAggregateOutputType = {
     duration: number | null;
+    platformFeeAmount: number | null;
+    payoutAmount: number | null;
 };
 export type ClipSumAggregateOutputType = {
     duration: number | null;
+    platformFeeAmount: number | null;
+    payoutAmount: number | null;
 };
 export type ClipMinAggregateOutputType = {
     id: string | null;
@@ -23,6 +27,8 @@ export type ClipMinAggregateOutputType = {
     duration: number | null;
     status: $Enums.ClipStatus | null;
     feedback: string | null;
+    platformFeeAmount: number | null;
+    payoutAmount: number | null;
     campaignId: string | null;
     clipperId: string | null;
     createdAt: Date | null;
@@ -36,6 +42,8 @@ export type ClipMaxAggregateOutputType = {
     duration: number | null;
     status: $Enums.ClipStatus | null;
     feedback: string | null;
+    platformFeeAmount: number | null;
+    payoutAmount: number | null;
     campaignId: string | null;
     clipperId: string | null;
     createdAt: Date | null;
@@ -49,6 +57,8 @@ export type ClipCountAggregateOutputType = {
     duration: number;
     status: number;
     feedback: number;
+    platformFeeAmount: number;
+    payoutAmount: number;
     campaignId: number;
     clipperId: number;
     createdAt: number;
@@ -57,9 +67,13 @@ export type ClipCountAggregateOutputType = {
 };
 export type ClipAvgAggregateInputType = {
     duration?: true;
+    platformFeeAmount?: true;
+    payoutAmount?: true;
 };
 export type ClipSumAggregateInputType = {
     duration?: true;
+    platformFeeAmount?: true;
+    payoutAmount?: true;
 };
 export type ClipMinAggregateInputType = {
     id?: true;
@@ -69,6 +83,8 @@ export type ClipMinAggregateInputType = {
     duration?: true;
     status?: true;
     feedback?: true;
+    platformFeeAmount?: true;
+    payoutAmount?: true;
     campaignId?: true;
     clipperId?: true;
     createdAt?: true;
@@ -82,6 +98,8 @@ export type ClipMaxAggregateInputType = {
     duration?: true;
     status?: true;
     feedback?: true;
+    platformFeeAmount?: true;
+    payoutAmount?: true;
     campaignId?: true;
     clipperId?: true;
     createdAt?: true;
@@ -95,6 +113,8 @@ export type ClipCountAggregateInputType = {
     duration?: true;
     status?: true;
     feedback?: true;
+    platformFeeAmount?: true;
+    payoutAmount?: true;
     campaignId?: true;
     clipperId?: true;
     createdAt?: true;
@@ -137,6 +157,8 @@ export type ClipGroupByOutputType = {
     duration: number | null;
     status: $Enums.ClipStatus;
     feedback: string | null;
+    platformFeeAmount: number | null;
+    payoutAmount: number | null;
     campaignId: string;
     clipperId: string;
     createdAt: Date;
@@ -161,6 +183,8 @@ export type ClipWhereInput = {
     duration?: Prisma.FloatNullableFilter<"Clip"> | number | null;
     status?: Prisma.EnumClipStatusFilter<"Clip"> | $Enums.ClipStatus;
     feedback?: Prisma.StringNullableFilter<"Clip"> | string | null;
+    platformFeeAmount?: Prisma.FloatNullableFilter<"Clip"> | number | null;
+    payoutAmount?: Prisma.FloatNullableFilter<"Clip"> | number | null;
     campaignId?: Prisma.StringFilter<"Clip"> | string;
     clipperId?: Prisma.StringFilter<"Clip"> | string;
     createdAt?: Prisma.DateTimeFilter<"Clip"> | Date | string;
@@ -177,6 +201,8 @@ export type ClipOrderByWithRelationInput = {
     duration?: Prisma.SortOrderInput | Prisma.SortOrder;
     status?: Prisma.SortOrder;
     feedback?: Prisma.SortOrderInput | Prisma.SortOrder;
+    platformFeeAmount?: Prisma.SortOrderInput | Prisma.SortOrder;
+    payoutAmount?: Prisma.SortOrderInput | Prisma.SortOrder;
     campaignId?: Prisma.SortOrder;
     clipperId?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
@@ -196,6 +222,8 @@ export type ClipWhereUniqueInput = Prisma.AtLeast<{
     duration?: Prisma.FloatNullableFilter<"Clip"> | number | null;
     status?: Prisma.EnumClipStatusFilter<"Clip"> | $Enums.ClipStatus;
     feedback?: Prisma.StringNullableFilter<"Clip"> | string | null;
+    platformFeeAmount?: Prisma.FloatNullableFilter<"Clip"> | number | null;
+    payoutAmount?: Prisma.FloatNullableFilter<"Clip"> | number | null;
     campaignId?: Prisma.StringFilter<"Clip"> | string;
     clipperId?: Prisma.StringFilter<"Clip"> | string;
     createdAt?: Prisma.DateTimeFilter<"Clip"> | Date | string;
@@ -212,6 +240,8 @@ export type ClipOrderByWithAggregationInput = {
     duration?: Prisma.SortOrderInput | Prisma.SortOrder;
     status?: Prisma.SortOrder;
     feedback?: Prisma.SortOrderInput | Prisma.SortOrder;
+    platformFeeAmount?: Prisma.SortOrderInput | Prisma.SortOrder;
+    payoutAmount?: Prisma.SortOrderInput | Prisma.SortOrder;
     campaignId?: Prisma.SortOrder;
     clipperId?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
@@ -233,6 +263,8 @@ export type ClipScalarWhereWithAggregatesInput = {
     duration?: Prisma.FloatNullableWithAggregatesFilter<"Clip"> | number | null;
     status?: Prisma.EnumClipStatusWithAggregatesFilter<"Clip"> | $Enums.ClipStatus;
     feedback?: Prisma.StringNullableWithAggregatesFilter<"Clip"> | string | null;
+    platformFeeAmount?: Prisma.FloatNullableWithAggregatesFilter<"Clip"> | number | null;
+    payoutAmount?: Prisma.FloatNullableWithAggregatesFilter<"Clip"> | number | null;
     campaignId?: Prisma.StringWithAggregatesFilter<"Clip"> | string;
     clipperId?: Prisma.StringWithAggregatesFilter<"Clip"> | string;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"Clip"> | Date | string;
@@ -246,6 +278,8 @@ export type ClipCreateInput = {
     duration?: number | null;
     status?: $Enums.ClipStatus;
     feedback?: string | null;
+    platformFeeAmount?: number | null;
+    payoutAmount?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     campaign: Prisma.CampaignCreateNestedOneWithoutClipsInput;
@@ -260,6 +294,8 @@ export type ClipUncheckedCreateInput = {
     duration?: number | null;
     status?: $Enums.ClipStatus;
     feedback?: string | null;
+    platformFeeAmount?: number | null;
+    payoutAmount?: number | null;
     campaignId: string;
     clipperId: string;
     createdAt?: Date | string;
@@ -274,6 +310,8 @@ export type ClipUpdateInput = {
     duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     status?: Prisma.EnumClipStatusFieldUpdateOperationsInput | $Enums.ClipStatus;
     feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    platformFeeAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    payoutAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     campaign?: Prisma.CampaignUpdateOneRequiredWithoutClipsNestedInput;
@@ -288,6 +326,8 @@ export type ClipUncheckedUpdateInput = {
     duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     status?: Prisma.EnumClipStatusFieldUpdateOperationsInput | $Enums.ClipStatus;
     feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    platformFeeAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    payoutAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     campaignId?: Prisma.StringFieldUpdateOperationsInput | string;
     clipperId?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -302,6 +342,8 @@ export type ClipCreateManyInput = {
     duration?: number | null;
     status?: $Enums.ClipStatus;
     feedback?: string | null;
+    platformFeeAmount?: number | null;
+    payoutAmount?: number | null;
     campaignId: string;
     clipperId: string;
     createdAt?: Date | string;
@@ -315,6 +357,8 @@ export type ClipUpdateManyMutationInput = {
     duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     status?: Prisma.EnumClipStatusFieldUpdateOperationsInput | $Enums.ClipStatus;
     feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    platformFeeAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    payoutAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -326,6 +370,8 @@ export type ClipUncheckedUpdateManyInput = {
     duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     status?: Prisma.EnumClipStatusFieldUpdateOperationsInput | $Enums.ClipStatus;
     feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    platformFeeAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    payoutAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     campaignId?: Prisma.StringFieldUpdateOperationsInput | string;
     clipperId?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -347,6 +393,8 @@ export type ClipCountOrderByAggregateInput = {
     duration?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
     feedback?: Prisma.SortOrder;
+    platformFeeAmount?: Prisma.SortOrder;
+    payoutAmount?: Prisma.SortOrder;
     campaignId?: Prisma.SortOrder;
     clipperId?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
@@ -354,6 +402,8 @@ export type ClipCountOrderByAggregateInput = {
 };
 export type ClipAvgOrderByAggregateInput = {
     duration?: Prisma.SortOrder;
+    platformFeeAmount?: Prisma.SortOrder;
+    payoutAmount?: Prisma.SortOrder;
 };
 export type ClipMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -363,6 +413,8 @@ export type ClipMaxOrderByAggregateInput = {
     duration?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
     feedback?: Prisma.SortOrder;
+    platformFeeAmount?: Prisma.SortOrder;
+    payoutAmount?: Prisma.SortOrder;
     campaignId?: Prisma.SortOrder;
     clipperId?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
@@ -376,6 +428,8 @@ export type ClipMinOrderByAggregateInput = {
     duration?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
     feedback?: Prisma.SortOrder;
+    platformFeeAmount?: Prisma.SortOrder;
+    payoutAmount?: Prisma.SortOrder;
     campaignId?: Prisma.SortOrder;
     clipperId?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
@@ -383,6 +437,8 @@ export type ClipMinOrderByAggregateInput = {
 };
 export type ClipSumOrderByAggregateInput = {
     duration?: Prisma.SortOrder;
+    platformFeeAmount?: Prisma.SortOrder;
+    payoutAmount?: Prisma.SortOrder;
 };
 export type ClipScalarRelationFilter = {
     is?: Prisma.ClipWhereInput;
@@ -494,6 +550,8 @@ export type ClipCreateWithoutClipperInput = {
     duration?: number | null;
     status?: $Enums.ClipStatus;
     feedback?: string | null;
+    platformFeeAmount?: number | null;
+    payoutAmount?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     campaign: Prisma.CampaignCreateNestedOneWithoutClipsInput;
@@ -507,6 +565,8 @@ export type ClipUncheckedCreateWithoutClipperInput = {
     duration?: number | null;
     status?: $Enums.ClipStatus;
     feedback?: string | null;
+    platformFeeAmount?: number | null;
+    payoutAmount?: number | null;
     campaignId: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
@@ -544,6 +604,8 @@ export type ClipScalarWhereInput = {
     duration?: Prisma.FloatNullableFilter<"Clip"> | number | null;
     status?: Prisma.EnumClipStatusFilter<"Clip"> | $Enums.ClipStatus;
     feedback?: Prisma.StringNullableFilter<"Clip"> | string | null;
+    platformFeeAmount?: Prisma.FloatNullableFilter<"Clip"> | number | null;
+    payoutAmount?: Prisma.FloatNullableFilter<"Clip"> | number | null;
     campaignId?: Prisma.StringFilter<"Clip"> | string;
     clipperId?: Prisma.StringFilter<"Clip"> | string;
     createdAt?: Prisma.DateTimeFilter<"Clip"> | Date | string;
@@ -557,6 +619,8 @@ export type ClipCreateWithoutCampaignInput = {
     duration?: number | null;
     status?: $Enums.ClipStatus;
     feedback?: string | null;
+    platformFeeAmount?: number | null;
+    payoutAmount?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     clipper: Prisma.UserCreateNestedOneWithoutClipsInput;
@@ -570,6 +634,8 @@ export type ClipUncheckedCreateWithoutCampaignInput = {
     duration?: number | null;
     status?: $Enums.ClipStatus;
     feedback?: string | null;
+    platformFeeAmount?: number | null;
+    payoutAmount?: number | null;
     clipperId: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
@@ -604,6 +670,8 @@ export type ClipCreateWithoutDisputeInput = {
     duration?: number | null;
     status?: $Enums.ClipStatus;
     feedback?: string | null;
+    platformFeeAmount?: number | null;
+    payoutAmount?: number | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
     campaign: Prisma.CampaignCreateNestedOneWithoutClipsInput;
@@ -617,6 +685,8 @@ export type ClipUncheckedCreateWithoutDisputeInput = {
     duration?: number | null;
     status?: $Enums.ClipStatus;
     feedback?: string | null;
+    platformFeeAmount?: number | null;
+    payoutAmount?: number | null;
     campaignId: string;
     clipperId: string;
     createdAt?: Date | string;
@@ -643,6 +713,8 @@ export type ClipUpdateWithoutDisputeInput = {
     duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     status?: Prisma.EnumClipStatusFieldUpdateOperationsInput | $Enums.ClipStatus;
     feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    platformFeeAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    payoutAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     campaign?: Prisma.CampaignUpdateOneRequiredWithoutClipsNestedInput;
@@ -656,6 +728,8 @@ export type ClipUncheckedUpdateWithoutDisputeInput = {
     duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     status?: Prisma.EnumClipStatusFieldUpdateOperationsInput | $Enums.ClipStatus;
     feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    platformFeeAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    payoutAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     campaignId?: Prisma.StringFieldUpdateOperationsInput | string;
     clipperId?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -669,6 +743,8 @@ export type ClipCreateManyClipperInput = {
     duration?: number | null;
     status?: $Enums.ClipStatus;
     feedback?: string | null;
+    platformFeeAmount?: number | null;
+    payoutAmount?: number | null;
     campaignId: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
@@ -681,6 +757,8 @@ export type ClipUpdateWithoutClipperInput = {
     duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     status?: Prisma.EnumClipStatusFieldUpdateOperationsInput | $Enums.ClipStatus;
     feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    platformFeeAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    payoutAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     campaign?: Prisma.CampaignUpdateOneRequiredWithoutClipsNestedInput;
@@ -694,6 +772,8 @@ export type ClipUncheckedUpdateWithoutClipperInput = {
     duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     status?: Prisma.EnumClipStatusFieldUpdateOperationsInput | $Enums.ClipStatus;
     feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    platformFeeAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    payoutAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     campaignId?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -707,6 +787,8 @@ export type ClipUncheckedUpdateManyWithoutClipperInput = {
     duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     status?: Prisma.EnumClipStatusFieldUpdateOperationsInput | $Enums.ClipStatus;
     feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    platformFeeAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    payoutAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     campaignId?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -719,6 +801,8 @@ export type ClipCreateManyCampaignInput = {
     duration?: number | null;
     status?: $Enums.ClipStatus;
     feedback?: string | null;
+    platformFeeAmount?: number | null;
+    payoutAmount?: number | null;
     clipperId: string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
@@ -731,6 +815,8 @@ export type ClipUpdateWithoutCampaignInput = {
     duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     status?: Prisma.EnumClipStatusFieldUpdateOperationsInput | $Enums.ClipStatus;
     feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    platformFeeAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    payoutAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     clipper?: Prisma.UserUpdateOneRequiredWithoutClipsNestedInput;
@@ -744,6 +830,8 @@ export type ClipUncheckedUpdateWithoutCampaignInput = {
     duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     status?: Prisma.EnumClipStatusFieldUpdateOperationsInput | $Enums.ClipStatus;
     feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    platformFeeAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    payoutAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     clipperId?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -757,6 +845,8 @@ export type ClipUncheckedUpdateManyWithoutCampaignInput = {
     duration?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     status?: Prisma.EnumClipStatusFieldUpdateOperationsInput | $Enums.ClipStatus;
     feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    platformFeeAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    payoutAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
     clipperId?: Prisma.StringFieldUpdateOperationsInput | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -769,6 +859,8 @@ export type ClipSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     duration?: boolean;
     status?: boolean;
     feedback?: boolean;
+    platformFeeAmount?: boolean;
+    payoutAmount?: boolean;
     campaignId?: boolean;
     clipperId?: boolean;
     createdAt?: boolean;
@@ -785,6 +877,8 @@ export type ClipSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     duration?: boolean;
     status?: boolean;
     feedback?: boolean;
+    platformFeeAmount?: boolean;
+    payoutAmount?: boolean;
     campaignId?: boolean;
     clipperId?: boolean;
     createdAt?: boolean;
@@ -800,6 +894,8 @@ export type ClipSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     duration?: boolean;
     status?: boolean;
     feedback?: boolean;
+    platformFeeAmount?: boolean;
+    payoutAmount?: boolean;
     campaignId?: boolean;
     clipperId?: boolean;
     createdAt?: boolean;
@@ -815,12 +911,14 @@ export type ClipSelectScalar = {
     duration?: boolean;
     status?: boolean;
     feedback?: boolean;
+    platformFeeAmount?: boolean;
+    payoutAmount?: boolean;
     campaignId?: boolean;
     clipperId?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 };
-export type ClipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "videoUrl" | "thumbnailUrl" | "duration" | "status" | "feedback" | "campaignId" | "clipperId" | "createdAt" | "updatedAt", ExtArgs["result"]["clip"]>;
+export type ClipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "videoUrl" | "thumbnailUrl" | "duration" | "status" | "feedback" | "platformFeeAmount" | "payoutAmount" | "campaignId" | "clipperId" | "createdAt" | "updatedAt", ExtArgs["result"]["clip"]>;
 export type ClipInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     campaign?: boolean | Prisma.CampaignDefaultArgs<ExtArgs>;
     clipper?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -849,6 +947,8 @@ export type $ClipPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
         duration: number | null;
         status: $Enums.ClipStatus;
         feedback: string | null;
+        platformFeeAmount: number | null;
+        payoutAmount: number | null;
         campaignId: string;
         clipperId: string;
         createdAt: Date;
@@ -920,6 +1020,8 @@ export interface ClipFieldRefs {
     readonly duration: Prisma.FieldRef<"Clip", 'Float'>;
     readonly status: Prisma.FieldRef<"Clip", 'ClipStatus'>;
     readonly feedback: Prisma.FieldRef<"Clip", 'String'>;
+    readonly platformFeeAmount: Prisma.FieldRef<"Clip", 'Float'>;
+    readonly payoutAmount: Prisma.FieldRef<"Clip", 'Float'>;
     readonly campaignId: Prisma.FieldRef<"Clip", 'String'>;
     readonly clipperId: Prisma.FieldRef<"Clip", 'String'>;
     readonly createdAt: Prisma.FieldRef<"Clip", 'DateTime'>;

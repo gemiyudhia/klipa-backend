@@ -2,6 +2,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Role } from "../../generated/prisma/enums";
+import { TopUpDto } from './dto/topup.dto';
 export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
@@ -30,4 +31,19 @@ export declare class UsersController {
         createdAt: Date;
     }>;
     remove(id: string): Promise<string>;
+    topUp(userId: string, topUpDto: TopUpDto): Promise<{
+        name: string;
+        email: string;
+        id: string;
+        passwordHash: string;
+        avatarUrl: string | null;
+        role: Role;
+        balance: number;
+        createdAt: Date;
+        updatedAt: Date;
+        hashedRefreshToken: string | null;
+        bankName: string | null;
+        bankAccountNumber: string | null;
+        bankAccountName: string | null;
+    }>;
 }

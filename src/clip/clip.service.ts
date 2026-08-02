@@ -1,28 +1,28 @@
 import {
-  BadRequestException,
-  ForbiddenException,
   Injectable,
   NotFoundException,
+  ForbiddenException,
+  BadRequestException,
 } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateClipDto } from './dto/create-clip.dto';
 import { UpdateClipDto } from './dto/update-clip.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { assertOwnerOrAdmin } from 'src/common/utils/authorization.util';
-import { ClipStatus, Role } from 'generated/prisma/enums';
 import { ReviewClipDto } from './dto/review-clip.dto';
+import { assertOwnerOrAdmin } from 'src/common/utils/authorization.util';
+import { Role, ClipStatus } from 'generated/prisma/enums';
 
 @Injectable()
 export class ClipService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
-  async create(clipperId: string, createClipDto: CreateClipDto) {
+  async create(clipperId: string, dto: CreateClipDto) {
     const campaign = await this.prisma.campaign.findUnique({
-      where: {
-        id: createClipDto.campaignId,
-      },
+      where: { id: dto.campaignId },
     });
 
-    if (!campaign) throw new NotFoundException('Campaign tidak ditemukan');
+    if (!campaign) {
+      throw new NotFoundException('Campaign tidak ditemukan');
+    }
 
     if (campaign.status !== 'ACTIVE') {
       throw new BadRequestException(
@@ -30,102 +30,87 @@ export class ClipService {
       );
     }
 
-    return this.prisma.clip.create({
-      data: {
-        title: createClipDto.title,
-        videoUrl: createClipDto.videoUrl,
-        thumbnailUrl: createClipDto.thumbnailUrl,
-        duration: createClipDto.duration,
-        campaignId: createClipDto.campaignId,
-        clipperId,
-      },
+    return this.prisma.$transaction(async (tx) => {
+      const lockResult = await tx.campaign.updateMany({
+        where: {
+          id: dto.campaignId,
+          remainingBudget: { gte: campaign.rewardPerClip },
+        },
+        data: {
+          remainingBudget: { decrement: campaign.rewardPerClip },
+        },
+      });
+
+      if (lockResult.count === 0) {
+        throw new BadRequestException('Budget campaign ini sudah penuh/habis');
+      }
+
+      return tx.clip.create({
+        data: {
+          title: dto.title,
+          videoUrl: dto.videoUrl,
+          thumbnailUrl: dto.thumbnailUrl,
+          duration: dto.duration,
+          campaignId: dto.campaignId,
+          clipperId,
+        },
+      });
     });
   }
 
   async findAllByClipper(clipperId: string) {
     return this.prisma.clip.findMany({
-      where: {
-        clipperId,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-      include: {
-        campaign: {
-          select: {
-            id: true,
-            title: true,
-          },
-        },
-      },
+      where: { clipperId },
+      orderBy: { createdAt: 'desc' },
+      include: { campaign: { select: { id: true, title: true } } },
     });
   }
 
   async findAllByCampaign(campaignId: string, userId: string, userRole: Role) {
     const campaign = await this.prisma.campaign.findUnique({
-      where: {
-        id: campaignId,
-      },
+      where: { id: campaignId },
     });
 
-    if (!campaign) throw new NotFoundException('Campaign tidak ditemukan');
+    if (!campaign) {
+      throw new NotFoundException('Campaign tidak ditemukan');
+    }
 
     assertOwnerOrAdmin(campaign.creatorId, userId, userRole);
 
     return this.prisma.clip.findMany({
-      where: {
-        id: campaignId,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-      include: {
-        clipper: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-      },
+      where: { campaignId },
+      orderBy: { createdAt: 'desc' },
+      include: { clipper: { select: { id: true, name: true } } },
     });
   }
 
   async findOne(id: string) {
     const clip = await this.prisma.clip.findUnique({
-      where: {
-        id,
-      },
-      include: {
-        campaign: true,
-      },
+      where: { id },
+      include: { campaign: true },
     });
 
-    if (!clip) throw new NotFoundException('Klip tidak ditemukan');
+    if (!clip) {
+      throw new NotFoundException('Klip tidak ditemukan');
+    }
 
     return clip;
   }
 
-  async update(
-    id: string,
-    userId: string,
-    userRole: Role,
-    updateClipDto: UpdateClipDto,
-  ) {
+  async update(id: string, userId: string, userRole: Role, dto: UpdateClipDto) {
     const clip = await this.findOne(id);
-
     assertOwnerOrAdmin(clip.clipperId, userId, userRole);
 
-    if (clip.status === ClipStatus.APPROVED && userRole !== Role.ADMIN)
+    if (clip.status === ClipStatus.APPROVED && userRole !== Role.ADMIN) {
       throw new ForbiddenException(
         'Klip yang sudah disetujui tidak bisa diubah lagi',
       );
+    }
 
     return this.prisma.clip.update({
-      where: {
-        id,
-      },
+      where: { id },
       data: {
-        ...updateClipDto,
+        ...dto,
         status:
           clip.status === ClipStatus.REVISION_REQUESTED
             ? ClipStatus.PENDING
@@ -136,69 +121,100 @@ export class ClipService {
 
   async remove(id: string, userId: string, userRole: Role) {
     const clip = await this.findOne(id);
-
     assertOwnerOrAdmin(clip.clipperId, userId, userRole);
 
     if (clip.status === ClipStatus.APPROVED && userRole !== Role.ADMIN) {
       throw new ForbiddenException(
-        'klip yang sudah disetujui tidak dapat dihapus',
+        'Klip yang sudah disetujui tidak bisa dihapus',
       );
     }
 
-    return this.prisma.clip.delete({ where: { id } });
+    return this.prisma.$transaction(async (tx) => {
+      const deletedClip = await tx.clip.delete({ where: { id } });
+
+      if (clip.status !== ClipStatus.APPROVED) {
+        await tx.campaign.update({
+          where: { id: clip.campaignId },
+          data: { remainingBudget: { increment: clip.campaign.rewardPerClip } },
+        });
+      }
+
+      return deletedClip;
+    });
   }
 
   async review(
     id: string,
     creatorId: string,
     userRole: Role,
-    reviewClipDto: ReviewClipDto,
+    dto: ReviewClipDto,
   ) {
     const clip = await this.findOne(id);
-
     assertOwnerOrAdmin(clip.campaign.creatorId, creatorId, userRole);
 
     if (clip.status === ClipStatus.APPROVED) {
       throw new BadRequestException('Klip ini sudah disetujui sebelumnya');
     }
 
-    const updateClip = await this.prisma.clip.update({
-      where: { id },
-      data: {
-        status: reviewClipDto.status,
-        feedback: reviewClipDto.feedback,
-      },
-    });
+    if (dto.status === 'REJECTED') {
+      return this.prisma.$transaction(async (tx) => {
+        const updatedClip = await tx.clip.update({
+          where: { id },
+          data: { status: ClipStatus.REJECTED, feedback: dto.feedback },
+        });
 
-    if (reviewClipDto.status === ClipStatus.APPROVED) {
-      await this.prisma.$transaction([
-        this.prisma.campaign.update({
-          where: {
-            id: clip.campaignId,
-          },
-          data: {
-            remainingBudget: { decrement: clip.campaign.rewardPerClip },
-          },
-        }),
-        this.prisma.user.update({
-          where: {
-            id: clip.clipperId,
-          },
-          data: {
-            balance: { increment: clip.campaign.rewardPerClip },
-          },
-        }),
-        this.prisma.transaction.create({
-          data: {
-            userId: clip.clipperId,
-            amount: clip.campaign.rewardPerClip,
-            type: 'CLIP_PAYOUT',
-            referenceId: clip.id,
-          },
-        }),
-      ]);
+        await tx.campaign.update({
+          where: { id: clip.campaignId },
+          data: { remainingBudget: { increment: clip.campaign.rewardPerClip } },
+        });
+
+        return updatedClip;
+      });
     }
 
-    return updateClip;
+    if (dto.status === 'REVISION_REQUESTED') {
+      return this.prisma.clip.update({
+        where: { id },
+        data: { status: ClipStatus.REVISION_REQUESTED, feedback: dto.feedback },
+      });
+    }
+
+    // APPROVED
+    const rewardPerClip = clip.campaign.rewardPerClip;
+    const platformFeeAmount = rewardPerClip * 0.1;
+    const payoutAmount = rewardPerClip - platformFeeAmount;
+
+    const [updatedClip] = await this.prisma.$transaction([
+      this.prisma.clip.update({
+        where: { id },
+        data: {
+          status: ClipStatus.APPROVED,
+          feedback: dto.feedback,
+          platformFeeAmount,
+          payoutAmount,
+        },
+      }),
+      this.prisma.user.update({
+        where: { id: clip.clipperId },
+        data: { balance: { increment: payoutAmount } },
+      }),
+      this.prisma.transaction.create({
+        data: {
+          userId: clip.clipperId,
+          amount: payoutAmount,
+          type: 'CLIP_PAYOUT',
+          referenceId: clip.id,
+        },
+      }),
+      this.prisma.platformRevenue.create({
+        data: {
+          source: 'CLIPPER_FEE',
+          amount: platformFeeAmount,
+          referenceId: clip.id,
+        },
+      }),
+    ]);
+
+    return updatedClip;
   }
 }

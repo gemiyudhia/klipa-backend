@@ -14,9 +14,10 @@ export declare const ModelName: {
     readonly User: "User";
     readonly Campaign: "Campaign";
     readonly Clip: "Clip";
-    readonly Transaction: "Transaction";
     readonly Dispute: "Dispute";
     readonly WithdrawalRequest: "WithdrawalRequest";
+    readonly PlatformRevenue: "PlatformRevenue";
+    readonly Transaction: "Transaction";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export declare const TransactionIsolationLevel: {
@@ -50,6 +51,8 @@ export declare const CampaignScalarFieldEnum: {
     readonly rewardPerClip: "rewardPerClip";
     readonly totalBudget: "totalBudget";
     readonly remainingBudget: "remainingBudget";
+    readonly platformFeeAmount: "platformFeeAmount";
+    readonly totalCharged: "totalCharged";
     readonly vodUrl: "vodUrl";
     readonly status: "status";
     readonly deadline: "deadline";
@@ -65,21 +68,14 @@ export declare const ClipScalarFieldEnum: {
     readonly duration: "duration";
     readonly status: "status";
     readonly feedback: "feedback";
+    readonly platformFeeAmount: "platformFeeAmount";
+    readonly payoutAmount: "payoutAmount";
     readonly campaignId: "campaignId";
     readonly clipperId: "clipperId";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
 };
 export type ClipScalarFieldEnum = (typeof ClipScalarFieldEnum)[keyof typeof ClipScalarFieldEnum];
-export declare const TransactionScalarFieldEnum: {
-    readonly id: "id";
-    readonly userId: "userId";
-    readonly amount: "amount";
-    readonly type: "type";
-    readonly referenceId: "referenceId";
-    readonly createdAt: "createdAt";
-};
-export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum];
 export declare const DisputeScalarFieldEnum: {
     readonly id: "id";
     readonly clipId: "clipId";
@@ -105,6 +101,23 @@ export declare const WithdrawalRequestScalarFieldEnum: {
     readonly updatedAt: "updatedAt";
 };
 export type WithdrawalRequestScalarFieldEnum = (typeof WithdrawalRequestScalarFieldEnum)[keyof typeof WithdrawalRequestScalarFieldEnum];
+export declare const PlatformRevenueScalarFieldEnum: {
+    readonly id: "id";
+    readonly source: "source";
+    readonly amount: "amount";
+    readonly referenceId: "referenceId";
+    readonly createdAt: "createdAt";
+};
+export type PlatformRevenueScalarFieldEnum = (typeof PlatformRevenueScalarFieldEnum)[keyof typeof PlatformRevenueScalarFieldEnum];
+export declare const TransactionScalarFieldEnum: {
+    readonly id: "id";
+    readonly userId: "userId";
+    readonly amount: "amount";
+    readonly type: "type";
+    readonly referenceId: "referenceId";
+    readonly createdAt: "createdAt";
+};
+export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: "asc";
     readonly desc: "desc";

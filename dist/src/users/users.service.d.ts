@@ -44,4 +44,19 @@ export declare class UsersService {
         email: string;
         role: import("../../generated/prisma/enums").Role;
     }>;
+    topUp(userId: string, amount: number): Promise<{
+        name: string;
+        email: string;
+        id: string;
+        passwordHash: string;
+        avatarUrl: string | null;
+        role: import("../../generated/prisma/enums").Role;
+        balance: number;
+        createdAt: Date;
+        updatedAt: Date;
+        hashedRefreshToken: string | null;
+        bankName: string | null;
+        bankAccountNumber: string | null;
+        bankAccountName: string | null;
+    }>;
 }
