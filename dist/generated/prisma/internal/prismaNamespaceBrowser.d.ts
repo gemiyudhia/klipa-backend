@@ -41,6 +41,9 @@ export declare const UserScalarFieldEnum: {
     readonly bankName: "bankName";
     readonly bankAccountNumber: "bankAccountNumber";
     readonly bankAccountName: "bankAccountName";
+    readonly isSuspended: "isSuspended";
+    readonly suspendedReason: "suspendedReason";
+    readonly suspendedAt: "suspendedAt";
 };
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
 export declare const CampaignScalarFieldEnum: {
@@ -58,6 +61,8 @@ export declare const CampaignScalarFieldEnum: {
     readonly deadline: "deadline";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
+    readonly bannedReason: "bannedReason";
+    readonly bannedAt: "bannedAt";
 };
 export type CampaignScalarFieldEnum = (typeof CampaignScalarFieldEnum)[keyof typeof CampaignScalarFieldEnum];
 export declare const ClipScalarFieldEnum: {

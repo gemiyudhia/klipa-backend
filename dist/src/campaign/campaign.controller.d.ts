@@ -21,6 +21,8 @@ export declare class CampaignController {
         vodUrl: string | null;
         status: import("generated/prisma/enums").CampaignStatus;
         deadline: Date;
+        bannedReason: string | null;
+        bannedAt: Date | null;
         creatorId: string;
     }>;
     findMine(creatorId: string): Promise<{
@@ -37,6 +39,8 @@ export declare class CampaignController {
         vodUrl: string | null;
         status: import("generated/prisma/enums").CampaignStatus;
         deadline: Date;
+        bannedReason: string | null;
+        bannedAt: Date | null;
         creatorId: string;
     }[]>;
     findAllPublic(): Promise<{
@@ -53,6 +57,8 @@ export declare class CampaignController {
         vodUrl: string | null;
         status: import("generated/prisma/enums").CampaignStatus;
         deadline: Date;
+        bannedReason: string | null;
+        bannedAt: Date | null;
         creatorId: string;
     }[]>;
     findOne(id: string): Promise<{
@@ -69,6 +75,8 @@ export declare class CampaignController {
         vodUrl: string | null;
         status: import("generated/prisma/enums").CampaignStatus;
         deadline: Date;
+        bannedReason: string | null;
+        bannedAt: Date | null;
         creatorId: string;
     }>;
     update(id: string, updateCampaignDto: UpdateCampaignDto, user: {
@@ -88,6 +96,8 @@ export declare class CampaignController {
         vodUrl: string | null;
         status: import("generated/prisma/enums").CampaignStatus;
         deadline: Date;
+        bannedReason: string | null;
+        bannedAt: Date | null;
         creatorId: string;
     }>;
     remove(id: string, user: {
@@ -107,6 +117,8 @@ export declare class CampaignController {
         vodUrl: string | null;
         status: import("generated/prisma/enums").CampaignStatus;
         deadline: Date;
+        bannedReason: string | null;
+        bannedAt: Date | null;
         creatorId: string;
     }>;
     triggerExpiryCheck(): Promise<{

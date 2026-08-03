@@ -37,6 +37,9 @@ export declare class UsersService {
         bankName: string | null;
         bankAccountNumber: string | null;
         bankAccountName: string | null;
+        isSuspended: boolean;
+        suspendedReason: string | null;
+        suspendedAt: Date | null;
     } | null>;
     remove(id: string): Promise<string>;
     findOne(id: string): Promise<{
@@ -58,5 +61,8 @@ export declare class UsersService {
         bankName: string | null;
         bankAccountNumber: string | null;
         bankAccountName: string | null;
+        isSuspended: boolean;
+        suspendedReason: string | null;
+        suspendedAt: Date | null;
     }>;
 }

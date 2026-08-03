@@ -38,6 +38,8 @@ export type CampaignMinAggregateOutputType = {
     deadline: Date | null;
     createdAt: Date | null;
     updatedAt: Date | null;
+    bannedReason: string | null;
+    bannedAt: Date | null;
 };
 export type CampaignMaxAggregateOutputType = {
     id: string | null;
@@ -54,6 +56,8 @@ export type CampaignMaxAggregateOutputType = {
     deadline: Date | null;
     createdAt: Date | null;
     updatedAt: Date | null;
+    bannedReason: string | null;
+    bannedAt: Date | null;
 };
 export type CampaignCountAggregateOutputType = {
     id: number;
@@ -70,6 +74,8 @@ export type CampaignCountAggregateOutputType = {
     deadline: number;
     createdAt: number;
     updatedAt: number;
+    bannedReason: number;
+    bannedAt: number;
     _all: number;
 };
 export type CampaignAvgAggregateInputType = {
@@ -101,6 +107,8 @@ export type CampaignMinAggregateInputType = {
     deadline?: true;
     createdAt?: true;
     updatedAt?: true;
+    bannedReason?: true;
+    bannedAt?: true;
 };
 export type CampaignMaxAggregateInputType = {
     id?: true;
@@ -117,6 +125,8 @@ export type CampaignMaxAggregateInputType = {
     deadline?: true;
     createdAt?: true;
     updatedAt?: true;
+    bannedReason?: true;
+    bannedAt?: true;
 };
 export type CampaignCountAggregateInputType = {
     id?: true;
@@ -133,6 +143,8 @@ export type CampaignCountAggregateInputType = {
     deadline?: true;
     createdAt?: true;
     updatedAt?: true;
+    bannedReason?: true;
+    bannedAt?: true;
     _all?: true;
 };
 export type CampaignAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -178,6 +190,8 @@ export type CampaignGroupByOutputType = {
     deadline: Date;
     createdAt: Date;
     updatedAt: Date;
+    bannedReason: string | null;
+    bannedAt: Date | null;
     _count: CampaignCountAggregateOutputType | null;
     _avg: CampaignAvgAggregateOutputType | null;
     _sum: CampaignSumAggregateOutputType | null;
@@ -205,6 +219,8 @@ export type CampaignWhereInput = {
     deadline?: Prisma.DateTimeFilter<"Campaign"> | Date | string;
     createdAt?: Prisma.DateTimeFilter<"Campaign"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Campaign"> | Date | string;
+    bannedReason?: Prisma.StringNullableFilter<"Campaign"> | string | null;
+    bannedAt?: Prisma.DateTimeNullableFilter<"Campaign"> | Date | string | null;
     creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
     clips?: Prisma.ClipListRelationFilter;
 };
@@ -223,6 +239,8 @@ export type CampaignOrderByWithRelationInput = {
     deadline?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    bannedReason?: Prisma.SortOrderInput | Prisma.SortOrder;
+    bannedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
     creator?: Prisma.UserOrderByWithRelationInput;
     clips?: Prisma.ClipOrderByRelationAggregateInput;
 };
@@ -244,6 +262,8 @@ export type CampaignWhereUniqueInput = Prisma.AtLeast<{
     deadline?: Prisma.DateTimeFilter<"Campaign"> | Date | string;
     createdAt?: Prisma.DateTimeFilter<"Campaign"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Campaign"> | Date | string;
+    bannedReason?: Prisma.StringNullableFilter<"Campaign"> | string | null;
+    bannedAt?: Prisma.DateTimeNullableFilter<"Campaign"> | Date | string | null;
     creator?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
     clips?: Prisma.ClipListRelationFilter;
 }, "id">;
@@ -262,6 +282,8 @@ export type CampaignOrderByWithAggregationInput = {
     deadline?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    bannedReason?: Prisma.SortOrderInput | Prisma.SortOrder;
+    bannedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
     _count?: Prisma.CampaignCountOrderByAggregateInput;
     _avg?: Prisma.CampaignAvgOrderByAggregateInput;
     _max?: Prisma.CampaignMaxOrderByAggregateInput;
@@ -286,6 +308,8 @@ export type CampaignScalarWhereWithAggregatesInput = {
     deadline?: Prisma.DateTimeWithAggregatesFilter<"Campaign"> | Date | string;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"Campaign"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Campaign"> | Date | string;
+    bannedReason?: Prisma.StringNullableWithAggregatesFilter<"Campaign"> | string | null;
+    bannedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Campaign"> | Date | string | null;
 };
 export type CampaignCreateInput = {
     id?: string;
@@ -301,6 +325,8 @@ export type CampaignCreateInput = {
     deadline: Date | string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    bannedReason?: string | null;
+    bannedAt?: Date | string | null;
     creator: Prisma.UserCreateNestedOneWithoutCampaignsInput;
     clips?: Prisma.ClipCreateNestedManyWithoutCampaignInput;
 };
@@ -319,6 +345,8 @@ export type CampaignUncheckedCreateInput = {
     deadline: Date | string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    bannedReason?: string | null;
+    bannedAt?: Date | string | null;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutCampaignInput;
 };
 export type CampaignUpdateInput = {
@@ -335,6 +363,8 @@ export type CampaignUpdateInput = {
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     creator?: Prisma.UserUpdateOneRequiredWithoutCampaignsNestedInput;
     clips?: Prisma.ClipUpdateManyWithoutCampaignNestedInput;
 };
@@ -353,6 +383,8 @@ export type CampaignUncheckedUpdateInput = {
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutCampaignNestedInput;
 };
 export type CampaignCreateManyInput = {
@@ -370,6 +402,8 @@ export type CampaignCreateManyInput = {
     deadline: Date | string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    bannedReason?: string | null;
+    bannedAt?: Date | string | null;
 };
 export type CampaignUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -385,6 +419,8 @@ export type CampaignUpdateManyMutationInput = {
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
 export type CampaignUncheckedUpdateManyInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -401,6 +437,8 @@ export type CampaignUncheckedUpdateManyInput = {
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
 export type CampaignListRelationFilter = {
     every?: Prisma.CampaignWhereInput;
@@ -425,6 +463,8 @@ export type CampaignCountOrderByAggregateInput = {
     deadline?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    bannedReason?: Prisma.SortOrder;
+    bannedAt?: Prisma.SortOrder;
 };
 export type CampaignAvgOrderByAggregateInput = {
     rewardPerClip?: Prisma.SortOrder;
@@ -448,6 +488,8 @@ export type CampaignMaxOrderByAggregateInput = {
     deadline?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    bannedReason?: Prisma.SortOrder;
+    bannedAt?: Prisma.SortOrder;
 };
 export type CampaignMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -464,6 +506,8 @@ export type CampaignMinOrderByAggregateInput = {
     deadline?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
+    bannedReason?: Prisma.SortOrder;
+    bannedAt?: Prisma.SortOrder;
 };
 export type CampaignSumOrderByAggregateInput = {
     rewardPerClip?: Prisma.SortOrder;
@@ -543,6 +587,8 @@ export type CampaignCreateWithoutCreatorInput = {
     deadline: Date | string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    bannedReason?: string | null;
+    bannedAt?: Date | string | null;
     clips?: Prisma.ClipCreateNestedManyWithoutCampaignInput;
 };
 export type CampaignUncheckedCreateWithoutCreatorInput = {
@@ -559,6 +605,8 @@ export type CampaignUncheckedCreateWithoutCreatorInput = {
     deadline: Date | string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    bannedReason?: string | null;
+    bannedAt?: Date | string | null;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutCampaignInput;
 };
 export type CampaignCreateOrConnectWithoutCreatorInput = {
@@ -600,6 +648,8 @@ export type CampaignScalarWhereInput = {
     deadline?: Prisma.DateTimeFilter<"Campaign"> | Date | string;
     createdAt?: Prisma.DateTimeFilter<"Campaign"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Campaign"> | Date | string;
+    bannedReason?: Prisma.StringNullableFilter<"Campaign"> | string | null;
+    bannedAt?: Prisma.DateTimeNullableFilter<"Campaign"> | Date | string | null;
 };
 export type CampaignCreateWithoutClipsInput = {
     id?: string;
@@ -615,6 +665,8 @@ export type CampaignCreateWithoutClipsInput = {
     deadline: Date | string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    bannedReason?: string | null;
+    bannedAt?: Date | string | null;
     creator: Prisma.UserCreateNestedOneWithoutCampaignsInput;
 };
 export type CampaignUncheckedCreateWithoutClipsInput = {
@@ -632,6 +684,8 @@ export type CampaignUncheckedCreateWithoutClipsInput = {
     deadline: Date | string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    bannedReason?: string | null;
+    bannedAt?: Date | string | null;
 };
 export type CampaignCreateOrConnectWithoutClipsInput = {
     where: Prisma.CampaignWhereUniqueInput;
@@ -660,6 +714,8 @@ export type CampaignUpdateWithoutClipsInput = {
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     creator?: Prisma.UserUpdateOneRequiredWithoutCampaignsNestedInput;
 };
 export type CampaignUncheckedUpdateWithoutClipsInput = {
@@ -677,6 +733,8 @@ export type CampaignUncheckedUpdateWithoutClipsInput = {
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
 export type CampaignCreateManyCreatorInput = {
     id?: string;
@@ -692,6 +750,8 @@ export type CampaignCreateManyCreatorInput = {
     deadline: Date | string;
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    bannedReason?: string | null;
+    bannedAt?: Date | string | null;
 };
 export type CampaignUpdateWithoutCreatorInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -707,6 +767,8 @@ export type CampaignUpdateWithoutCreatorInput = {
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     clips?: Prisma.ClipUpdateManyWithoutCampaignNestedInput;
 };
 export type CampaignUncheckedUpdateWithoutCreatorInput = {
@@ -723,6 +785,8 @@ export type CampaignUncheckedUpdateWithoutCreatorInput = {
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutCampaignNestedInput;
 };
 export type CampaignUncheckedUpdateManyWithoutCreatorInput = {
@@ -739,6 +803,8 @@ export type CampaignUncheckedUpdateManyWithoutCreatorInput = {
     deadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
 export type CampaignCountOutputType = {
     clips: number;
@@ -767,6 +833,8 @@ export type CampaignSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
     deadline?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    bannedReason?: boolean;
+    bannedAt?: boolean;
     creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     clips?: boolean | Prisma.Campaign$clipsArgs<ExtArgs>;
     _count?: boolean | Prisma.CampaignCountOutputTypeDefaultArgs<ExtArgs>;
@@ -786,6 +854,8 @@ export type CampaignSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
     deadline?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    bannedReason?: boolean;
+    bannedAt?: boolean;
     creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["campaign"]>;
 export type CampaignSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -803,6 +873,8 @@ export type CampaignSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
     deadline?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    bannedReason?: boolean;
+    bannedAt?: boolean;
     creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["campaign"]>;
 export type CampaignSelectScalar = {
@@ -820,8 +892,10 @@ export type CampaignSelectScalar = {
     deadline?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    bannedReason?: boolean;
+    bannedAt?: boolean;
 };
-export type CampaignOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "creatorId" | "rewardPerClip" | "totalBudget" | "remainingBudget" | "platformFeeAmount" | "totalCharged" | "vodUrl" | "status" | "deadline" | "createdAt" | "updatedAt", ExtArgs["result"]["campaign"]>;
+export type CampaignOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "creatorId" | "rewardPerClip" | "totalBudget" | "remainingBudget" | "platformFeeAmount" | "totalCharged" | "vodUrl" | "status" | "deadline" | "createdAt" | "updatedAt" | "bannedReason" | "bannedAt", ExtArgs["result"]["campaign"]>;
 export type CampaignInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     creator?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     clips?: boolean | Prisma.Campaign$clipsArgs<ExtArgs>;
@@ -854,6 +928,8 @@ export type $CampaignPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
         deadline: Date;
         createdAt: Date;
         updatedAt: Date;
+        bannedReason: string | null;
+        bannedAt: Date | null;
     }, ExtArgs["result"]["campaign"]>;
     composites: {};
 };
@@ -927,6 +1003,8 @@ export interface CampaignFieldRefs {
     readonly deadline: Prisma.FieldRef<"Campaign", 'DateTime'>;
     readonly createdAt: Prisma.FieldRef<"Campaign", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"Campaign", 'DateTime'>;
+    readonly bannedReason: Prisma.FieldRef<"Campaign", 'String'>;
+    readonly bannedAt: Prisma.FieldRef<"Campaign", 'DateTime'>;
 }
 export type CampaignFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.CampaignSelect<ExtArgs> | null;

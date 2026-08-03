@@ -9,6 +9,7 @@ export declare const CampaignStatus: {
     readonly ACTIVE: "ACTIVE";
     readonly PAUSED: "PAUSED";
     readonly COMPLETED: "COMPLETED";
+    readonly BANNED: "BANNED";
 };
 export type CampaignStatus = (typeof CampaignStatus)[keyof typeof CampaignStatus];
 export declare const ClipStatus: {

@@ -45,5 +45,8 @@ export declare class UsersController {
         bankName: string | null;
         bankAccountNumber: string | null;
         bankAccountName: string | null;
+        isSuspended: boolean;
+        suspendedReason: string | null;
+        suspendedAt: Date | null;
     }>;
 }

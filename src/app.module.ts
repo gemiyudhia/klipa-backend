@@ -10,6 +10,7 @@ import { ClipModule } from './clip/clip.module';
 import { DisputeModule } from './dispute/dispute.module';
 import { WithdrawalModule } from './withdrawal/withdrawal.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     ClipModule,
     DisputeModule,
     WithdrawalModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -75,6 +75,9 @@ export declare class WithdrawalController {
             bankName: string | null;
             bankAccountNumber: string | null;
             bankAccountName: string | null;
+            isSuspended: boolean;
+            suspendedReason: string | null;
+            suspendedAt: Date | null;
         };
     } & {
         id: string;

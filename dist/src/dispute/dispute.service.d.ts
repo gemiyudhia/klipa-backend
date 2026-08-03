@@ -88,6 +88,8 @@ export declare class DisputeService {
                 vodUrl: string | null;
                 status: import("generated/prisma/enums").CampaignStatus;
                 deadline: Date;
+                bannedReason: string | null;
+                bannedAt: Date | null;
                 creatorId: string;
             };
         } & {
