@@ -19,6 +19,8 @@ export declare class CampaignService {
         vodUrl: string | null;
         status: CampaignStatus;
         deadline: Date;
+        bannedReason: string | null;
+        bannedAt: Date | null;
         creatorId: string;
     }>;
     findAllByCreator(creatorId: string): Promise<{
@@ -35,6 +37,8 @@ export declare class CampaignService {
         vodUrl: string | null;
         status: CampaignStatus;
         deadline: Date;
+        bannedReason: string | null;
+        bannedAt: Date | null;
         creatorId: string;
     }[]>;
     findAllPublic(): Promise<{
@@ -51,6 +55,8 @@ export declare class CampaignService {
         vodUrl: string | null;
         status: CampaignStatus;
         deadline: Date;
+        bannedReason: string | null;
+        bannedAt: Date | null;
         creatorId: string;
     }[]>;
     findOne(id: string): Promise<{
@@ -67,6 +73,8 @@ export declare class CampaignService {
         vodUrl: string | null;
         status: CampaignStatus;
         deadline: Date;
+        bannedReason: string | null;
+        bannedAt: Date | null;
         creatorId: string;
     }>;
     update(id: string, userId: string, userRole: Role, updateCampaignDto: UpdateCampaignDto): Promise<{
@@ -83,6 +91,8 @@ export declare class CampaignService {
         vodUrl: string | null;
         status: CampaignStatus;
         deadline: Date;
+        bannedReason: string | null;
+        bannedAt: Date | null;
         creatorId: string;
     }>;
     remove(id: string, userId: string, userRole: Role): Promise<{
@@ -99,6 +109,8 @@ export declare class CampaignService {
         vodUrl: string | null;
         status: CampaignStatus;
         deadline: Date;
+        bannedReason: string | null;
+        bannedAt: Date | null;
         creatorId: string;
     }>;
 }

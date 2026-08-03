@@ -19,6 +19,7 @@ const clip_module_1 = require("./clip/clip.module");
 const dispute_module_1 = require("./dispute/dispute.module");
 const withdrawal_module_1 = require("./withdrawal/withdrawal.module");
 const schedule_1 = require("@nestjs/schedule");
+const admin_module_1 = require("./admin/admin.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -36,6 +37,7 @@ exports.AppModule = AppModule = __decorate([
             clip_module_1.ClipModule,
             dispute_module_1.DisputeModule,
             withdrawal_module_1.WithdrawalModule,
+            admin_module_1.AdminModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

@@ -43,6 +43,9 @@ export declare class AuthService {
         bankName: string | null;
         bankAccountNumber: string | null;
         bankAccountName: string | null;
+        isSuspended: boolean;
+        suspendedReason: string | null;
+        suspendedAt: Date | null;
     }>;
     private generateAccessToken;
 }

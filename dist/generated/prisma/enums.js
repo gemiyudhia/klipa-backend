@@ -10,7 +10,8 @@ exports.CampaignStatus = {
     DRAFT: 'DRAFT',
     ACTIVE: 'ACTIVE',
     PAUSED: 'PAUSED',
-    COMPLETED: 'COMPLETED'
+    COMPLETED: 'COMPLETED',
+    BANNED: 'BANNED'
 };
 exports.ClipStatus = {
     PENDING: 'PENDING',

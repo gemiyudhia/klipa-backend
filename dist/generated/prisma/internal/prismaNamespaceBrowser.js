@@ -72,7 +72,10 @@ exports.UserScalarFieldEnum = {
     hashedRefreshToken: 'hashedRefreshToken',
     bankName: 'bankName',
     bankAccountNumber: 'bankAccountNumber',
-    bankAccountName: 'bankAccountName'
+    bankAccountName: 'bankAccountName',
+    isSuspended: 'isSuspended',
+    suspendedReason: 'suspendedReason',
+    suspendedAt: 'suspendedAt'
 };
 exports.CampaignScalarFieldEnum = {
     id: 'id',
@@ -88,7 +91,9 @@ exports.CampaignScalarFieldEnum = {
     status: 'status',
     deadline: 'deadline',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    bannedReason: 'bannedReason',
+    bannedAt: 'bannedAt'
 };
 exports.ClipScalarFieldEnum = {
     id: 'id',

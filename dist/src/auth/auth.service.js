@@ -73,6 +73,8 @@ let AuthService = class AuthService {
         const user = await this.userService.findByEmail(loginDto.email);
         if (!user)
             throw new common_1.UnauthorizedException('Invalid email or password');
+        if (user.isSuspended)
+            throw new common_1.ForbiddenException('Akun Anda telah disuspend. Hubungi admin untuk informasi lebih lanjut.');
         const isPasswordValid = await bcrypt.compare(loginDto.password, user.passwordHash);
         if (!isPasswordValid)
             throw new common_1.UnauthorizedException('Invalid email or password');

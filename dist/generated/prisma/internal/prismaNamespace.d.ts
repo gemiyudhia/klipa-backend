@@ -746,6 +746,9 @@ export declare const UserScalarFieldEnum: {
     readonly bankName: "bankName";
     readonly bankAccountNumber: "bankAccountNumber";
     readonly bankAccountName: "bankAccountName";
+    readonly isSuspended: "isSuspended";
+    readonly suspendedReason: "suspendedReason";
+    readonly suspendedAt: "suspendedAt";
 };
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
 export declare const CampaignScalarFieldEnum: {
@@ -763,6 +766,8 @@ export declare const CampaignScalarFieldEnum: {
     readonly deadline: "deadline";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
+    readonly bannedReason: "bannedReason";
+    readonly bannedAt: "bannedAt";
 };
 export type CampaignScalarFieldEnum = (typeof CampaignScalarFieldEnum)[keyof typeof CampaignScalarFieldEnum];
 export declare const ClipScalarFieldEnum: {
@@ -846,6 +851,7 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>;
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>;
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>;
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>;
 export type EnumCampaignStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CampaignStatus'>;
 export type ListEnumCampaignStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CampaignStatus[]'>;
 export type EnumClipStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClipStatus'>;

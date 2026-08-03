@@ -29,6 +29,9 @@ export type UserMinAggregateOutputType = {
     bankName: string | null;
     bankAccountNumber: string | null;
     bankAccountName: string | null;
+    isSuspended: boolean | null;
+    suspendedReason: string | null;
+    suspendedAt: Date | null;
 };
 export type UserMaxAggregateOutputType = {
     id: string | null;
@@ -44,6 +47,9 @@ export type UserMaxAggregateOutputType = {
     bankName: string | null;
     bankAccountNumber: string | null;
     bankAccountName: string | null;
+    isSuspended: boolean | null;
+    suspendedReason: string | null;
+    suspendedAt: Date | null;
 };
 export type UserCountAggregateOutputType = {
     id: number;
@@ -59,6 +65,9 @@ export type UserCountAggregateOutputType = {
     bankName: number;
     bankAccountNumber: number;
     bankAccountName: number;
+    isSuspended: number;
+    suspendedReason: number;
+    suspendedAt: number;
     _all: number;
 };
 export type UserAvgAggregateInputType = {
@@ -81,6 +90,9 @@ export type UserMinAggregateInputType = {
     bankName?: true;
     bankAccountNumber?: true;
     bankAccountName?: true;
+    isSuspended?: true;
+    suspendedReason?: true;
+    suspendedAt?: true;
 };
 export type UserMaxAggregateInputType = {
     id?: true;
@@ -96,6 +108,9 @@ export type UserMaxAggregateInputType = {
     bankName?: true;
     bankAccountNumber?: true;
     bankAccountName?: true;
+    isSuspended?: true;
+    suspendedReason?: true;
+    suspendedAt?: true;
 };
 export type UserCountAggregateInputType = {
     id?: true;
@@ -111,6 +126,9 @@ export type UserCountAggregateInputType = {
     bankName?: true;
     bankAccountNumber?: true;
     bankAccountName?: true;
+    isSuspended?: true;
+    suspendedReason?: true;
+    suspendedAt?: true;
     _all?: true;
 };
 export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -155,6 +173,9 @@ export type UserGroupByOutputType = {
     bankName: string | null;
     bankAccountNumber: string | null;
     bankAccountName: string | null;
+    isSuspended: boolean;
+    suspendedReason: string | null;
+    suspendedAt: Date | null;
     _count: UserCountAggregateOutputType | null;
     _avg: UserAvgAggregateOutputType | null;
     _sum: UserSumAggregateOutputType | null;
@@ -181,6 +202,9 @@ export type UserWhereInput = {
     bankName?: Prisma.StringNullableFilter<"User"> | string | null;
     bankAccountNumber?: Prisma.StringNullableFilter<"User"> | string | null;
     bankAccountName?: Prisma.StringNullableFilter<"User"> | string | null;
+    isSuspended?: Prisma.BoolFilter<"User"> | boolean;
+    suspendedReason?: Prisma.StringNullableFilter<"User"> | string | null;
+    suspendedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null;
     campaigns?: Prisma.CampaignListRelationFilter;
     clips?: Prisma.ClipListRelationFilter;
     transactions?: Prisma.TransactionListRelationFilter;
@@ -203,6 +227,9 @@ export type UserOrderByWithRelationInput = {
     bankName?: Prisma.SortOrderInput | Prisma.SortOrder;
     bankAccountNumber?: Prisma.SortOrderInput | Prisma.SortOrder;
     bankAccountName?: Prisma.SortOrderInput | Prisma.SortOrder;
+    isSuspended?: Prisma.SortOrder;
+    suspendedReason?: Prisma.SortOrderInput | Prisma.SortOrder;
+    suspendedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
     campaigns?: Prisma.CampaignOrderByRelationAggregateInput;
     clips?: Prisma.ClipOrderByRelationAggregateInput;
     transactions?: Prisma.TransactionOrderByRelationAggregateInput;
@@ -228,6 +255,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
     bankName?: Prisma.StringNullableFilter<"User"> | string | null;
     bankAccountNumber?: Prisma.StringNullableFilter<"User"> | string | null;
     bankAccountName?: Prisma.StringNullableFilter<"User"> | string | null;
+    isSuspended?: Prisma.BoolFilter<"User"> | boolean;
+    suspendedReason?: Prisma.StringNullableFilter<"User"> | string | null;
+    suspendedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null;
     campaigns?: Prisma.CampaignListRelationFilter;
     clips?: Prisma.ClipListRelationFilter;
     transactions?: Prisma.TransactionListRelationFilter;
@@ -250,6 +280,9 @@ export type UserOrderByWithAggregationInput = {
     bankName?: Prisma.SortOrderInput | Prisma.SortOrder;
     bankAccountNumber?: Prisma.SortOrderInput | Prisma.SortOrder;
     bankAccountName?: Prisma.SortOrderInput | Prisma.SortOrder;
+    isSuspended?: Prisma.SortOrder;
+    suspendedReason?: Prisma.SortOrderInput | Prisma.SortOrder;
+    suspendedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
     _count?: Prisma.UserCountOrderByAggregateInput;
     _avg?: Prisma.UserAvgOrderByAggregateInput;
     _max?: Prisma.UserMaxOrderByAggregateInput;
@@ -273,6 +306,9 @@ export type UserScalarWhereWithAggregatesInput = {
     bankName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
     bankAccountNumber?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
     bankAccountName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    isSuspended?: Prisma.BoolWithAggregatesFilter<"User"> | boolean;
+    suspendedReason?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    suspendedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null;
 };
 export type UserCreateInput = {
     id?: string;
@@ -288,6 +324,9 @@ export type UserCreateInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
@@ -310,6 +349,9 @@ export type UserUncheckedCreateInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
@@ -332,6 +374,9 @@ export type UserUpdateInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
@@ -354,6 +399,9 @@ export type UserUncheckedUpdateInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
@@ -376,6 +424,9 @@ export type UserCreateManyInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
 };
 export type UserUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -391,6 +442,9 @@ export type UserUpdateManyMutationInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
 export type UserUncheckedUpdateManyInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -406,6 +460,9 @@ export type UserUncheckedUpdateManyInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
 export type UserCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -421,6 +478,9 @@ export type UserCountOrderByAggregateInput = {
     bankName?: Prisma.SortOrder;
     bankAccountNumber?: Prisma.SortOrder;
     bankAccountName?: Prisma.SortOrder;
+    isSuspended?: Prisma.SortOrder;
+    suspendedReason?: Prisma.SortOrder;
+    suspendedAt?: Prisma.SortOrder;
 };
 export type UserAvgOrderByAggregateInput = {
     balance?: Prisma.SortOrder;
@@ -439,6 +499,9 @@ export type UserMaxOrderByAggregateInput = {
     bankName?: Prisma.SortOrder;
     bankAccountNumber?: Prisma.SortOrder;
     bankAccountName?: Prisma.SortOrder;
+    isSuspended?: Prisma.SortOrder;
+    suspendedReason?: Prisma.SortOrder;
+    suspendedAt?: Prisma.SortOrder;
 };
 export type UserMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
@@ -454,6 +517,9 @@ export type UserMinOrderByAggregateInput = {
     bankName?: Prisma.SortOrder;
     bankAccountNumber?: Prisma.SortOrder;
     bankAccountName?: Prisma.SortOrder;
+    isSuspended?: Prisma.SortOrder;
+    suspendedReason?: Prisma.SortOrder;
+    suspendedAt?: Prisma.SortOrder;
 };
 export type UserSumOrderByAggregateInput = {
     balance?: Prisma.SortOrder;
@@ -484,6 +550,12 @@ export type FloatFieldUpdateOperationsInput = {
 };
 export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string;
+};
+export type BoolFieldUpdateOperationsInput = {
+    set?: boolean;
+};
+export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null;
 };
 export type UserCreateNestedOneWithoutCampaignsInput = {
     create?: Prisma.XOR<Prisma.UserCreateWithoutCampaignsInput, Prisma.UserUncheckedCreateWithoutCampaignsInput>;
@@ -587,6 +659,9 @@ export type UserCreateWithoutCampaignsInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
     disputesRaised?: Prisma.DisputeCreateNestedManyWithoutClipperInput;
@@ -608,6 +683,9 @@ export type UserUncheckedCreateWithoutCampaignsInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
     disputesRaised?: Prisma.DisputeUncheckedCreateNestedManyWithoutClipperInput;
@@ -642,6 +720,9 @@ export type UserUpdateWithoutCampaignsInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
     disputesRaised?: Prisma.DisputeUpdateManyWithoutClipperNestedInput;
@@ -663,6 +744,9 @@ export type UserUncheckedUpdateWithoutCampaignsInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
     disputesRaised?: Prisma.DisputeUncheckedUpdateManyWithoutClipperNestedInput;
@@ -684,6 +768,9 @@ export type UserCreateWithoutClipsInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
     transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
     disputesRaised?: Prisma.DisputeCreateNestedManyWithoutClipperInput;
@@ -705,6 +792,9 @@ export type UserUncheckedCreateWithoutClipsInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
     transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
     disputesRaised?: Prisma.DisputeUncheckedCreateNestedManyWithoutClipperInput;
@@ -739,6 +829,9 @@ export type UserUpdateWithoutClipsInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
     transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
     disputesRaised?: Prisma.DisputeUpdateManyWithoutClipperNestedInput;
@@ -760,6 +853,9 @@ export type UserUncheckedUpdateWithoutClipsInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
     transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
     disputesRaised?: Prisma.DisputeUncheckedUpdateManyWithoutClipperNestedInput;
@@ -781,6 +877,9 @@ export type UserCreateWithoutDisputesRaisedInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
@@ -802,6 +901,9 @@ export type UserUncheckedCreateWithoutDisputesRaisedInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
@@ -827,6 +929,9 @@ export type UserCreateWithoutDisputesResolvedInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
@@ -848,6 +953,9 @@ export type UserUncheckedCreateWithoutDisputesResolvedInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
@@ -882,6 +990,9 @@ export type UserUpdateWithoutDisputesRaisedInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
@@ -903,6 +1014,9 @@ export type UserUncheckedUpdateWithoutDisputesRaisedInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
@@ -933,6 +1047,9 @@ export type UserUpdateWithoutDisputesResolvedInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
@@ -954,6 +1071,9 @@ export type UserUncheckedUpdateWithoutDisputesResolvedInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
@@ -975,6 +1095,9 @@ export type UserCreateWithoutWithdrawalsInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
@@ -996,6 +1119,9 @@ export type UserUncheckedCreateWithoutWithdrawalsInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
@@ -1021,6 +1147,9 @@ export type UserCreateWithoutWithdrawalsProcessedInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
@@ -1042,6 +1171,9 @@ export type UserUncheckedCreateWithoutWithdrawalsProcessedInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
     transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
@@ -1076,6 +1208,9 @@ export type UserUpdateWithoutWithdrawalsInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
@@ -1097,6 +1232,9 @@ export type UserUncheckedUpdateWithoutWithdrawalsInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
@@ -1127,6 +1265,9 @@ export type UserUpdateWithoutWithdrawalsProcessedInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
@@ -1148,6 +1289,9 @@ export type UserUncheckedUpdateWithoutWithdrawalsProcessedInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
     transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
@@ -1169,6 +1313,9 @@ export type UserCreateWithoutTransactionsInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     campaigns?: Prisma.CampaignCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipCreateNestedManyWithoutClipperInput;
     disputesRaised?: Prisma.DisputeCreateNestedManyWithoutClipperInput;
@@ -1190,6 +1337,9 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
     bankName?: string | null;
     bankAccountNumber?: string | null;
     bankAccountName?: string | null;
+    isSuspended?: boolean;
+    suspendedReason?: string | null;
+    suspendedAt?: Date | string | null;
     campaigns?: Prisma.CampaignUncheckedCreateNestedManyWithoutCreatorInput;
     clips?: Prisma.ClipUncheckedCreateNestedManyWithoutClipperInput;
     disputesRaised?: Prisma.DisputeUncheckedCreateNestedManyWithoutClipperInput;
@@ -1224,6 +1374,9 @@ export type UserUpdateWithoutTransactionsInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     campaigns?: Prisma.CampaignUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUpdateManyWithoutClipperNestedInput;
     disputesRaised?: Prisma.DisputeUpdateManyWithoutClipperNestedInput;
@@ -1245,6 +1398,9 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
     bankName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     bankAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    isSuspended?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    suspendedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    suspendedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     campaigns?: Prisma.CampaignUncheckedUpdateManyWithoutCreatorNestedInput;
     clips?: Prisma.ClipUncheckedUpdateManyWithoutClipperNestedInput;
     disputesRaised?: Prisma.DisputeUncheckedUpdateManyWithoutClipperNestedInput;
@@ -1308,6 +1464,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     bankName?: boolean;
     bankAccountNumber?: boolean;
     bankAccountName?: boolean;
+    isSuspended?: boolean;
+    suspendedReason?: boolean;
+    suspendedAt?: boolean;
     campaigns?: boolean | Prisma.User$campaignsArgs<ExtArgs>;
     clips?: boolean | Prisma.User$clipsArgs<ExtArgs>;
     transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>;
@@ -1331,6 +1490,9 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     bankName?: boolean;
     bankAccountNumber?: boolean;
     bankAccountName?: boolean;
+    isSuspended?: boolean;
+    suspendedReason?: boolean;
+    suspendedAt?: boolean;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -1346,6 +1508,9 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
     bankName?: boolean;
     bankAccountNumber?: boolean;
     bankAccountName?: boolean;
+    isSuspended?: boolean;
+    suspendedReason?: boolean;
+    suspendedAt?: boolean;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectScalar = {
     id?: boolean;
@@ -1361,8 +1526,11 @@ export type UserSelectScalar = {
     bankName?: boolean;
     bankAccountNumber?: boolean;
     bankAccountName?: boolean;
+    isSuspended?: boolean;
+    suspendedReason?: boolean;
+    suspendedAt?: boolean;
 };
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "avatarUrl" | "role" | "balance" | "createdAt" | "updatedAt" | "hashedRefreshToken" | "bankName" | "bankAccountNumber" | "bankAccountName", ExtArgs["result"]["user"]>;
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "avatarUrl" | "role" | "balance" | "createdAt" | "updatedAt" | "hashedRefreshToken" | "bankName" | "bankAccountNumber" | "bankAccountName" | "isSuspended" | "suspendedReason" | "suspendedAt", ExtArgs["result"]["user"]>;
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     campaigns?: boolean | Prisma.User$campaignsArgs<ExtArgs>;
     clips?: boolean | Prisma.User$clipsArgs<ExtArgs>;
@@ -1400,6 +1568,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
         bankName: string | null;
         bankAccountNumber: string | null;
         bankAccountName: string | null;
+        isSuspended: boolean;
+        suspendedReason: string | null;
+        suspendedAt: Date | null;
     }, ExtArgs["result"]["user"]>;
     composites: {};
 };
@@ -1477,6 +1648,9 @@ export interface UserFieldRefs {
     readonly bankName: Prisma.FieldRef<"User", 'String'>;
     readonly bankAccountNumber: Prisma.FieldRef<"User", 'String'>;
     readonly bankAccountName: Prisma.FieldRef<"User", 'String'>;
+    readonly isSuspended: Prisma.FieldRef<"User", 'Boolean'>;
+    readonly suspendedReason: Prisma.FieldRef<"User", 'String'>;
+    readonly suspendedAt: Prisma.FieldRef<"User", 'DateTime'>;
 }
 export type UserFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.UserSelect<ExtArgs> | null;
