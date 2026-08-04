@@ -1,24 +1,10 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Post, Body, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuards } from 'src/common/guards/jwt-auth.guard';
-import { Roles } from './decorators/roles.decorator';
-import { Role } from 'generated/prisma/enums';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { RolesGuard } from 'src/common/guards/roles.guard';
+import { JwtRefreshGuard } from 'src/common/guards/jwt-refresh.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -40,18 +26,9 @@ export class AuthController {
     return this.authService.logout(req.user.sub);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.authService.findAll();
-  // }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
+  @Post('refresh')
+  @UseGuards(JwtRefreshGuard)
+  refresh(@CurrentUser() user: { sub: string; refreshToken: string }) {
+    return this.authService.refreshToken(user.sub, user.refreshToken);
   }
 }

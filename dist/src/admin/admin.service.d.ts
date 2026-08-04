@@ -5,17 +5,17 @@ export declare class AdminService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     suspendUser(userId: string, suspendUserDto: SuspendUserDto): Promise<{
-        id: string;
-        email: string;
         name: string;
+        email: string;
+        id: string;
         isSuspended: boolean;
         suspendedReason: string | null;
         suspendedAt: Date | null;
     }>;
     unsuspendUser(userId: string): Promise<{
-        id: string;
-        email: string;
         name: string;
+        email: string;
+        id: string;
         isSuspended: boolean;
     }>;
     closeCampign(campaignId: string, suspendUserDto: SuspendUserDto): Promise<{
@@ -24,7 +24,6 @@ export declare class AdminService {
         updatedAt: Date;
         title: string;
         description: string;
-        creatorId: string;
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
@@ -35,6 +34,7 @@ export declare class AdminService {
         deadline: Date;
         bannedReason: string | null;
         bannedAt: Date | null;
+        creatorId: string;
     }>;
     getAnalytics(): Promise<{
         users: {

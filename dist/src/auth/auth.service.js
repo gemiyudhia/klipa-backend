@@ -49,6 +49,7 @@ const config_1 = require("@nestjs/config");
 const jwt_1 = require("@nestjs/jwt");
 const prisma_service_1 = require("../prisma/prisma.service");
 const bcrypt = __importStar(require("bcrypt"));
+const crypto = __importStar(require("crypto"));
 let AuthService = class AuthService {
     userService;
     configService;
@@ -79,19 +80,35 @@ let AuthService = class AuthService {
         if (!isPasswordValid)
             throw new common_1.UnauthorizedException('Invalid email or password');
         const accessToken = await this.generateAccessToken(user);
-        const refreshToken = await this.generateAccessToken(user);
-        const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+        const refreshToken = await this.generateRefreshToken(user);
+        const hashedRefreshToken = await this.hashToken(refreshToken);
         await this.updateRefreshToken(user.id, hashedRefreshToken);
         return {
             access_token: accessToken,
             refresh_token: refreshToken,
         };
     }
-    findOne(id) {
-        return `This action returns a #${id} auth`;
-    }
-    update(id, updateAuthDto) {
-        return `This action updates a #${id} auth`;
+    async refreshToken(userId, refreshToken) {
+        const user = await this.userService.findOneWithAuthFields(userId);
+        if (!user || !user.hashedRefreshToken) {
+            throw new common_1.UnauthorizedException('Akses ditolak');
+        }
+        if (user.isSuspended) {
+            throw new common_1.ForbiddenException('Akun Anda telah disuspend');
+        }
+        const incomingHash = this.hashToken(refreshToken);
+        const isRefreshTokenValid = incomingHash === user.hashedRefreshToken;
+        if (!isRefreshTokenValid) {
+            throw new common_1.UnauthorizedException('Refresh token tidak valid');
+        }
+        const newAccessToken = await this.generateAccessToken(user);
+        const newRefreshToken = await this.generateRefreshToken(user);
+        const newHashedRefreshToken = this.hashToken(newRefreshToken);
+        await this.updateRefreshToken(user.id, newHashedRefreshToken);
+        return {
+            access_token: newAccessToken,
+            refresh_token: newRefreshToken,
+        };
     }
     async updateRefreshToken(userId, hashedRefreshToken) {
         return this.prisma.user.update({
@@ -113,6 +130,16 @@ let AuthService = class AuthService {
             secret: this.configService.get('JWT_SECRET'),
             expiresIn: '15m',
         });
+    }
+    async generateRefreshToken(user) {
+        const payload = { sub: user.id, email: user.email, role: user.role };
+        return this.jwtService.signAsync(payload, {
+            secret: this.configService.get('JWT_REFRESH_SECRET'),
+            expiresIn: this.configService.get('JWT_REFRESH_EXPIRES_IN') || '7d',
+        });
+    }
+    hashToken(token) {
+        return crypto.createHash('sha256').update(token).digest('hex');
     }
 };
 exports.AuthService = AuthService;

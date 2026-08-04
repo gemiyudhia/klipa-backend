@@ -65,4 +65,12 @@ export declare class UsersService {
         suspendedReason: string | null;
         suspendedAt: Date | null;
     }>;
+    findOneWithAuthFields(id: string): Promise<{
+        name: string;
+        email: string;
+        id: string;
+        role: import("../../generated/prisma/enums").Role;
+        hashedRefreshToken: string | null;
+        isSuspended: boolean;
+    } | null>;
 }

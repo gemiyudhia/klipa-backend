@@ -156,6 +156,19 @@ let UsersService = class UsersService {
             return user;
         });
     }
+    async findOneWithAuthFields(id) {
+        return this.prisma.user.findUnique({
+            where: { id },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                role: true,
+                isSuspended: true,
+                hashedRefreshToken: true,
+            },
+        });
+    }
 };
 exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([

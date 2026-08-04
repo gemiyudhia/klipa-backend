@@ -1,4 +1,3 @@
-import { UpdateAuthDto } from './dto/update-auth.dto';
 import { UsersService } from "../users/users.service";
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -12,9 +11,9 @@ export declare class AuthService {
     private readonly prisma;
     constructor(userService: UsersService, configService: ConfigService, jwtService: JwtService, prisma: PrismaService);
     register(createUserDto: CreateUserDto): Promise<{
-        name: string;
-        email: string;
         id: string;
+        email: string;
+        name: string;
         avatarUrl: string | null;
         role: import("generated/prisma/client").Role;
         balance: number;
@@ -27,13 +26,15 @@ export declare class AuthService {
         access_token: string;
         refresh_token: string;
     }>;
-    findOne(id: number): string;
-    update(id: number, updateAuthDto: UpdateAuthDto): string;
+    refreshToken(userId: string, refreshToken: string): Promise<{
+        access_token: string;
+        refresh_token: string;
+    }>;
     updateRefreshToken(userId: string, hashedRefreshToken: string | null): Promise<{
-        name: string;
-        email: string;
         id: string;
+        email: string;
         passwordHash: string;
+        name: string;
         avatarUrl: string | null;
         role: import("generated/prisma/client").Role;
         balance: number;
@@ -48,4 +49,6 @@ export declare class AuthService {
         suspendedAt: Date | null;
     }>;
     private generateAccessToken;
+    private generateRefreshToken;
+    private hashToken;
 }
