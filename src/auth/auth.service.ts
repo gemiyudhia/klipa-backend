@@ -76,7 +76,7 @@ export class AuthService {
     }
 
     const incomingHash = this.hashToken(refreshToken);
-    const isRefreshTokenValid = incomingHash === user.hashedRefreshToken; // <-- ganti dari bcrypt.compare
+    const isRefreshTokenValid = incomingHash === user.hashedRefreshToken;
 
     if (!isRefreshTokenValid) {
       throw new UnauthorizedException('Refresh token tidak valid');

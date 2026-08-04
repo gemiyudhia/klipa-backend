@@ -21,6 +21,7 @@ const roles_decorator_1 = require("../auth/decorators/roles.decorator");
 const enums_1 = require("../../generated/prisma/enums");
 const suspend_user_dto_1 = require("./dto/suspend-user.dto");
 const close_campaign_dto_1 = require("./dto/close-campaign.dto");
+const throttler_1 = require("@nestjs/throttler");
 let AdminController = class AdminController {
     adminService;
     constructor(adminService) {
@@ -65,6 +66,7 @@ __decorate([
 ], AdminController.prototype, "closeCampaign", null);
 __decorate([
     (0, common_1.Get)('analytics'),
+    (0, throttler_1.SkipThrottle)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)

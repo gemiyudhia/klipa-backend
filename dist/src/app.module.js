@@ -20,12 +20,21 @@ const dispute_module_1 = require("./dispute/dispute.module");
 const withdrawal_module_1 = require("./withdrawal/withdrawal.module");
 const schedule_1 = require("@nestjs/schedule");
 const admin_module_1 = require("./admin/admin.module");
+const throttler_1 = require("@nestjs/throttler");
+const core_1 = require("@nestjs/core");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            throttler_1.ThrottlerModule.forRoot([
+                {
+                    name: 'default',
+                    ttl: 60000,
+                    limit: 100,
+                },
+            ]),
             schedule_1.ScheduleModule.forRoot(),
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
@@ -40,7 +49,13 @@ exports.AppModule = AppModule = __decorate([
             admin_module_1.AdminModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [
+            {
+                provide: core_1.APP_GUARD,
+                useClass: throttler_1.ThrottlerGuard,
+            },
+            app_service_1.AppService,
+        ],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
