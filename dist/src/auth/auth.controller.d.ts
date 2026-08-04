@@ -1,17 +1,15 @@
 import { AuthService } from './auth.service';
-import { UpdateAuthDto } from './dto/update-auth.dto';
 import { CreateUserDto } from "../users/dto/create-user.dto";
 import { LoginDto } from './dto/login.dto';
-import { Role } from "../../generated/prisma/enums";
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
     register(createUserDto: CreateUserDto): Promise<{
-        name: string;
-        email: string;
         id: string;
+        email: string;
+        name: string;
         avatarUrl: string | null;
-        role: Role;
+        role: import("../../generated/prisma/enums").Role;
         balance: number;
         createdAt: Date;
     }>;
@@ -22,6 +20,11 @@ export declare class AuthController {
     logout(req: any): Promise<{
         message: string;
     }>;
-    findOne(id: string): string;
-    update(id: string, updateAuthDto: UpdateAuthDto): string;
+    refresh(user: {
+        sub: string;
+        refreshToken: string;
+    }): Promise<{
+        access_token: string;
+        refresh_token: string;
+    }>;
 }

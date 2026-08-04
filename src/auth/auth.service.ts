@@ -3,15 +3,15 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { UpdateAuthDto } from './dto/update-auth.dto';
 import { UsersService } from 'src/users/users.service';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
-import * as bcrypt from 'bcrypt';
 import { User } from 'generated/prisma/client';
+import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -53,8 +53,8 @@ export class AuthService {
       throw new UnauthorizedException('Invalid email or password');
 
     const accessToken = await this.generateAccessToken(user);
-    const refreshToken = await this.generateAccessToken(user);
-    const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    const refreshToken = await this.generateRefreshToken(user);
+    const hashedRefreshToken = await this.hashToken(refreshToken);
 
     await this.updateRefreshToken(user.id, hashedRefreshToken);
 
@@ -64,12 +64,34 @@ export class AuthService {
     };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+  async refreshToken(userId: string, refreshToken: string) {
+    const user = await this.userService.findOneWithAuthFields(userId);
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
+    if (!user || !user.hashedRefreshToken) {
+      throw new UnauthorizedException('Akses ditolak');
+    }
+
+    if (user.isSuspended) {
+      throw new ForbiddenException('Akun Anda telah disuspend');
+    }
+
+    const incomingHash = this.hashToken(refreshToken);
+    const isRefreshTokenValid = incomingHash === user.hashedRefreshToken; // <-- ganti dari bcrypt.compare
+
+    if (!isRefreshTokenValid) {
+      throw new UnauthorizedException('Refresh token tidak valid');
+    }
+
+    const newAccessToken = await this.generateAccessToken(user);
+    const newRefreshToken = await this.generateRefreshToken(user);
+    const newHashedRefreshToken = this.hashToken(newRefreshToken);
+
+    await this.updateRefreshToken(user.id, newHashedRefreshToken);
+
+    return {
+      access_token: newAccessToken,
+      refresh_token: newRefreshToken,
+    };
   }
 
   async updateRefreshToken(userId: string, hashedRefreshToken: string | null) {
@@ -94,5 +116,19 @@ export class AuthService {
       secret: this.configService.get('JWT_SECRET'),
       expiresIn: '15m',
     });
+  }
+
+  private async generateRefreshToken(
+    user: Pick<User, 'id' | 'email' | 'role'>,
+  ) {
+    const payload = { sub: user.id, email: user.email, role: user.role };
+    return this.jwtService.signAsync(payload, {
+      secret: this.configService.get('JWT_REFRESH_SECRET'),
+      expiresIn: this.configService.get('JWT_REFRESH_EXPIRES_IN') || '7d',
+    });
+  }
+
+  private hashToken(token: string): string {
+    return crypto.createHash('sha256').update(token).digest('hex');
   }
 }

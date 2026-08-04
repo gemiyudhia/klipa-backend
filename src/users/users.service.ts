@@ -135,4 +135,18 @@ export class UsersService {
       return user;
     });
   }
+
+  async findOneWithAuthFields(id: string) {
+    return this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+        isSuspended: true,
+        hashedRefreshToken: true,
+      },
+    });
+  }
 }

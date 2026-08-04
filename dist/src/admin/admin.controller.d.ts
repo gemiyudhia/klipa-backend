@@ -6,17 +6,17 @@ export declare class AdminController {
     private readonly adminService;
     constructor(adminService: AdminService);
     suspendUser(id: string, suspendUserDto: SuspendUserDto): Promise<{
-        id: string;
-        email: string;
         name: string;
+        email: string;
+        id: string;
         isSuspended: boolean;
         suspendedReason: string | null;
         suspendedAt: Date | null;
     }>;
     unsuspendUser(id: string): Promise<{
-        id: string;
-        email: string;
         name: string;
+        email: string;
+        id: string;
         isSuspended: boolean;
     }>;
     closeCampaign(id: string, closeCampaignDto: CloseCampaignDto): Promise<{
@@ -25,7 +25,6 @@ export declare class AdminController {
         updatedAt: Date;
         title: string;
         description: string;
-        creatorId: string;
         rewardPerClip: number;
         totalBudget: number;
         remainingBudget: number;
@@ -36,6 +35,7 @@ export declare class AdminController {
         deadline: Date;
         bannedReason: string | null;
         bannedAt: Date | null;
+        creatorId: string;
     }>;
     getAnalytics(): Promise<{
         users: {
