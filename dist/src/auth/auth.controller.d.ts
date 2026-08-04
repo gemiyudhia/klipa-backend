@@ -5,9 +5,9 @@ export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
     register(createUserDto: CreateUserDto): Promise<{
-        id: string;
-        email: string;
         name: string;
+        email: string;
+        id: string;
         avatarUrl: string | null;
         role: import("../../generated/prisma/enums").Role;
         balance: number;
