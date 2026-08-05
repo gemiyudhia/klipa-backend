@@ -10,6 +10,8 @@ import { UpdateClipDto } from './dto/update-clip.dto';
 import { ReviewClipDto } from './dto/review-clip.dto';
 import { assertOwnerOrAdmin } from 'src/common/utils/authorization.util';
 import { Role, ClipStatus } from 'generated/prisma/enums';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { buildPaginationMeta, getSkip } from 'src/common/utils/pagination.util';
 
 @Injectable()
 export class ClipService {
@@ -58,15 +60,30 @@ export class ClipService {
     });
   }
 
-  async findAllByClipper(clipperId: string) {
-    return this.prisma.clip.findMany({
-      where: { clipperId },
-      orderBy: { createdAt: 'desc' },
-      include: { campaign: { select: { id: true, title: true } } },
-    });
+  async findAllByClipper(clipperId: string, pagination: PaginationDto) {
+    const { page = 1, limit = 10 } = pagination;
+    const skip = getSkip(page, limit);
+
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.clip.findMany({
+        where: { clipperId },
+        orderBy: { createdAt: 'desc' },
+        include: { campaign: { select: { id: true, title: true } } },
+        skip,
+        take: limit,
+      }),
+      this.prisma.clip.count({ where: { clipperId } }),
+    ]);
+
+    return { data, meta: buildPaginationMeta(total, page, limit) };
   }
 
-  async findAllByCampaign(campaignId: string, userId: string, userRole: Role) {
+  async findAllByCampaign(
+    campaignId: string,
+    userId: string,
+    userRole: Role,
+    pagination: PaginationDto,
+  ) {
     const campaign = await this.prisma.campaign.findUnique({
       where: { id: campaignId },
     });
@@ -77,11 +94,22 @@ export class ClipService {
 
     assertOwnerOrAdmin(campaign.creatorId, userId, userRole);
 
-    return this.prisma.clip.findMany({
-      where: { campaignId },
-      orderBy: { createdAt: 'desc' },
-      include: { clipper: { select: { id: true, name: true } } },
-    });
+    const { page = 1, limit = 10 } = pagination;
+    const skip = getSkip(page, limit);
+
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.clip.findMany({
+        where: { campaignId },
+        orderBy: {createdAt: 'desc'},
+        include: {clipper: {select: {id: true, name: true}}},
+        skip,
+        take: limit
+      }),
+
+      this.prisma.clip.count({where: {campaignId}})
+    ]);
+
+    return {data, meta: buildPaginationMeta(total, page, limit)}
   }
 
   async findOne(id: string) {

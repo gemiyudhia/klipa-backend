@@ -9,6 +9,8 @@ import { CreateWithdrawalDto } from './dto/create-withdrawal.dto';
 import { ResolveWithdrawalDto } from './dto/resolve-withdrawal.dto';
 import { UpdateBankInfoDto } from './dto/update-bank-info.dto';
 import { WithdrawalStatus, Role } from 'generated/prisma/enums';
+import { buildPaginationMeta, getSkip } from 'src/common/utils/pagination.util';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Injectable()
 export class WithdrawalService {
@@ -59,43 +61,52 @@ export class WithdrawalService {
     });
   }
 
-  async findAllByUser(userId: string) {
-    return this.prisma.withdrawalRequest.findMany({
-      where: { userId },
-      orderBy: { createdAt: 'desc' },
-    });
+  async findAllByUser(userId: string, pagination: PaginationDto) {
+    const { page = 1, limit = 10 } = pagination;
+    const skip = getSkip(page, limit);
+
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.withdrawalRequest.findMany({
+        where: { userId },
+        orderBy: { createdAt: 'desc' },
+        skip,
+        take: limit,
+      }),
+      this.prisma.withdrawalRequest.count({ where: { userId } }),
+    ]);
+
+    return { data, meta: buildPaginationMeta(total, page, limit) };
   }
 
-  async findAllPending() {
-    return this.prisma.withdrawalRequest.findMany({
-      where: { status: WithdrawalStatus.PENDING },
-      orderBy: { createdAt: 'asc' },
-      include: {
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            bankName: true,
-            bankAccountNumber: true,
-            bankAccountName: true,
+  async findAllPending(pagination: PaginationDto) {
+    const { page = 1, limit = 10 } = pagination;
+    const skip = getSkip(page, limit);
+
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.withdrawalRequest.findMany({
+        where: { status: WithdrawalStatus.PENDING },
+        orderBy: { createdAt: 'asc' },
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              bankName: true,
+              bankAccountNumber: true,
+              bankAccountName: true,
+            },
           },
         },
-      },
-    });
-  }
+        skip,
+        take: limit,
+      }),
+      this.prisma.withdrawalRequest.count({
+        where: { status: WithdrawalStatus.PENDING },
+      }),
+    ]);
 
-  private async findByIdOrThrow(id: string) {
-    const withdrawal = await this.prisma.withdrawalRequest.findUnique({
-      where: { id },
-      include: { user: true },
-    });
-
-    if (!withdrawal) {
-      throw new NotFoundException('Withdrawal request tidak ditemukan');
-    }
-
-    return withdrawal;
+    return { data, meta: buildPaginationMeta(total, page, limit) };
   }
 
   async findOne(id: string, userId: string, userRole: Role) {
@@ -174,5 +185,18 @@ export class WithdrawalService {
     ]);
 
     return updatedWithdrawal;
+  }
+
+  private async findByIdOrThrow(id: string) {
+    const withdrawal = await this.prisma.withdrawalRequest.findUnique({
+      where: { id },
+      include: { user: true },
+    });
+
+    if (!withdrawal) {
+      throw new NotFoundException('Withdrawal request tidak ditemukan');
+    }
+
+    return withdrawal;
   }
 }

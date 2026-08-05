@@ -14,6 +14,7 @@ const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 const authorization_util_1 = require("../common/utils/authorization.util");
 const enums_1 = require("../../generated/prisma/enums");
+const pagination_util_1 = require("../common/utils/pagination.util");
 let ClipService = class ClipService {
     prisma;
     constructor(prisma) {
@@ -54,14 +55,22 @@ let ClipService = class ClipService {
             });
         });
     }
-    async findAllByClipper(clipperId) {
-        return this.prisma.clip.findMany({
-            where: { clipperId },
-            orderBy: { createdAt: 'desc' },
-            include: { campaign: { select: { id: true, title: true } } },
-        });
+    async findAllByClipper(clipperId, pagination) {
+        const { page = 1, limit = 10 } = pagination;
+        const skip = (0, pagination_util_1.getSkip)(page, limit);
+        const [data, total] = await this.prisma.$transaction([
+            this.prisma.clip.findMany({
+                where: { clipperId },
+                orderBy: { createdAt: 'desc' },
+                include: { campaign: { select: { id: true, title: true } } },
+                skip,
+                take: limit,
+            }),
+            this.prisma.clip.count({ where: { clipperId } }),
+        ]);
+        return { data, meta: (0, pagination_util_1.buildPaginationMeta)(total, page, limit) };
     }
-    async findAllByCampaign(campaignId, userId, userRole) {
+    async findAllByCampaign(campaignId, userId, userRole, pagination) {
         const campaign = await this.prisma.campaign.findUnique({
             where: { id: campaignId },
         });
@@ -69,11 +78,19 @@ let ClipService = class ClipService {
             throw new common_1.NotFoundException('Campaign tidak ditemukan');
         }
         (0, authorization_util_1.assertOwnerOrAdmin)(campaign.creatorId, userId, userRole);
-        return this.prisma.clip.findMany({
-            where: { campaignId },
-            orderBy: { createdAt: 'desc' },
-            include: { clipper: { select: { id: true, name: true } } },
-        });
+        const { page = 1, limit = 10 } = pagination;
+        const skip = (0, pagination_util_1.getSkip)(page, limit);
+        const [data, total] = await this.prisma.$transaction([
+            this.prisma.clip.findMany({
+                where: { campaignId },
+                orderBy: { createdAt: 'desc' },
+                include: { clipper: { select: { id: true, name: true } } },
+                skip,
+                take: limit
+            }),
+            this.prisma.clip.count({ where: { campaignId } })
+        ]);
+        return { data, meta: (0, pagination_util_1.buildPaginationMeta)(total, page, limit) };
     }
     async findOne(id) {
         const clip = await this.prisma.clip.findUnique({

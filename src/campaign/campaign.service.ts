@@ -8,6 +8,8 @@ import { UpdateCampaignDto } from './dto/update-campaign.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CampaignStatus, Role } from 'generated/prisma/enums';
 import { assertOwnerOrAdmin } from 'src/common/utils/authorization.util';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { buildPaginationMeta, getSkip } from 'src/common/utils/pagination.util';
 
 @Injectable()
 export class CampaignService {
@@ -84,18 +86,38 @@ export class CampaignService {
     return campaign;
   }
 
-  async findAllByCreator(creatorId: string) {
-    return this.prisma.campaign.findMany({
-      where: { creatorId },
-      orderBy: { createdAt: 'desc' },
-    });
+  async findAllByCreator(creatorId: string, pagination: PaginationDto) {
+    const { page = 1, limit = 10 } = pagination;
+    const skip = getSkip(page, limit);
+
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.campaign.findMany({
+        where: { creatorId },
+        orderBy: { createdAt: 'desc' },
+        skip,
+        take: limit,
+      }),
+      this.prisma.campaign.count({ where: { creatorId } }),
+    ]);
+
+    return { data, meta: buildPaginationMeta(total, page, limit) };
   }
 
-  async findAllPublic() {
-    return this.prisma.campaign.findMany({
-      where: { status: CampaignStatus.ACTIVE },
-      orderBy: { createdAt: 'desc' },
-    });
+  async findAllPublic(pagination: PaginationDto) {
+    const { page = 1, limit = 10 } = pagination;
+    const skip = getSkip(page, limit);
+
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.campaign.findMany({
+        where: { status: CampaignStatus.ACTIVE },
+        orderBy: { createdAt: 'desc' },
+        skip,
+        take: limit,
+      }),
+      this.prisma.campaign.count({ where: { status: CampaignStatus.ACTIVE } }),
+    ]);
+
+    return { data, meta: buildPaginationMeta(total, page, limit) };
   }
 
   async findOne(id: string) {

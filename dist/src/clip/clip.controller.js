@@ -23,6 +23,7 @@ const roles_decorator_1 = require("../auth/decorators/roles.decorator");
 const enums_1 = require("../../generated/prisma/enums");
 const current_user_decorator_1 = require("../auth/decorators/current-user.decorator");
 const review_clip_dto_1 = require("./dto/review-clip.dto");
+const pagination_dto_1 = require("../common/dto/pagination.dto");
 let ClipController = class ClipController {
     clipService;
     constructor(clipService) {
@@ -31,11 +32,11 @@ let ClipController = class ClipController {
     create(clipperId, createClipDto) {
         return this.clipService.create(clipperId, createClipDto);
     }
-    findMine(clipperId) {
-        return this.clipService.findAllByClipper(clipperId);
+    findMine(clipperId, pagination) {
+        return this.clipService.findAllByClipper(clipperId, pagination);
     }
-    findByCampaign(campaignId, user) {
-        return this.clipService.findAllByCampaign(campaignId, user.sub, user.role);
+    findByCampaign(campaignId, user, pagination) {
+        return this.clipService.findAllByCampaign(campaignId, user.sub, user.role, pagination);
     }
     findOne(id) {
         return this.clipService.findOne(id);
@@ -64,8 +65,9 @@ __decorate([
     (0, common_1.Get)('mine'),
     (0, roles_decorator_1.Roles)(enums_1.Role.CLIPPER),
     __param(0, (0, current_user_decorator_1.CurrentUser)('sub')),
+    __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, pagination_dto_1.PaginationDto]),
     __metadata("design:returntype", void 0)
 ], ClipController.prototype, "findMine", null);
 __decorate([
@@ -73,8 +75,9 @@ __decorate([
     (0, roles_decorator_1.Roles)(enums_1.Role.ADMIN, enums_1.Role.CREATOR),
     __param(0, (0, common_1.Param)('campaignId')),
     __param(1, (0, current_user_decorator_1.CurrentUser)()),
+    __param(2, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, Object, pagination_dto_1.PaginationDto]),
     __metadata("design:returntype", void 0)
 ], ClipController.prototype, "findByCampaign", null);
 __decorate([

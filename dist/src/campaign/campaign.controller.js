@@ -23,6 +23,7 @@ const current_user_decorator_1 = require("../auth/decorators/current-user.decora
 const jwt_auth_guard_1 = require("../common/guards/jwt-auth.guard");
 const roles_guard_1 = require("../common/guards/roles.guard");
 const campaign_expiry_task_1 = require("./task/campaign-expiry.task");
+const pagination_dto_1 = require("../common/dto/pagination.dto");
 let CampaignController = class CampaignController {
     campaignService;
     campaignExpiryTask;
@@ -33,11 +34,11 @@ let CampaignController = class CampaignController {
     create(creatorId, createCampaignDto) {
         return this.campaignService.create(creatorId, createCampaignDto);
     }
-    findMine(creatorId) {
-        return this.campaignService.findAllByCreator(creatorId);
+    findMine(creatorId, pagination) {
+        return this.campaignService.findAllByCreator(creatorId, pagination);
     }
-    findAllPublic() {
-        return this.campaignService.findAllPublic();
+    findAllPublic(pagination) {
+        return this.campaignService.findAllPublic(pagination);
     }
     findOne(id) {
         return this.campaignService.findOne(id);
@@ -69,15 +70,17 @@ __decorate([
     (0, common_1.Get)('mine'),
     (0, roles_decorator_1.Roles)(enums_1.Role.CREATOR),
     __param(0, (0, current_user_decorator_1.CurrentUser)('sub')),
+    __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, pagination_dto_1.PaginationDto]),
     __metadata("design:returntype", void 0)
 ], CampaignController.prototype, "findMine", null);
 __decorate([
     (0, common_1.Get)(),
     (0, roles_decorator_1.Roles)(enums_1.Role.CREATOR, enums_1.Role.CLIPPER, enums_1.Role.ADMIN),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [pagination_dto_1.PaginationDto]),
     __metadata("design:returntype", void 0)
 ], CampaignController.prototype, "findAllPublic", null);
 __decorate([

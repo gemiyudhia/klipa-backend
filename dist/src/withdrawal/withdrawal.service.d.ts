@@ -4,6 +4,7 @@ import { CreateWithdrawalDto } from './dto/create-withdrawal.dto';
 import { ResolveWithdrawalDto } from './dto/resolve-withdrawal.dto';
 import { UpdateBankInfoDto } from './dto/update-bank-info.dto';
 import { WithdrawalStatus, Role } from "../../generated/prisma/enums";
+import { PaginationDto } from "../common/dto/pagination.dto";
 export declare class WithdrawalService {
     private prisma;
     private configService;
@@ -26,40 +27,55 @@ export declare class WithdrawalService {
         rejectionReason: string | null;
         processedById: string | null;
     }>;
-    findAllByUser(userId: string): Promise<{
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        status: WithdrawalStatus;
-        amount: number;
-        userId: string;
-        taxAmount: number | null;
-        netAmount: number | null;
-        rejectionReason: string | null;
-        processedById: string | null;
-    }[]>;
-    findAllPending(): Promise<({
-        user: {
-            name: string;
-            email: string;
+    findAllByUser(userId: string, pagination: PaginationDto): Promise<{
+        data: {
             id: string;
-            bankName: string | null;
-            bankAccountNumber: string | null;
-            bankAccountName: string | null;
+            createdAt: Date;
+            updatedAt: Date;
+            status: WithdrawalStatus;
+            amount: number;
+            userId: string;
+            taxAmount: number | null;
+            netAmount: number | null;
+            rejectionReason: string | null;
+            processedById: string | null;
+        }[];
+        meta: {
+            total: number;
+            page: number;
+            limit: number;
+            totalPages: number;
         };
-    } & {
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        status: WithdrawalStatus;
-        amount: number;
-        userId: string;
-        taxAmount: number | null;
-        netAmount: number | null;
-        rejectionReason: string | null;
-        processedById: string | null;
-    })[]>;
-    private findByIdOrThrow;
+    }>;
+    findAllPending(pagination: PaginationDto): Promise<{
+        data: ({
+            user: {
+                name: string;
+                email: string;
+                id: string;
+                bankName: string | null;
+                bankAccountNumber: string | null;
+                bankAccountName: string | null;
+            };
+        } & {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            status: WithdrawalStatus;
+            amount: number;
+            userId: string;
+            taxAmount: number | null;
+            netAmount: number | null;
+            rejectionReason: string | null;
+            processedById: string | null;
+        })[];
+        meta: {
+            total: number;
+            page: number;
+            limit: number;
+            totalPages: number;
+        };
+    }>;
     findOne(id: string, userId: string, userRole: Role): Promise<{
         user: {
             name: string;
@@ -103,4 +119,5 @@ export declare class WithdrawalService {
         rejectionReason: string | null;
         processedById: string | null;
     }>;
+    private findByIdOrThrow;
 }

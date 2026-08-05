@@ -3,6 +3,7 @@ import { CreateWithdrawalDto } from './dto/create-withdrawal.dto';
 import { ResolveWithdrawalDto } from './dto/resolve-withdrawal.dto';
 import { UpdateBankInfoDto } from './dto/update-bank-info.dto';
 import { Role } from "../../generated/prisma/enums";
+import { PaginationDto } from "../common/dto/pagination.dto";
 export declare class WithdrawalController {
     private readonly withdrawalService;
     constructor(withdrawalService: WithdrawalService);
@@ -24,39 +25,55 @@ export declare class WithdrawalController {
         rejectionReason: string | null;
         processedById: string | null;
     }>;
-    findMine(userId: string): Promise<{
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        status: import("generated/prisma/enums").WithdrawalStatus;
-        amount: number;
-        userId: string;
-        taxAmount: number | null;
-        netAmount: number | null;
-        rejectionReason: string | null;
-        processedById: string | null;
-    }[]>;
-    findAllPending(): Promise<({
-        user: {
-            name: string;
-            email: string;
+    findMine(userId: string, pagination: PaginationDto): Promise<{
+        data: {
             id: string;
-            bankName: string | null;
-            bankAccountNumber: string | null;
-            bankAccountName: string | null;
+            createdAt: Date;
+            updatedAt: Date;
+            status: import("generated/prisma/enums").WithdrawalStatus;
+            amount: number;
+            userId: string;
+            taxAmount: number | null;
+            netAmount: number | null;
+            rejectionReason: string | null;
+            processedById: string | null;
+        }[];
+        meta: {
+            total: number;
+            page: number;
+            limit: number;
+            totalPages: number;
         };
-    } & {
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        status: import("generated/prisma/enums").WithdrawalStatus;
-        amount: number;
-        userId: string;
-        taxAmount: number | null;
-        netAmount: number | null;
-        rejectionReason: string | null;
-        processedById: string | null;
-    })[]>;
+    }>;
+    findAllPending(pagination: PaginationDto): Promise<{
+        data: ({
+            user: {
+                name: string;
+                email: string;
+                id: string;
+                bankName: string | null;
+                bankAccountNumber: string | null;
+                bankAccountName: string | null;
+            };
+        } & {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            status: import("generated/prisma/enums").WithdrawalStatus;
+            amount: number;
+            userId: string;
+            taxAmount: number | null;
+            netAmount: number | null;
+            rejectionReason: string | null;
+            processedById: string | null;
+        })[];
+        meta: {
+            total: number;
+            page: number;
+            limit: number;
+            totalPages: number;
+        };
+    }>;
     findOne(id: string, user: {
         sub: string;
         role: Role;

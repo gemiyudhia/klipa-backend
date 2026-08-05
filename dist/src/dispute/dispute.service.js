@@ -14,6 +14,7 @@ const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 const authorization_util_1 = require("../common/utils/authorization.util");
 const enums_1 = require("../../generated/prisma/enums");
+const pagination_util_1 = require("../common/utils/pagination.util");
 let DisputeService = class DisputeService {
     prisma;
     constructor(prisma) {
@@ -40,41 +41,44 @@ let DisputeService = class DisputeService {
             data: { clipId: dto.clipId, clipperId, reason: dto.reason },
         });
     }
-    async findAllByClipper(clipperId) {
-        return this.prisma.dispute.findMany({
-            where: { clipperId },
-            orderBy: { createdAt: 'desc' },
-            include: { clip: { select: { id: true, title: true, status: true } } },
-        });
+    async findAllByClipper(clipperId, pagination) {
+        const { page = 1, limit = 10 } = pagination;
+        const skip = (0, pagination_util_1.getSkip)(page, limit);
+        const [data, total] = await this.prisma.$transaction([
+            this.prisma.dispute.findMany({
+                where: { clipperId },
+                orderBy: { createdAt: 'desc' },
+                include: { clip: { select: { id: true, title: true, status: true } } },
+                skip,
+                take: limit,
+            }),
+            this.prisma.dispute.count({ where: { clipperId } }),
+        ]);
+        return { data, meta: (0, pagination_util_1.buildPaginationMeta)(total, page, limit) };
     }
-    async findAllPending() {
-        return this.prisma.dispute.findMany({
-            where: { status: enums_1.DisputeStatus.PENDING },
-            orderBy: { createdAt: 'asc' },
-            include: {
-                clip: {
-                    include: {
-                        campaign: {
-                            select: { id: true, title: true, rewardPerClip: true },
+    async findAllPending(pagination) {
+        const { page = 1, limit = 10 } = pagination;
+        const skip = (0, pagination_util_1.getSkip)(page, limit);
+        const [data, total] = await this.prisma.$transaction([
+            this.prisma.dispute.findMany({
+                where: { status: enums_1.DisputeStatus.PENDING },
+                orderBy: { createdAt: 'asc' },
+                include: {
+                    clip: {
+                        include: {
+                            campaign: {
+                                select: { id: true, title: true, rewardPerClip: true },
+                            },
                         },
                     },
+                    clipper: { select: { id: true, name: true, email: true } },
                 },
-                clipper: { select: { id: true, name: true, email: true } },
-            },
-        });
-    }
-    async findByIdOrThrow(id) {
-        const dispute = await this.prisma.dispute.findUnique({
-            where: { id },
-            include: {
-                clip: { include: { campaign: true } },
-                clipper: { select: { id: true, name: true, email: true } },
-            },
-        });
-        if (!dispute) {
-            throw new common_1.NotFoundException('Dispute tidak ditemukan');
-        }
-        return dispute;
+                skip,
+                take: limit,
+            }),
+            this.prisma.dispute.count({ where: { status: enums_1.DisputeStatus.PENDING } })
+        ]);
+        return { data, meta: (0, pagination_util_1.buildPaginationMeta)(total, page, limit) };
     }
     async findOne(id, userId, userRole) {
         const dispute = await this.findByIdOrThrow(id);
@@ -147,6 +151,19 @@ let DisputeService = class DisputeService {
             });
             return updatedDispute;
         });
+    }
+    async findByIdOrThrow(id) {
+        const dispute = await this.prisma.dispute.findUnique({
+            where: { id },
+            include: {
+                clip: { include: { campaign: true } },
+                clipper: { select: { id: true, name: true, email: true } },
+            },
+        });
+        if (!dispute) {
+            throw new common_1.NotFoundException('Dispute tidak ditemukan');
+        }
+        return dispute;
     }
 };
 exports.DisputeService = DisputeService;

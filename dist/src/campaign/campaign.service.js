@@ -14,6 +14,7 @@ const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 const enums_1 = require("../../generated/prisma/enums");
 const authorization_util_1 = require("../common/utils/authorization.util");
+const pagination_util_1 = require("../common/utils/pagination.util");
 let CampaignService = class CampaignService {
     prisma;
     constructor(prisma) {
@@ -77,17 +78,33 @@ let CampaignService = class CampaignService {
         });
         return campaign;
     }
-    async findAllByCreator(creatorId) {
-        return this.prisma.campaign.findMany({
-            where: { creatorId },
-            orderBy: { createdAt: 'desc' },
-        });
+    async findAllByCreator(creatorId, pagination) {
+        const { page = 1, limit = 10 } = pagination;
+        const skip = (0, pagination_util_1.getSkip)(page, limit);
+        const [data, total] = await this.prisma.$transaction([
+            this.prisma.campaign.findMany({
+                where: { creatorId },
+                orderBy: { createdAt: 'desc' },
+                skip,
+                take: limit,
+            }),
+            this.prisma.campaign.count({ where: { creatorId } }),
+        ]);
+        return { data, meta: (0, pagination_util_1.buildPaginationMeta)(total, page, limit) };
     }
-    async findAllPublic() {
-        return this.prisma.campaign.findMany({
-            where: { status: enums_1.CampaignStatus.ACTIVE },
-            orderBy: { createdAt: 'desc' },
-        });
+    async findAllPublic(pagination) {
+        const { page = 1, limit = 10 } = pagination;
+        const skip = (0, pagination_util_1.getSkip)(page, limit);
+        const [data, total] = await this.prisma.$transaction([
+            this.prisma.campaign.findMany({
+                where: { status: enums_1.CampaignStatus.ACTIVE },
+                orderBy: { createdAt: 'desc' },
+                skip,
+                take: limit,
+            }),
+            this.prisma.campaign.count({ where: { status: enums_1.CampaignStatus.ACTIVE } }),
+        ]);
+        return { data, meta: (0, pagination_util_1.buildPaginationMeta)(total, page, limit) };
     }
     async findOne(id) {
         const campaign = await this.prisma.campaign.findUnique({ where: { id } });

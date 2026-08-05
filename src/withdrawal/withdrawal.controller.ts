@@ -6,6 +6,7 @@ import {
   Body,
   Param,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { WithdrawalService } from './withdrawal.service';
 import { CreateWithdrawalDto } from './dto/create-withdrawal.dto';
@@ -16,6 +17,7 @@ import { RolesGuard } from 'src/common/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { Role } from 'generated/prisma/enums';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Controller('withdrawal')
 @UseGuards(JwtAuthGuards, RolesGuard)
@@ -39,14 +41,17 @@ export class WithdrawalController {
 
   @Get('mine')
   @Roles(Role.CREATOR, Role.CLIPPER)
-  findMine(@CurrentUser('sub') userId: string) {
-    return this.withdrawalService.findAllByUser(userId);
+  findMine(
+    @CurrentUser('sub') userId: string,
+    @Query() pagination: PaginationDto,
+  ) {
+    return this.withdrawalService.findAllByUser(userId, pagination);
   }
 
   @Get('pending')
   @Roles(Role.ADMIN)
-  findAllPending() {
-    return this.withdrawalService.findAllPending();
+  findAllPending(pagination: PaginationDto) {
+    return this.withdrawalService.findAllPending(pagination);
   }
 
   @Get(':id')
