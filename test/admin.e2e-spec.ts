@@ -3,7 +3,7 @@ import request from 'supertest';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { createTestApp, cleanDatabase } from './helpers/test-app.helper';
 import { registerAndLogin, topUp } from './helpers/auth.helper';
-import { Role } from 'generated/prisma/enums';
+import { Role } from '../generated/prisma/enums';
 
 describe('Admin (e2e)', () => {
   let app: INestApplication;
