@@ -2,6 +2,7 @@ import { CreateCampaignDto } from './dto/create-campaign.dto';
 import { UpdateCampaignDto } from './dto/update-campaign.dto';
 import { PrismaService } from "../prisma/prisma.service";
 import { CampaignStatus, Role } from "../../generated/prisma/enums";
+import { PaginationDto } from "../common/dto/pagination.dto";
 export declare class CampaignService {
     private readonly prisma;
     constructor(prisma: PrismaService);
@@ -23,42 +24,58 @@ export declare class CampaignService {
         bannedAt: Date | null;
         creatorId: string;
     }>;
-    findAllByCreator(creatorId: string): Promise<{
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        title: string;
-        description: string;
-        rewardPerClip: number;
-        totalBudget: number;
-        remainingBudget: number;
-        platformFeeAmount: number;
-        totalCharged: number;
-        vodUrl: string | null;
-        status: CampaignStatus;
-        deadline: Date;
-        bannedReason: string | null;
-        bannedAt: Date | null;
-        creatorId: string;
-    }[]>;
-    findAllPublic(): Promise<{
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        title: string;
-        description: string;
-        rewardPerClip: number;
-        totalBudget: number;
-        remainingBudget: number;
-        platformFeeAmount: number;
-        totalCharged: number;
-        vodUrl: string | null;
-        status: CampaignStatus;
-        deadline: Date;
-        bannedReason: string | null;
-        bannedAt: Date | null;
-        creatorId: string;
-    }[]>;
+    findAllByCreator(creatorId: string, pagination: PaginationDto): Promise<{
+        data: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            title: string;
+            description: string;
+            rewardPerClip: number;
+            totalBudget: number;
+            remainingBudget: number;
+            platformFeeAmount: number;
+            totalCharged: number;
+            vodUrl: string | null;
+            status: CampaignStatus;
+            deadline: Date;
+            bannedReason: string | null;
+            bannedAt: Date | null;
+            creatorId: string;
+        }[];
+        meta: {
+            total: number;
+            page: number;
+            limit: number;
+            totalPages: number;
+        };
+    }>;
+    findAllPublic(pagination: PaginationDto): Promise<{
+        data: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            title: string;
+            description: string;
+            rewardPerClip: number;
+            totalBudget: number;
+            remainingBudget: number;
+            platformFeeAmount: number;
+            totalCharged: number;
+            vodUrl: string | null;
+            status: CampaignStatus;
+            deadline: Date;
+            bannedReason: string | null;
+            bannedAt: Date | null;
+            creatorId: string;
+        }[];
+        meta: {
+            total: number;
+            page: number;
+            limit: number;
+            totalPages: number;
+        };
+    }>;
     findOne(id: string): Promise<{
         id: string;
         createdAt: Date;

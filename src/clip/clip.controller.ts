@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { ClipService } from './clip.service';
 import { CreateClipDto } from './dto/create-clip.dto';
@@ -17,6 +18,7 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'generated/prisma/enums';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { ReviewClipDto } from './dto/review-clip.dto';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Controller('clip')
 @UseGuards(JwtAuthGuards, RolesGuard)
@@ -34,8 +36,11 @@ export class ClipController {
 
   @Get('mine')
   @Roles(Role.CLIPPER)
-  findMine(@CurrentUser('sub') clipperId: string) {
-    return this.clipService.findAllByClipper(clipperId);
+  findMine(
+    @CurrentUser('sub') clipperId: string,
+    @Query() pagination: PaginationDto,
+  ) {
+    return this.clipService.findAllByClipper(clipperId, pagination);
   }
 
   @Get('by-campaign/:campaignId')
@@ -43,8 +48,14 @@ export class ClipController {
   findByCampaign(
     @Param('campaignId') campaignId: string,
     @CurrentUser() user: { sub: string; role: Role },
+    @Query() pagination: PaginationDto,
   ) {
-    return this.clipService.findAllByCampaign(campaignId, user.sub, user.role);
+    return this.clipService.findAllByCampaign(
+      campaignId,
+      user.sub,
+      user.role,
+      pagination,
+    );
   }
 
   @Get(':id')

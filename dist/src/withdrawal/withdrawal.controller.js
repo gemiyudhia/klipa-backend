@@ -23,6 +23,7 @@ const roles_guard_1 = require("../common/guards/roles.guard");
 const roles_decorator_1 = require("../auth/decorators/roles.decorator");
 const current_user_decorator_1 = require("../auth/decorators/current-user.decorator");
 const enums_1 = require("../../generated/prisma/enums");
+const pagination_dto_1 = require("../common/dto/pagination.dto");
 let WithdrawalController = class WithdrawalController {
     withdrawalService;
     constructor(withdrawalService) {
@@ -34,11 +35,11 @@ let WithdrawalController = class WithdrawalController {
     create(userId, dto) {
         return this.withdrawalService.create(userId, dto);
     }
-    findMine(userId) {
-        return this.withdrawalService.findAllByUser(userId);
+    findMine(userId, pagination) {
+        return this.withdrawalService.findAllByUser(userId, pagination);
     }
-    findAllPending() {
-        return this.withdrawalService.findAllPending();
+    findAllPending(pagination) {
+        return this.withdrawalService.findAllPending(pagination);
     }
     findOne(id, user) {
         return this.withdrawalService.findOne(id, user.sub, user.role);
@@ -70,15 +71,16 @@ __decorate([
     (0, common_1.Get)('mine'),
     (0, roles_decorator_1.Roles)(enums_1.Role.CREATOR, enums_1.Role.CLIPPER),
     __param(0, (0, current_user_decorator_1.CurrentUser)('sub')),
+    __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, pagination_dto_1.PaginationDto]),
     __metadata("design:returntype", void 0)
 ], WithdrawalController.prototype, "findMine", null);
 __decorate([
     (0, common_1.Get)('pending'),
     (0, roles_decorator_1.Roles)(enums_1.Role.ADMIN),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [pagination_dto_1.PaginationDto]),
     __metadata("design:returntype", void 0)
 ], WithdrawalController.prototype, "findAllPending", null);
 __decorate([

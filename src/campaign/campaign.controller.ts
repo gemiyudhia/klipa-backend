@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { CampaignService } from './campaign.service';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
@@ -17,6 +18,7 @@ import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { JwtAuthGuards } from 'src/common/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { CampaignExpiryTask } from './task/campaign-expiry.task';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Controller('campaign')
 @UseGuards(JwtAuthGuards, RolesGuard)
@@ -37,14 +39,17 @@ export class CampaignController {
 
   @Get('mine')
   @Roles(Role.CREATOR)
-  findMine(@CurrentUser('sub') creatorId: string) {
-    return this.campaignService.findAllByCreator(creatorId);
+  findMine(
+    @CurrentUser('sub') creatorId: string,
+    @Query() pagination: PaginationDto,
+  ) {
+    return this.campaignService.findAllByCreator(creatorId, pagination);
   }
 
   @Get()
   @Roles(Role.CREATOR, Role.CLIPPER, Role.ADMIN)
-  findAllPublic() {
-    return this.campaignService.findAllPublic();
+  findAllPublic(@Query() pagination: PaginationDto) {
+    return this.campaignService.findAllPublic(pagination);
   }
 
   @Get(':id')

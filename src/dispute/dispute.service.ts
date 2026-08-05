@@ -10,6 +10,8 @@ import { CreateDisputeDto } from './dto/create-dispute.dto';
 import { ResolveDisputeDto } from './dto/resolve-dispute.dto';
 import { assertOwnerOrAdmin } from 'src/common/utils/authorization.util';
 import { ClipStatus, DisputeStatus, Role } from 'generated/prisma/enums';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { buildPaginationMeta, getSkip } from 'src/common/utils/pagination.util';
 
 @Injectable()
 export class DisputeService {
@@ -46,45 +48,49 @@ export class DisputeService {
     });
   }
 
-  async findAllByClipper(clipperId: string) {
-    return this.prisma.dispute.findMany({
-      where: { clipperId },
-      orderBy: { createdAt: 'desc' },
-      include: { clip: { select: { id: true, title: true, status: true } } },
-    });
+  async findAllByClipper(clipperId: string, pagination: PaginationDto) {
+    const { page = 1, limit = 10 } = pagination;
+    const skip = getSkip(page, limit);
+
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.dispute.findMany({
+        where: { clipperId },
+        orderBy: { createdAt: 'desc' },
+        include: { clip: { select: { id: true, title: true, status: true } } },
+        skip,
+        take: limit,
+      }),
+      this.prisma.dispute.count({ where: { clipperId } }),
+    ]);
+
+    return { data, meta: buildPaginationMeta(total, page, limit) };
   }
 
-  async findAllPending() {
-    return this.prisma.dispute.findMany({
-      where: { status: DisputeStatus.PENDING },
-      orderBy: { createdAt: 'asc' },
-      include: {
-        clip: {
-          include: {
-            campaign: {
-              select: { id: true, title: true, rewardPerClip: true },
+  async findAllPending(pagination: PaginationDto) {
+    const { page = 1, limit = 10 } = pagination;
+    const skip = getSkip(page, limit);
+
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.dispute.findMany({
+        where: { status: DisputeStatus.PENDING },
+        orderBy: { createdAt: 'asc' },
+        include: {
+          clip: {
+            include: {
+              campaign: {
+                select: { id: true, title: true, rewardPerClip: true },
+              },
             },
           },
+          clipper: { select: { id: true, name: true, email: true } },
         },
-        clipper: { select: { id: true, name: true, email: true } },
-      },
-    });
-  }
+        skip,
+        take: limit,
+      }),
+      this.prisma.dispute.count({where: {status: DisputeStatus.PENDING}})
+    ]);
 
-  private async findByIdOrThrow(id: string) {
-    const dispute = await this.prisma.dispute.findUnique({
-      where: { id },
-      include: {
-        clip: { include: { campaign: true } },
-        clipper: { select: { id: true, name: true, email: true } },
-      },
-    });
-
-    if (!dispute) {
-      throw new NotFoundException('Dispute tidak ditemukan');
-    }
-
-    return dispute;
+    return {data, meta: buildPaginationMeta(total, page, limit)}
   }
 
   async findOne(id: string, userId: string, userRole: Role) {
@@ -174,5 +180,21 @@ export class DisputeService {
 
       return updatedDispute;
     });
+  }
+
+  private async findByIdOrThrow(id: string) {
+    const dispute = await this.prisma.dispute.findUnique({
+      where: { id },
+      include: {
+        clip: { include: { campaign: true } },
+        clipper: { select: { id: true, name: true, email: true } },
+      },
+    });
+
+    if (!dispute) {
+      throw new NotFoundException('Dispute tidak ditemukan');
+    }
+
+    return dispute;
   }
 }

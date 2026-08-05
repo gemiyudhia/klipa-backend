@@ -3,6 +3,7 @@ import { CreateClipDto } from './dto/create-clip.dto';
 import { UpdateClipDto } from './dto/update-clip.dto';
 import { Role } from "../../generated/prisma/enums";
 import { ReviewClipDto } from './dto/review-clip.dto';
+import { PaginationDto } from "../common/dto/pagination.dto";
 export declare class ClipController {
     private readonly clipService;
     constructor(clipService: ClipService);
@@ -21,49 +22,65 @@ export declare class ClipController {
         campaignId: string;
         clipperId: string;
     }>;
-    findMine(clipperId: string): Promise<({
-        campaign: {
+    findMine(clipperId: string, pagination: PaginationDto): Promise<{
+        data: ({
+            campaign: {
+                id: string;
+                title: string;
+            };
+        } & {
             id: string;
+            createdAt: Date;
+            updatedAt: Date;
             title: string;
+            platformFeeAmount: number | null;
+            status: import("generated/prisma/enums").ClipStatus;
+            videoUrl: string;
+            thumbnailUrl: string | null;
+            duration: number | null;
+            feedback: string | null;
+            payoutAmount: number | null;
+            campaignId: string;
+            clipperId: string;
+        })[];
+        meta: {
+            total: number;
+            page: number;
+            limit: number;
+            totalPages: number;
         };
-    } & {
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        title: string;
-        platformFeeAmount: number | null;
-        status: import("generated/prisma/enums").ClipStatus;
-        videoUrl: string;
-        thumbnailUrl: string | null;
-        duration: number | null;
-        feedback: string | null;
-        payoutAmount: number | null;
-        campaignId: string;
-        clipperId: string;
-    })[]>;
+    }>;
     findByCampaign(campaignId: string, user: {
         sub: string;
         role: Role;
-    }): Promise<({
-        clipper: {
-            name: string;
+    }, pagination: PaginationDto): Promise<{
+        data: ({
+            clipper: {
+                name: string;
+                id: string;
+            };
+        } & {
             id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            title: string;
+            platformFeeAmount: number | null;
+            status: import("generated/prisma/enums").ClipStatus;
+            videoUrl: string;
+            thumbnailUrl: string | null;
+            duration: number | null;
+            feedback: string | null;
+            payoutAmount: number | null;
+            campaignId: string;
+            clipperId: string;
+        })[];
+        meta: {
+            total: number;
+            page: number;
+            limit: number;
+            totalPages: number;
         };
-    } & {
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        title: string;
-        platformFeeAmount: number | null;
-        status: import("generated/prisma/enums").ClipStatus;
-        videoUrl: string;
-        thumbnailUrl: string | null;
-        duration: number | null;
-        feedback: string | null;
-        payoutAmount: number | null;
-        campaignId: string;
-        clipperId: string;
-    })[]>;
+    }>;
     findOne(id: string): Promise<{
         campaign: {
             id: string;
