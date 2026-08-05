@@ -40,3 +40,14 @@ export async function topUp(
     .set('Authorization', `Bearer ${accessToken}`)
     .send({ amount });
 }
+
+export async function suspendUser(
+  app: INestApplication,
+  adminToken: string,
+  userId: string,
+) {
+  return request(app.getHttpServer())
+    .patch(`/admin/users/${userId}/suspend`)
+    .set('Authorization', `Bearer ${adminToken}`)
+    .send({ reason: 'Test suspend' });
+}
