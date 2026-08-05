@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -116,7 +117,7 @@ export class WithdrawalService {
     const isAdmin = userRole === Role.ADMIN;
 
     if (!isOwner && !isAdmin) {
-      throw new BadRequestException(
+      throw new ForbiddenException(
         'Anda tidak memiliki akses ke resource ini',
       );
     }
