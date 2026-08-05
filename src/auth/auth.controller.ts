@@ -12,13 +12,17 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  @Throttle({ default: { limit: 5, ttl: 60000 } })
+  @Throttle({
+    default: { limit: process.env.NODE_ENV === 'test' ? 1000 : 5, ttl: 60000 },
+  })
   register(@Body() createUserDto: CreateUserDto) {
     return this.authService.register(createUserDto);
   }
 
   @Post('login')
-  @Throttle({ default: { limit: 5, ttl: 60000 } })
+  @Throttle({
+    default: { limit: process.env.NODE_ENV === 'test' ? 1000 : 5, ttl: 60000 },
+  })
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
   }
