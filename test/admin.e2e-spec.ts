@@ -23,6 +23,103 @@ describe('Admin (e2e)', () => {
     await app.close();
   });
 
+  it('should list all users with pagination', async () => {
+    const admin = await registerAndLogin(
+      app,
+      prisma,
+      'admin@example.com',
+      Role.ADMIN,
+    );
+    await registerAndLogin(app, prisma, 'creator@example.com', Role.CREATOR);
+    await registerAndLogin(app, prisma, 'clipper@example.com', Role.CLIPPER);
+
+    const res = await request(app.getHttpServer())
+      .get('/admin/users')
+      .set('Authorization', `Bearer ${admin.accessToken}`)
+      .expect(200);
+
+    expect(res.body.data.length).toBe(3); // admin + creator + clipper
+    expect(res.body.meta.total).toBe(3);
+  });
+
+  it('should filter users by role', async () => {
+    const admin = await registerAndLogin(
+      app,
+      prisma,
+      'admin@example.com',
+      Role.ADMIN,
+    );
+    await registerAndLogin(app, prisma, 'creator@example.com', Role.CREATOR);
+    await registerAndLogin(app, prisma, 'clipper1@example.com', Role.CLIPPER);
+    await registerAndLogin(app, prisma, 'clipper2@example.com', Role.CLIPPER);
+
+    const res = await request(app.getHttpServer())
+      .get('/admin/users?role=CLIPPER')
+      .set('Authorization', `Bearer ${admin.accessToken}`)
+      .expect(200);
+
+    expect(res.body.data.length).toBe(2);
+    expect(res.body.data.every((u: any) => u.role === 'CLIPPER')).toBe(true);
+  });
+
+  it('should filter users by search keyword (name or email)', async () => {
+    const admin = await registerAndLogin(
+      app,
+      prisma,
+      'admin@example.com',
+      Role.ADMIN,
+    );
+    await registerAndLogin(
+      app,
+      prisma,
+      'budisantoso@example.com',
+      Role.CLIPPER,
+    );
+    await registerAndLogin(app, prisma, 'agus@example.com', Role.CLIPPER);
+
+    const res = await request(app.getHttpServer())
+      .get('/admin/users?search=budi')
+      .set('Authorization', `Bearer ${admin.accessToken}`)
+      .expect(200);
+
+    expect(res.body.data.length).toBe(1);
+    expect(res.body.data[0].email).toBe('budisantoso@example.com');
+  });
+
+  it('should never expose passwordHash or hashedRefreshToken', async () => {
+    const admin = await registerAndLogin(
+      app,
+      prisma,
+      'admin@example.com',
+      Role.ADMIN,
+    );
+    await registerAndLogin(app, prisma, 'clipper@example.com', Role.CLIPPER);
+
+    const res = await request(app.getHttpServer())
+      .get('/admin/users')
+      .set('Authorization', `Bearer ${admin.accessToken}`)
+      .expect(200);
+
+    for (const user of res.body.data) {
+      expect(user.passwordHash).toBeUndefined();
+      expect(user.hashedRefreshToken).toBeUndefined();
+    }
+  });
+
+  it('should reject non-admin access to user list', async () => {
+    const creator = await registerAndLogin(
+      app,
+      prisma,
+      'creator@example.com',
+      Role.CREATOR,
+    );
+
+    await request(app.getHttpServer())
+      .get('/admin/users')
+      .set('Authorization', `Bearer ${creator.accessToken}`)
+      .expect(403);
+  });
+
   it('should suspend user and block subsequent login', async () => {
     const admin = await registerAndLogin(
       app,
@@ -312,7 +409,7 @@ describe('Admin (e2e)', () => {
       .set('Authorization', `Bearer ${admin.accessToken}`)
       .expect(200);
 
-    expect(res.body.users.total).toBe(2); 
+    expect(res.body.users.total).toBe(2);
     expect(res.body.campaign.total).toBe(1);
     expect(res.body.revenue.total).toBe(50000);
   });

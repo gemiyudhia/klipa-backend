@@ -5,9 +5,12 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { Prisma } from '../../generated/prisma/client';
+import { Prisma, Role } from '../../generated/prisma/client';
 import * as bcrypt from 'bcrypt';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { buildPaginationMeta, getSkip } from '../common/utils/pagination.util';
+import { PrismaService } from '../prisma/prisma.service';
+import { FilterUsersDto } from '../admin/dto/filter-users.dto';
 
 @Injectable()
 export class UsersService {
@@ -46,8 +49,44 @@ export class UsersService {
     }
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll(query: FilterUsersDto) {
+    const { page = 1, limit = 10, role, search } = query;
+    const skip = getSkip(page, limit);
+
+    const where: any = {};
+
+    if (role) {
+      where.role = role;
+    }
+
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: 'insensitive' } },
+        { email: { contains: search, mode: 'insensitive' } },
+      ];
+    }
+
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.user.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        skip,
+        take: limit,
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          balance: true,
+          isSuspended: true,
+          suspendedReason: true,
+          createdAt: true,
+        },
+      }),
+      this.prisma.user.count({ where }),
+    ]);
+
+    return { data, meta: buildPaginationMeta(total, page, limit) };
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {

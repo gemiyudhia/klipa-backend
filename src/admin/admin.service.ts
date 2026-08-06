@@ -3,13 +3,23 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { SuspendUserDto } from './dto/suspend-user.dto';
-import { CampaignStatus, Role } from 'generated/prisma/enums';
+import { CampaignStatus, Role } from '../../generated/prisma/enums';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { FilterUsersDto } from './dto/filter-users.dto';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AdminService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private usersService: UsersService,
+  ) {}
+
+  async findAllUsers(query: FilterUsersDto) {
+    return this.usersService.findAll(query);
+  }
 
   async suspendUser(userId: string, suspendUserDto: SuspendUserDto) {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });

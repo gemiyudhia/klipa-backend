@@ -12,12 +12,12 @@ import { WithdrawalService } from './withdrawal.service';
 import { CreateWithdrawalDto } from './dto/create-withdrawal.dto';
 import { ResolveWithdrawalDto } from './dto/resolve-withdrawal.dto';
 import { UpdateBankInfoDto } from './dto/update-bank-info.dto';
-import { JwtAuthGuards } from 'src/common/guards/jwt-auth.guard';
-import { RolesGuard } from 'src/common/guards/roles.guard';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-import { Role } from 'generated/prisma/enums';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { JwtAuthGuards } from '../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { Role } from '../../generated/prisma/enums';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Controller('withdrawal')
 @UseGuards(JwtAuthGuards, RolesGuard)

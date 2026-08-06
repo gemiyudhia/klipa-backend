@@ -4,14 +4,14 @@ import {
   ForbiddenException,
   BadRequestException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateClipDto } from './dto/create-clip.dto';
 import { UpdateClipDto } from './dto/update-clip.dto';
 import { ReviewClipDto } from './dto/review-clip.dto';
-import { assertOwnerOrAdmin } from 'src/common/utils/authorization.util';
-import { Role, ClipStatus } from 'generated/prisma/enums';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
-import { buildPaginationMeta, getSkip } from 'src/common/utils/pagination.util';
+import { assertOwnerOrAdmin } from '../common/utils/authorization.util';
+import { Role, ClipStatus } from '../../generated/prisma/enums';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { buildPaginationMeta, getSkip } from '../common/utils/pagination.util';
 
 @Injectable()
 export class ClipService {

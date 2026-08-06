@@ -5,13 +5,13 @@ import {
   BadRequestException,
   ConflictException,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateDisputeDto } from './dto/create-dispute.dto';
 import { ResolveDisputeDto } from './dto/resolve-dispute.dto';
-import { assertOwnerOrAdmin } from 'src/common/utils/authorization.util';
-import { ClipStatus, DisputeStatus, Role } from 'generated/prisma/enums';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
-import { buildPaginationMeta, getSkip } from 'src/common/utils/pagination.util';
+import { assertOwnerOrAdmin } from '../common/utils/authorization.util';
+import { ClipStatus, DisputeStatus, Role } from '../../generated/prisma/enums';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { buildPaginationMeta, getSkip } from '../common/utils/pagination.util';
 
 @Injectable()
 export class DisputeService {

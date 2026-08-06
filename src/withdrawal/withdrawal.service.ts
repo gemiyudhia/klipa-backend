@@ -5,13 +5,13 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateWithdrawalDto } from './dto/create-withdrawal.dto';
 import { ResolveWithdrawalDto } from './dto/resolve-withdrawal.dto';
 import { UpdateBankInfoDto } from './dto/update-bank-info.dto';
-import { WithdrawalStatus, Role } from 'generated/prisma/enums';
-import { buildPaginationMeta, getSkip } from 'src/common/utils/pagination.util';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { WithdrawalStatus, Role } from '../../generated/prisma/enums';
+import { buildPaginationMeta, getSkip } from '../common/utils/pagination.util';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Injectable()
 export class WithdrawalService {
