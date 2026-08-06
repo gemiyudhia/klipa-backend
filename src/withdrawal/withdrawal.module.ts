@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { WithdrawalService } from './withdrawal.service';
 import { WithdrawalController } from './withdrawal.controller';
-import { PrismaModule } from 'src/prisma/prisma.module';
+import { PrismaModule } from '../prisma/prisma.module';
 
 @Module({
   imports: [PrismaModule],

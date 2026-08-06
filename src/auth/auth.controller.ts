@@ -1,10 +1,10 @@
 import { Controller, Post, Body, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
-import { JwtAuthGuards } from 'src/common/guards/jwt-auth.guard';
+import { JwtAuthGuards } from '../common/guards/jwt-auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
-import { JwtRefreshGuard } from 'src/common/guards/jwt-refresh.guard';
+import { JwtRefreshGuard } from '../common/guards/jwt-refresh.guard';
 import { Throttle } from '@nestjs/throttler';
 
 @Controller('auth')

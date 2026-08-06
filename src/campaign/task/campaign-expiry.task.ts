@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { CampaignStatus } from 'generated/prisma/enums';
+import { PrismaService } from '../../prisma/prisma.service';
+import { CampaignStatus } from '../../../generated/prisma/enums';
 
 @Injectable()
 export class CampaignExpiryTask {

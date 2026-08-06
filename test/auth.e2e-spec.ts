@@ -66,6 +66,8 @@ describe('Auth (e2e)', () => {
 
     const oldRefreshToken = loginRes.body.refresh_token;
 
+    await new Promise((resolve) => setTimeout(resolve, 1100));
+
     const firstRefresh = await request(app.getHttpServer())
       .post('/auth/refresh')
       .send({ refreshToken: oldRefreshToken })

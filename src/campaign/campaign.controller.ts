@@ -12,13 +12,13 @@ import {
 import { CampaignService } from './campaign.service';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
 import { UpdateCampaignDto } from './dto/update-campaign.dto';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from 'generated/prisma/enums';
-import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-import { JwtAuthGuards } from 'src/common/guards/jwt-auth.guard';
-import { RolesGuard } from 'src/common/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../../generated/prisma/enums';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { JwtAuthGuards } from '../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
 import { CampaignExpiryTask } from './task/campaign-expiry.task';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Controller('campaign')
 @UseGuards(JwtAuthGuards, RolesGuard)

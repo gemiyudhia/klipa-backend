@@ -1,18 +1,27 @@
-import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Query, UseGuards } from '@nestjs/common';
 import { AdminService } from './admin.service';
-import { JwtAuthGuards } from 'src/common/guards/jwt-auth.guard';
-import { RolesGuard } from 'src/common/guards/roles.guard';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from 'generated/prisma/enums';
+import { JwtAuthGuards } from '../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../../generated/prisma/enums';
 import { SuspendUserDto } from './dto/suspend-user.dto';
 import { CloseCampaignDto } from './dto/close-campaign.dto';
 import { SkipThrottle } from '@nestjs/throttler';
+import { FilterUsersDto } from './dto/filter-users.dto';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @Controller('admin')
 @UseGuards(JwtAuthGuards, RolesGuard)
 @Roles(Role.ADMIN)
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
+
+  @Get('users')
+  findAllUsers(
+    @Query() query: FilterUsersDto,
+  ) {
+    return this.adminService.findAllUsers(query);
+  }
 
   @Patch('users/:id/suspend')
   suspendUser(@Param('id') id: string, @Body() suspendUserDto: SuspendUserDto) {

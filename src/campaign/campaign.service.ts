@@ -5,11 +5,11 @@ import {
 } from '@nestjs/common';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
 import { UpdateCampaignDto } from './dto/update-campaign.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { CampaignStatus, Role } from 'generated/prisma/enums';
-import { assertOwnerOrAdmin } from 'src/common/utils/authorization.util';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
-import { buildPaginationMeta, getSkip } from 'src/common/utils/pagination.util';
+import { PrismaService } from '../prisma/prisma.service';
+import { CampaignStatus, Role } from '../../generated/prisma/enums';
+import { assertOwnerOrAdmin } from '../common/utils/authorization.util';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { buildPaginationMeta, getSkip } from '../common/utils/pagination.util';
 
 @Injectable()
 export class CampaignService {
