@@ -7,7 +7,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Prisma, Role } from '../../generated/prisma/client';
 import * as bcrypt from 'bcrypt';
-import { PaginationDto } from '../common/dto/pagination.dto';
 import { buildPaginationMeta, getSkip } from '../common/utils/pagination.util';
 import { PrismaService } from '../prisma/prisma.service';
 import { FilterUsersDto } from '../admin/dto/filter-users.dto';
@@ -25,6 +24,7 @@ export class UsersService {
           name: createUserDto.name,
           email: createUserDto.email,
           passwordHash,
+          role: createUserDto.role ?? 'CLIPPER'
         },
         select: {
           id: true,

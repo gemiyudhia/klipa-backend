@@ -19,7 +19,9 @@ import { JwtAuthGuards } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { CampaignExpiryTask } from './task/campaign-expiry.task';
 import { PaginationDto } from '../common/dto/pagination.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Campaign')
 @Controller('campaign')
 @UseGuards(JwtAuthGuards, RolesGuard)
 export class CampaignController {
@@ -29,6 +31,9 @@ export class CampaignController {
   ) {}
 
   @Post()
+  @ApiOperation({
+    summary: 'Buat campaign baru (Creator, dikenakan fee platform 5%)',
+  })
   @Roles(Role.CREATOR)
   create(
     @CurrentUser('sub') creatorId: string,
@@ -38,6 +43,7 @@ export class CampaignController {
   }
 
   @Get('mine')
+  @ApiOperation({ summary: 'Lihat semua campaign milik sendiri (Creator)' })
   @Roles(Role.CREATOR)
   findMine(
     @CurrentUser('sub') creatorId: string,
@@ -47,18 +53,21 @@ export class CampaignController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'Browse semua campaign yang sedang aktif' })
   @Roles(Role.CREATOR, Role.CLIPPER, Role.ADMIN)
   findAllPublic(@Query() pagination: PaginationDto) {
     return this.campaignService.findAllPublic(pagination);
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Detail satu campaign' })
   @Roles(Role.CREATOR, Role.ADMIN, Role.CLIPPER)
   findOne(@Param('id') id: string) {
     return this.campaignService.findOne(id);
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'Update campaign (pemilik atau Admin)' })
   @Roles(Role.CREATOR, Role.ADMIN)
   update(
     @Param('id') id: string,
@@ -74,6 +83,7 @@ export class CampaignController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Hapus campaign (pemilik atau Admin)' })
   @Roles(Role.CREATOR, Role.ADMIN)
   remove(
     @Param('id') id: string,
