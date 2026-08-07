@@ -17,13 +17,17 @@ import { Role } from '../../generated/prisma/enums';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { ResolveDisputeDto } from './dto/resolve-dispute.dto';
 import { PaginationDto } from '../common/dto/pagination.dto';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Dispute')
+@ApiBearerAuth('access_token')
 @Controller('dispute')
 @UseGuards(JwtAuthGuards, RolesGuard)
 export class DisputeController {
   constructor(private readonly disputeService: DisputeService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Ajukan dispute untuk klip yang ditolak (Clipper)' })
   @Roles(Role.CLIPPER)
   create(
     @CurrentUser('sub') clipperId: string,
@@ -33,6 +37,7 @@ export class DisputeController {
   }
 
   @Get('mine')
+  @ApiOperation({ summary: 'Lihat dispute milik sendiri (Clipper)' })
   @Roles(Role.CLIPPER)
   findMine(
     @CurrentUser('sub') clipperId: string,
@@ -42,12 +47,16 @@ export class DisputeController {
   }
 
   @Get('pending')
+  @ApiOperation({
+    summary: 'Lihat semua dispute yang menunggu resolusi (Admin)',
+  })
   @Roles(Role.ADMIN)
   findAllPending(@Query() pagination: PaginationDto) {
     return this.disputeService.findAllPending(pagination);
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Detail dispute (pemilik atau Admin)' })
   @Roles(Role.ADMIN, Role.CLIPPER)
   findOne(
     @Param('id') id: string,
@@ -57,6 +66,9 @@ export class DisputeController {
   }
 
   @Patch(':id/resolve')
+  @ApiOperation({
+    summary: 'Selesaikan dispute: approve (paksa payout) atau reject (Admin)',
+  })
   @Roles(Role.ADMIN)
   resolve(
     @Param('id') id: string,
