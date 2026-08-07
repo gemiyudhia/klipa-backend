@@ -98,4 +98,31 @@ describe('Auth (e2e)', () => {
       .send({ email: 'suspended@example.com', password: 'password123' })
       .expect(403);
   });
+
+  it('should return current user profile with valid access token', async () => {
+    await request(app.getHttpServer()).post('/auth/register').send({
+      name: 'Profile Test',
+      email: 'profile@example.com',
+      password: 'password123',
+      role: 'CREATOR',
+    });
+
+    const loginRes = await request(app.getHttpServer())
+      .post('/auth/login')
+      .send({ email: 'profile@example.com', password: 'password123' });
+
+    const res = await request(app.getHttpServer())
+      .get('/auth/me')
+      .set('Authorization', `Bearer ${loginRes.body.access_token}`)
+      .expect(200);
+
+    expect(res.body.email).toBe('profile@example.com');
+    expect(res.body.role).toBe('CREATOR');
+    expect(res.body.passwordHash).toBeUndefined();
+    expect(res.body.hashedRefreshToken).toBeUndefined();
+  });
+
+  it('should reject /auth/me without token', async () => {
+    await request(app.getHttpServer()).get('/auth/me').expect(401);
+  });
 });

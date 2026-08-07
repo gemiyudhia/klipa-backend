@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Request, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Request, UseGuards, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
@@ -38,5 +38,11 @@ export class AuthController {
   @UseGuards(JwtRefreshGuard)
   refresh(@CurrentUser() user: { sub: string; refreshToken: string }) {
     return this.authService.refreshToken(user.sub, user.refreshToken);
+  }
+
+  @Get('me')
+  @UseGuards(JwtAuthGuards)
+  getProfile(@CurrentUser('sub') userId: string) {
+    return this.authService.getProfile(userId);
   }
 }

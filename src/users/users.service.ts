@@ -183,6 +183,8 @@ export class UsersService {
         email: true,
         name: true,
         role: true,
+        balance: true,
+        avatarUrl: true,
         isSuspended: true,
         hashedRefreshToken: true,
       },
