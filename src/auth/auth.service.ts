@@ -105,6 +105,23 @@ export class AuthService {
     });
   }
 
+  async getProfile(userId: string) {
+    const user = await this.userService.findOneWithAuthFields(userId);
+
+    if (!user) {
+      throw new UnauthorizedException('User tidak ditemukan');
+    }
+
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      balance: user.balance,
+      avatarUrl: user.avatarUrl,
+    };
+  }
+
   private async generateAccessToken(user: Pick<User, 'id' | 'email' | 'role'>) {
     const payload = {
       sub: user.id,
