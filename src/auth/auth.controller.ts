@@ -97,9 +97,8 @@ export class AuthController {
     const result = await this.authService.validateGoogleUser(req.user);
 
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-    const redirectPath = result.needsRoleSelection ? '/role-selector' : '/';
+    const redirectPath = result.needsRoleSelection ? '/select-role' : '/';
 
-    // Kirim token lewat query param sekali pakai, frontend langsung simpan lalu bersihkan URL
     const params = new URLSearchParams({
       access_token: result.access_token,
       refresh_token: result.refresh_token,

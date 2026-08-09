@@ -132,17 +132,14 @@ export class AuthService {
     let user = await this.userService.findByGoogleId(googleProfile.googleId);
 
     if (!user) {
-      // cek juga apakah email ini sudah terdaftar via register manual
       user = await this.userService.findByEmail(googleProfile.email);
 
       if (user) {
-        // akun sudah ada (dari register manual), tautkan googleId ke akun itu
         user = await this.userService.linkGoogleAccount(
           user.id,
           googleProfile.googleId,
         );
       } else {
-        // user benar-benar baru, buat akun dengan isRoleSelected: false
         user = await this.userService.createFromGoogle(googleProfile);
       }
     }

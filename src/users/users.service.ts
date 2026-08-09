@@ -216,7 +216,7 @@ export class UsersService {
         avatarUrl: googleProfile.avatarUrl,
         googleId: googleProfile.googleId,
         passwordHash: null,
-        role: 'CLIPPER', // default sementara, akan ditimpa setelah user memilih
+        role: 'CLIPPER',
         isRoleSelected: false,
       },
     });

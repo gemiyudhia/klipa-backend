@@ -9,6 +9,11 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: ['http://localhost:3000', process.env.FRONTEND_URL].filter(Boolean),
+    credentials: true,
+  });
+
   app.useGlobalFilters(new ThrottlerExceptionFilter());
 
   (ThrottlerModule.forRoot([
