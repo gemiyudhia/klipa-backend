@@ -5,6 +5,8 @@ import {
   Request,
   UseGuards,
   Get,
+  Res,
+  Patch,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
@@ -19,6 +21,8 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { GoogleAuthGuard } from '../common/guards/google-auth.guard';
+import type { Response } from 'express';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -81,5 +85,36 @@ export class AuthController {
   @UseGuards(JwtAuthGuards)
   getProfile(@CurrentUser('sub') userId: string) {
     return this.authService.getProfile(userId);
+  }
+
+  @Get('google')
+  @UseGuards(GoogleAuthGuard)
+  googleAuth() {}
+
+  @Get('google/callback')
+  @UseGuards(GoogleAuthGuard)
+  async googleAuthCallback(@Request() req: any, @Res() res: Response) {
+    const result = await this.authService.validateGoogleUser(req.user);
+
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    const redirectPath = result.needsRoleSelection ? '/role-selector' : '/';
+
+    // Kirim token lewat query param sekali pakai, frontend langsung simpan lalu bersihkan URL
+    const params = new URLSearchParams({
+      access_token: result.access_token,
+      refresh_token: result.refresh_token,
+    });
+
+    res.redirect(`${frontendUrl}${redirectPath}?${params.toString()}`);
+  }
+
+  @Patch('select-role')
+  @ApiBearerAuth('access-token')
+  @UseGuards(JwtAuthGuards)
+  selectRole(
+    @CurrentUser('sub') userId: string,
+    @Body() dto: { role: 'CREATOR' | 'CLIPPER' },
+  ) {
+    return this.authService.selectRole(userId, dto.role);
   }
 }

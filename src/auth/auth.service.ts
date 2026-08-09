@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
   UnauthorizedException,
@@ -120,6 +121,60 @@ export class AuthService {
       balance: user.balance,
       avatarUrl: user.avatarUrl,
     };
+  }
+
+  async validateGoogleUser(googleProfile: {
+    googleId: string;
+    email: string;
+    name: string;
+    avatarUrl?: string;
+  }) {
+    let user = await this.userService.findByGoogleId(googleProfile.googleId);
+
+    if (!user) {
+      // cek juga apakah email ini sudah terdaftar via register manual
+      user = await this.userService.findByEmail(googleProfile.email);
+
+      if (user) {
+        // akun sudah ada (dari register manual), tautkan googleId ke akun itu
+        user = await this.userService.linkGoogleAccount(
+          user.id,
+          googleProfile.googleId,
+        );
+      } else {
+        // user benar-benar baru, buat akun dengan isRoleSelected: false
+        user = await this.userService.createFromGoogle(googleProfile);
+      }
+    }
+
+    if (user.isSuspended) {
+      throw new ForbiddenException('Akun Anda telah disuspend');
+    }
+
+    const accessToken = await this.generateAccessToken(user);
+    const refreshToken = await this.generateRefreshToken(user);
+    const hashedRefreshToken = this.hashToken(refreshToken);
+    await this.updateRefreshToken(user.id, hashedRefreshToken);
+
+    return {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      needsRoleSelection: !user.isRoleSelected,
+    };
+  }
+
+  async selectRole(userId: string, role: 'CREATOR' | 'CLIPPER') {
+    const user = await this.userService.findOneWithAuthFields(userId);
+
+    if (!user) {
+      throw new UnauthorizedException('User tidak ditemukan');
+    }
+
+    if (user.isRoleSelected) {
+      throw new BadRequestException('Role sudah pernah dipilih sebelumnya');
+    }
+
+    return this.userService.setRole(userId, role);
   }
 
   private async generateAccessToken(user: Pick<User, 'id' | 'email' | 'role'>) {

@@ -47,15 +47,17 @@ enum RevenueSource {
 }
 
 model User {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  passwordHash String
-  name         String
-  avatarUrl    String?
-  role         Role     @default(CLIPPER)
-  balance      Float    @default(0.0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id             String   @id @default(uuid())
+  email          String   @unique
+  passwordHash   String?
+  googleId       String?  @unique
+  name           String
+  avatarUrl      String?
+  role           Role     @default(CLIPPER)
+  isRoleSelected Boolean  @default(true)
+  balance        Float    @default(0.0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   hashedRefreshToken String?
 

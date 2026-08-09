@@ -24,7 +24,7 @@ export class UsersService {
           name: createUserDto.name,
           email: createUserDto.email,
           passwordHash,
-          role: createUserDto.role ?? 'CLIPPER'
+          role: createUserDto.role ?? 'CLIPPER',
         },
         select: {
           id: true,
@@ -184,9 +184,54 @@ export class UsersService {
         name: true,
         role: true,
         balance: true,
+        isRoleSelected: true,
         avatarUrl: true,
         isSuspended: true,
         hashedRefreshToken: true,
+      },
+    });
+  }
+
+  async findByGoogleId(googleId: string) {
+    return this.prisma.user.findUnique({ where: { googleId } });
+  }
+
+  async linkGoogleAccount(userId: string, googleId: string) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: { googleId },
+    });
+  }
+
+  async createFromGoogle(googleProfile: {
+    googleId: string;
+    email: string;
+    name: string;
+    avatarUrl?: string;
+  }) {
+    return this.prisma.user.create({
+      data: {
+        email: googleProfile.email,
+        name: googleProfile.name,
+        avatarUrl: googleProfile.avatarUrl,
+        googleId: googleProfile.googleId,
+        passwordHash: null,
+        role: 'CLIPPER', // default sementara, akan ditimpa setelah user memilih
+        isRoleSelected: false,
+      },
+    });
+  }
+
+  async setRole(userId: string, role: 'CREATOR' | 'CLIPPER') {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: { role, isRoleSelected: true },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        isRoleSelected: true,
       },
     });
   }
