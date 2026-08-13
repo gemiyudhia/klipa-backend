@@ -120,6 +120,7 @@ export class AuthService {
       role: user.role,
       balance: user.balance,
       avatarUrl: user.avatarUrl,
+      isRoleSelected: user.isRoleSelected
     };
   }
 
