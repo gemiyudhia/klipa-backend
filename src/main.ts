@@ -5,6 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { ThrottlerExceptionFilter } from './common/filters/throttler-exception.filter';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,6 +16,8 @@ async function bootstrap() {
   });
 
   app.useGlobalFilters(new ThrottlerExceptionFilter());
+
+  app.use(cookieParser());
 
   (ThrottlerModule.forRoot([
     {

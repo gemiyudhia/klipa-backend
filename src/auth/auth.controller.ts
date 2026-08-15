@@ -97,14 +97,28 @@ export class AuthController {
     const result = await this.authService.validateGoogleUser(req.user);
 
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-    const redirectPath = result.needsRoleSelection ? '/select-role' : '/';
 
-    const params = new URLSearchParams({
-      access_token: result.access_token,
-      refresh_token: result.refresh_token,
+    const redirectPath = result.needsRoleSelection
+      ? '/select-role'
+      : '/explore';
+
+    res.cookie('accessToken', result.access_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 15 * 60 * 1000,
     });
 
-    res.redirect(`${frontendUrl}${redirectPath}?${params.toString()}`);
+    res.cookie('refreshToken', result.refresh_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.redirect(`${frontendUrl}${redirectPath}`);
   }
 
   @Patch('select-role')
