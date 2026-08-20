@@ -61,7 +61,7 @@ export class WithdrawalController {
     summary: 'Lihat semua permintaan penarikan yang menunggu (Admin)',
   })
   @Roles(Role.ADMIN)
-  findAllPending(pagination: PaginationDto) {
+  findAllPending(@Query() pagination: PaginationDto) {
     return this.withdrawalService.findAllPending(pagination);
   }
 
