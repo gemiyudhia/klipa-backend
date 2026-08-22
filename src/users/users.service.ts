@@ -10,6 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { buildPaginationMeta, getSkip } from '../common/utils/pagination.util';
 import { PrismaService } from '../prisma/prisma.service';
 import { FilterUsersDto } from '../admin/dto/filter-users.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @Injectable()
 export class UsersService {
@@ -231,6 +232,25 @@ export class UsersService {
         name: true,
         email: true,
         role: true,
+        isRoleSelected: true,
+      },
+    });
+  }
+
+  async updateProfile(userId: string, dto: UpdateProfileDto) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        name: dto.name,
+        avatarUrl: dto.avatarUrl,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        balance: true,
+        avatarUrl: true,
         isRoleSelected: true,
       },
     });
