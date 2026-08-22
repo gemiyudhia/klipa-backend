@@ -19,6 +19,7 @@ enum CampaignStatus {
   ACTIVE
   PAUSED
   COMPLETED
+  BANNED
 }
 
 enum ClipStatus {
@@ -28,48 +29,88 @@ enum ClipStatus {
   REVISION_REQUESTED
 }
 
-model User {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  passwordHash String
-  name         String
-  avatarUrl    String?
-  role         Role     @default(CLIPPER)
-  balance      Float    @default(0.0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+enum DisputeStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
 
-  campaigns    Campaign[]    @relation("CreatorCampaigns")
-  clips        Clip[]        @relation("ClipperClips")
-  transactions Transaction[]
+enum WithdrawalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum RevenueSource {
+  CREATOR_FEE
+  CLIPPER_FEE
+}
+
+model User {
+  id             String   @id @default(uuid())
+  email          String   @unique
+  passwordHash   String?
+  googleId       String?  @unique
+  name           String
+  avatarUrl      String?
+  role           Role     @default(CLIPPER)
+  isRoleSelected Boolean  @default(true)
+  balance        Float    @default(0.0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  hashedRefreshToken String?
+
+  bankName          String?
+  bankAccountNumber String?
+  bankAccountName   String?
+
+  campaigns            Campaign[]          @relation("CreatorCampaigns")
+  clips                Clip[]              @relation("ClipperClips")
+  transactions         Transaction[]
+  disputesRaised       Dispute[]           @relation("ClipperDisputes")
+  disputesResolved     Dispute[]           @relation("AdminResolvedDisputes")
+  withdrawals          WithdrawalRequest[] @relation("UserWithdrawals")
+  withdrawalsProcessed WithdrawalRequest[] @relation("AdminProcessedWithdrawals")
+
+  isSuspended     Boolean   @default(false)
+  suspendedReason String?
+  suspendedAt     DateTime?
 }
 
 model Campaign {
-  id              String         @id @default(uuid())
-  title           String
-  description     String
-  creatorId       String
-  creator         User           @relation("CreatorCampaigns", fields: [creatorId], references: [id])
-  rewardPerClip   Float
-  totalBudget     Float
-  remainingBudget Float
-  vodUrl          String?
-  status          CampaignStatus @default(ACTIVE)
-  deadline        DateTime
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  id                String         @id @default(uuid())
+  title             String
+  description       String
+  creatorId         String
+  creator           User           @relation("CreatorCampaigns", fields: [creatorId], references: [id])
+  rewardPerClip     Float
+  totalBudget       Float
+  remainingBudget   Float
+  platformFeeAmount Float          @default(0)
+  totalCharged      Float          @default(0)
+  vodUrl            String?
+  status            CampaignStatus @default(ACTIVE)
+  deadline          DateTime
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
 
   clips Clip[]
+
+  bannedReason String?
+  bannedAt     DateTime?
 }
 
 model Clip {
-  id           String     @id @default(uuid())
-  title        String
-  videoUrl     String
-  thumbnailUrl String?
-  duration     Float?
-  status       ClipStatus @default(PENDING)
-  feedback     String?
+  id                String     @id @default(uuid())
+  title             String
+  videoUrl          String
+  thumbnailUrl      String?
+  duration          Float?
+  status            ClipStatus @default(PENDING)
+  feedback          String?
+  platformFeeAmount Float?
+  payoutAmount      Float?
 
   campaignId String
   campaign   Campaign @relation(fields: [campaignId], references: [id])
@@ -79,6 +120,50 @@ model Clip {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  dispute Dispute?
+}
+
+model Dispute {
+  id             String        @id @default(uuid())
+  clipId         String        @unique
+  clip           Clip          @relation(fields: [clipId], references: [id])
+  clipperId      String
+  clipper        User          @relation("ClipperDisputes", fields: [clipperId], references: [id])
+  reason         String
+  status         DisputeStatus @default(PENDING)
+  resolutionNote String?
+  resolvedById   String?
+  resolvedBy     User?         @relation("AdminResolvedDisputes", fields: [resolvedById], references: [id])
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model WithdrawalRequest {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation("UserWithdrawals", fields: [userId], references: [id])
+
+  amount    Float
+  taxAmount Float?
+  netAmount Float?
+
+  status          WithdrawalStatus @default(PENDING)
+  rejectionReason String?
+
+  processedById String?
+  processedBy   User?   @relation("AdminProcessedWithdrawals", fields: [processedById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PlatformRevenue {
+  id          String        @id @default(uuid())
+  source      RevenueSource
+  amount      Float
+  referenceId String
+  createdAt   DateTime      @default(now())
 }
 
 model Transaction {
