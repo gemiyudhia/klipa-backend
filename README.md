@@ -1,22 +1,22 @@
 # Klipa Backend
 
-REST API untuk **Klipa**, sebuah platform marketplace dua arah yang menghubungkan **Content Creator** dengan **Clipper** untuk mendistribusikan konten video pendek melalui sistem **Campaign**.
+REST API for **Klipa**, a two-sided marketplace platform that connects **Content Creators** with **Clippers** to distribute short-form video content through a **Campaign** system.
 
-Backend ini dibangun menggunakan NestJS dan menyediakan authentication, authorization, campaign management, user management, serta integrasi database PostgreSQL melalui Prisma ORM.
+This backend is built using NestJS and provides authentication, authorization, campaign management, user management, and PostgreSQL database integration through Prisma ORM.
 
 > 🚧 **Status: In Development**
 >
-> Klipa masih dalam tahap pengembangan. Beberapa fitur, API, dan struktur database dapat berubah selama proses development.
+> Klipa is currently under development. Some features, APIs, and database structures may change during the development process.
 
 ## Overview
 
-Klipa memiliki dua peran utama dalam marketplace:
+Klipa has two main roles within the marketplace:
 
-**Creator** menggunakan platform untuk membuat campaign dan mendistribusikan konten mereka melalui clipper.
+**Creators** use the platform to create campaigns and distribute their content through Clippers.
 
-**Clipper** dapat menemukan campaign yang tersedia dan berpartisipasi dengan membuat serta mendistribusikan video pendek sesuai ketentuan campaign.
+**Clippers** can discover available campaigns and participate by creating and distributing short-form videos according to the campaign requirements.
 
-Backend bertindak sebagai pusat business logic yang menangani autentikasi, data pengguna, campaign, authorization, dan komunikasi dengan database.
+The backend acts as the central business logic layer responsible for authentication, user data, campaigns, authorization, and database communication.
 
 ## Tech Stack
 
@@ -109,7 +109,7 @@ Each role has different access and responsibilities within the platform.
 
 Campaign is the core workflow of Klipa.
 
-A Creator can create and manage campaigns containing information required by Clipper to participate in the campaign.
+A Creator can create and manage campaigns containing information required by Clippers to participate in the campaign.
 
 The backend handles campaign data and the relationship between users and campaigns.
 
@@ -230,9 +230,9 @@ npm install
 Create a `.env` file in the project root.
 
 ```env
-DATABASE_URL=<pooler connection string dari Supabase>
+DATABASE_URL=<pooler connection string from Supabase>
 
-DIRECT_URL=<direct connection string dari Supabase>
+DIRECT_URL=<direct connection string from Supabase>
 
 JWT_SECRET=<access token secret>
 JWT_REFRESH_SECRET=<refresh token secret>
@@ -381,7 +381,7 @@ When running the backend locally, open the Swagger documentation through the con
 
 ## Deployment
 
-The backend is deployed using **Render** and connects to a production PostgreSQL database hosted on **Supabase**.
+The backend is deployed using **Railway** and connects to a production PostgreSQL database hosted on **Supabase**.
 
 Production architecture:
 
@@ -394,7 +394,7 @@ Production architecture:
                               │ HTTPS
                               ▼
                     ┌───────────────────┐
-                    │      Render       │
+                    │      Railway      │
                     │ Klipa Backend     │
                     │     NestJS        │
                     └─────────┬─────────┘
@@ -423,7 +423,9 @@ The project is **not intended to represent a production-ready commercial platfor
 
 **Gemi Yudhia**
 
-GitHub: https://github.com/gemiyudhia
+GitHub:
+
+https://github.com/gemiyudhia
 
 ---
 
