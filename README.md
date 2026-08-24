@@ -1,98 +1,430 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Klipa Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+REST API untuk **Klipa**, sebuah platform marketplace dua arah yang menghubungkan **Content Creator** dengan **Clipper** untuk mendistribusikan konten video pendek melalui sistem **Campaign**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Backend ini dibangun menggunakan NestJS dan menyediakan authentication, authorization, campaign management, user management, serta integrasi database PostgreSQL melalui Prisma ORM.
 
-## Description
+> 🚧 **Status: In Development**
+>
+> Klipa masih dalam tahap pengembangan. Beberapa fitur, API, dan struktur database dapat berubah selama proses development.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Overview
 
-## Project setup
+Klipa memiliki dua peran utama dalam marketplace:
 
-```bash
-$ npm install
+**Creator** menggunakan platform untuk membuat campaign dan mendistribusikan konten mereka melalui clipper.
+
+**Clipper** dapat menemukan campaign yang tersedia dan berpartisipasi dengan membuat serta mendistribusikan video pendek sesuai ketentuan campaign.
+
+Backend bertindak sebagai pusat business logic yang menangani autentikasi, data pengguna, campaign, authorization, dan komunikasi dengan database.
+
+## Tech Stack
+
+### Backend
+
+* **NestJS 11** — backend framework
+* **TypeScript** — programming language
+* **Node.js** — runtime
+* **Prisma 7** — ORM
+* **PostgreSQL** — relational database
+* **Supabase** — production database hosting
+* **Passport** — authentication middleware
+* **JWT** — access & refresh token authentication
+* **Google OAuth 2.0** — social authentication
+* **bcrypt** — password hashing
+* **class-validator** — request validation
+* **class-transformer** — data transformation
+* **Swagger** — API documentation
+* **Throttler** — API rate limiting
+* **Jest & Supertest** — testing
+
+### Deployment
+
+* **Railway** — backend deployment
+* **Supabase** — PostgreSQL database
+
+## Architecture
+
+```text
+                         ┌─────────────────┐
+                         │     Client      │
+                         │  Web / Browser  │
+                         └────────┬────────┘
+                                  │
+                                  │ REST API
+                                  ▼
+                    ┌─────────────────────────┐
+                    │    Klipa Backend        │
+                    │       NestJS 11         │
+                    ├─────────────────────────┤
+                    │                         │
+                    │ Authentication          │
+                    │ Authorization           │
+                    │ User Management         │
+                    │ Campaign Management     │
+                    │ Validation              │
+                    │ Rate Limiting           │
+                    │                         │
+                    └────────────┬────────────┘
+                                 │
+                                 │ Prisma
+                                 ▼
+                       ┌──────────────────┐
+                       │    PostgreSQL    │
+                       │    Supabase      │
+                       └──────────────────┘
 ```
 
-## Compile and run the project
+## Core Features
 
-```bash
-# development
-$ npm run start
+### Authentication
 
-# watch mode
-$ npm run start:dev
+The backend implements authentication using JWT and supports:
 
-# production mode
-$ npm run start:prod
+* User registration
+* User login
+* Access token
+* Refresh token
+* Logout
+* Password hashing
+* Protected routes
+* JWT authentication strategy
+* Google OAuth 2.0
+
+Access tokens are designed for short-lived authentication, while refresh tokens are used to maintain authenticated sessions.
+
+### Role-Based Authorization
+
+Klipa currently supports three application roles:
+
+```text
+CREATOR
+CLIPPER
+ADMIN
 ```
 
-## Run tests
+Each role has different access and responsibilities within the platform.
+
+### Campaign System
+
+Campaign is the core workflow of Klipa.
+
+A Creator can create and manage campaigns containing information required by Clipper to participate in the campaign.
+
+The backend handles campaign data and the relationship between users and campaigns.
+
+### User Management
+
+The backend manages application users and their roles, authentication state, and account-related information.
+
+### Withdrawal Tax
+
+The backend also supports withdrawal-related business logic, including a configurable withdrawal tax rate.
+
+The production environment currently uses:
+
+```env
+WITHDRAWAL_TAX_RATE=0.10
+```
+
+## Authentication Flow
+
+### Email & Password
+
+```text
+User
+ │
+ │ Register / Login
+ ▼
+Klipa Backend
+ │
+ ├── Validate credentials
+ ├── Hash / verify password
+ ├── Generate JWT
+ │
+ ▼
+Access Token + Refresh Token
+```
+
+### Google OAuth
+
+```text
+User
+ │
+ │ Login with Google
+ ▼
+Google OAuth
+ │
+ │ Callback
+ ▼
+Klipa Backend
+ │
+ ├── Validate Google account
+ ├── Find / create user
+ └── Generate authentication tokens
+ │
+ ▼
+Frontend
+```
+
+## Project Structure
+
+```text
+klipa-backend/
+│
+├── prisma/
+│   └── schema.prisma
+│
+├── src/
+│   ├── admin/
+│   ├── auth/
+│   ├── campaign/
+│   ├── prisma/
+│   ├── users/
+│   ├── withdrawal/
+│   ├── dispute/
+│   ├── clip/
+│   ├── common/
+│   └── main.ts
+│
+├── test/
+│
+├── .env
+├── package.json
+├── prisma.config.ts
+├── nest-cli.json
+├── tsconfig.json
+└── ...
+```
+
+The structure may evolve as new modules and features are added.
+
+## Getting Started
+
+### Requirements
+
+Make sure the following are installed:
+
+* Node.js
+* npm
+* PostgreSQL or a Supabase project
+
+### Installation
+
+Clone the repository:
 
 ```bash
-# unit tests
-$ npm run test
+git clone https://github.com/gemiyudhia/klipa-backend.git
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+cd klipa-backend
 ```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+### Environment Variables
+
+Create a `.env` file in the project root.
+
+```env
+DATABASE_URL=<pooler connection string dari Supabase>
+
+DIRECT_URL=<direct connection string dari Supabase>
+
+JWT_SECRET=<access token secret>
+JWT_REFRESH_SECRET=<refresh token secret>
+
+JWT_EXPIRES_IN=15m
+JWT_REFRESH_EXPIRES_IN=7d
+
+GOOGLE_CLIENT_ID=<Google OAuth Client ID>
+GOOGLE_CLIENT_SECRET=<Google OAuth Client Secret>
+GOOGLE_CALLBACK_URL=http://localhost:4000/auth/google/callback
+
+FRONTEND_URL=http://localhost:3000
+
+WITHDRAWAL_TAX_RATE=0.10
+
+NODE_ENV=development
+```
+
+For production, configure the environment variables through the deployment platform instead of committing them to the repository.
+
+Example production configuration:
+
+```env
+DATABASE_URL=<production Supabase pooler connection string>
+DIRECT_URL=<production Supabase direct connection string>
+
+JWT_SECRET=<production secret>
+JWT_REFRESH_SECRET=<different production secret>
+
+JWT_EXPIRES_IN=15m
+JWT_REFRESH_EXPIRES_IN=7d
+
+GOOGLE_CLIENT_ID=<production Google OAuth Client ID>
+GOOGLE_CLIENT_SECRET=<production Google OAuth Client Secret>
+GOOGLE_CALLBACK_URL=https://klipa-backend.onrender.com/auth/google/callback
+
+FRONTEND_URL=https://<your-vercel-domain>.vercel.app
+
+WITHDRAWAL_TAX_RATE=0.10
+
+NODE_ENV=production
+```
+
+## Database
+
+Klipa uses Prisma ORM with PostgreSQL.
+
+Generate Prisma Client:
+
+```bash
+npx prisma generate
+```
+
+Create and apply migrations during development:
+
+```bash
+npx prisma migrate dev
+```
+
+For production deployments, apply existing migrations with:
+
+```bash
+npx prisma migrate deploy
+```
+
+The application uses two database connection variables:
+
+* `DATABASE_URL` — pooled connection used by the application
+* `DIRECT_URL` — direct database connection used for Prisma operations that require a direct connection
+
+## Running Locally
+
+Start the development server:
+
+```bash
+npm run start:dev
+```
+
+The backend will be available at:
+
+```text
+http://localhost:4000
+```
+
+depending on the configured application port.
+
+## Build
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+The build process generates the Prisma Client before compiling the NestJS application:
+
+```text
+prisma generate → nest build
+```
+
+## Production
+
+Run the production application:
+
+```bash
+npm run start:prod
+```
+
+The production command runs:
+
+```bash
+node dist/src/main
+```
+
+## Testing
+
+Run unit tests:
+
+```bash
+npm run test
+```
+
+Watch tests:
+
+```bash
+npm run test:watch
+```
+
+Generate coverage:
+
+```bash
+npm run test:cov
+```
+
+Run end-to-end tests:
+
+```bash
+npm run test:e2e
+```
+
+## API Documentation
+
+The API is documented using Swagger.
+
+When running the backend locally, open the Swagger documentation through the configured Swagger endpoint.
 
 ## Deployment
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+The backend is deployed using **Render** and connects to a production PostgreSQL database hosted on **Supabase**.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Production architecture:
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```text
+                    ┌───────────────────┐
+                    │      Vercel       │
+                    │ Klipa Frontend    │
+                    └─────────┬─────────┘
+                              │
+                              │ HTTPS
+                              ▼
+                    ┌───────────────────┐
+                    │      Render       │
+                    │ Klipa Backend     │
+                    │     NestJS        │
+                    └─────────┬─────────┘
+                              │
+                              │ Prisma
+                              ▼
+                    ┌───────────────────┐
+                    │     Supabase      │
+                    │    PostgreSQL     │
+                    └───────────────────┘
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Related Repository
 
-## Resources
+Frontend:
 
-Check out a few resources that may come in handy when working with NestJS:
+https://github.com/gemiyudhia/klipa-frontend
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## Project Status
 
-## Support
+The current development focuses on building a realistic marketplace architecture with authentication, role-based access, campaign management, database integration, and frontend-backend communication.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+The project is **not intended to represent a production-ready commercial platform yet**. Features, business rules, database schemas, and API contracts are still subject to change.
 
-## Stay in touch
+## Author
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**Gemi Yudhia**
 
-## License
+GitHub: https://github.com/gemiyudhia
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+
+Built as a full-stack project to explore backend architecture, authentication, database design, REST API development, and marketplace application workflows.
