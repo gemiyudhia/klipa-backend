@@ -102,21 +102,29 @@ export class AuthController {
       ? '/select-role'
       : '/explore';
 
-    res.cookie('accessToken', result.access_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 15 * 60 * 1000,
+    const oauthSessionUrl = `${frontendUrl}/api/auth/oauth-session`;
+
+    // Kirim token ke frontend melalui server-side request.
+    // Token tidak pernah masuk URL.
+    const sessionResponse = await fetch(oauthSessionUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        accessToken: result.access_token,
+        refreshToken: result.refresh_token,
+      }),
     });
 
-    res.cookie('refreshToken', result.refresh_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    if (!sessionResponse.ok) {
+      console.error(
+        'Failed to create frontend OAuth session:',
+        await sessionResponse.text(),
+      );
+
+      return res.redirect(`${frontendUrl}/sign-in?error=oauth_session_failed`);
+    }
 
     return res.redirect(`${frontendUrl}${redirectPath}`);
   }
