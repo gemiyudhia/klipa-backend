@@ -102,31 +102,14 @@ export class AuthController {
       ? '/select-role'
       : '/explore';
 
-    const oauthSessionUrl = `${frontendUrl}/api/auth/oauth-session`;
-
-    // Kirim token ke frontend melalui server-side request.
-    // Token tidak pernah masuk URL.
-    const sessionResponse = await fetch(oauthSessionUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        accessToken: result.access_token,
-        refreshToken: result.refresh_token,
-      }),
+    const code = await this.authService.createOAuthCode({
+      accessToken: result.access_token,
+      refreshToken: result.refresh_token,
     });
 
-    if (!sessionResponse.ok) {
-      console.error(
-        'Failed to create frontend OAuth session:',
-        await sessionResponse.text(),
-      );
-
-      return res.redirect(`${frontendUrl}/sign-in?error=oauth_session_failed`);
-    }
-
-    return res.redirect(`${frontendUrl}${redirectPath}`);
+    return res.redirect(
+      `${frontendUrl}/api/auth/oauth-session?code=${encodeURIComponent(code)}&redirect=${encodeURIComponent(redirectPath)}`,
+    );
   }
 
   @Patch('select-role')
@@ -137,5 +120,10 @@ export class AuthController {
     @Body() dto: { role: 'CREATOR' | 'CLIPPER' },
   ) {
     return this.authService.selectRole(userId, dto.role);
+  }
+
+  @Post('oauth/exchange')
+  async exchangeOAuthCode(@Body() body: { code: string }) {
+    return this.authService.consumeOAuthCode(body.code);
   }
 }

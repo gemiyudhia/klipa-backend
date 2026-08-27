@@ -120,7 +120,7 @@ export class AuthService {
       role: user.role,
       balance: user.balance,
       avatarUrl: user.avatarUrl,
-      isRoleSelected: user.isRoleSelected
+      isRoleSelected: user.isRoleSelected,
     };
   }
 
@@ -175,6 +175,34 @@ export class AuthService {
     return this.userService.setRole(userId, role);
   }
 
+  async createOAuthCode(tokens: { accessToken: string; refreshToken: string }) {
+    const code = crypto.randomBytes(32).toString('hex');
+
+    this.oauthCodes.set(code, {
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+      expiresAt: Date.now() + 60 * 1000,
+    });
+
+    return code;
+  }
+
+  consumeOAuthCode(code: string) {
+    const session = this.oauthCodes.get(code);
+
+    if (!session) {
+      throw new UnauthorizedException('OAuth code tidak valid');
+    }
+
+    this.oauthCodes.delete(code);
+
+    if (Date.now() > session.expiresAt) {
+      throw new UnauthorizedException('OAuth code sudah expired');
+    }
+
+    return session;
+  }
+
   private async generateAccessToken(user: Pick<User, 'id' | 'email' | 'role'>) {
     const payload = {
       sub: user.id,
@@ -201,4 +229,13 @@ export class AuthService {
   private hashToken(token: string): string {
     return crypto.createHash('sha256').update(token).digest('hex');
   }
+
+  private oauthCodes = new Map<
+    string,
+    {
+      accessToken: string;
+      refreshToken: string;
+      expiresAt: number;
+    }
+  >();
 }
